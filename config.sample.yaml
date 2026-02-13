@@ -1,0 +1,148 @@
+# PriceTracker Configuration Sample
+# Copy this file to config.yaml and customize it for your needs
+
+# ============================================================================
+# SITES CONFIGURATION
+# ============================================================================
+# Define the supermarket websites you want to track
+# Each site can use either:
+#   1. Deterministic extraction (CSS selectors) - faster, more reliable
+#   2. LLM-based extraction (fallback) - slower, but adapts to changes
+
+sites:
+  # Example 1: Site with CSS selectors (recommended for best performance)
+  - name: "ExampleMarket1"
+    enabled: true  # Set to false to disable this site
+    skip_detail_extraction: true  # Use search results page only (faster)
+    
+    # CSS Selectors for deterministic extraction
+    selectors:
+      product_container: ".product-card"  # Container for each product
+      title: ".product-title"              # Product title/name
+      price: ".product-price"              # Product price
+    
+    # URLs
+    base_url: "https://www.example-market.com/"
+    search_url_pattern: "https://www.example-market.com/search?q={query}"
+  
+  # Example 2: Site without selectors (uses LLM fallback)
+  - name: "ExampleMarket2"
+    enabled: false  # Disabled by default
+    skip_detail_extraction: true
+    base_url: "https://www.another-market.com/"
+    search_url_pattern: "https://www.another-market.com/products?search={query}"
+    # No selectors - will use LLM to extract data
+
+  # Example 3: Brazilian supermarket (real example from Angeloni)
+  # Uncomment and modify if you want to track Brazilian supermarkets
+  # - name: "Angeloni"
+  #   enabled: true
+  #   skip_detail_extraction: true
+  #   selectors:
+  #     product_container: ".vtex-product-summary-2-x-clearLink"
+  #     title: ".vtex-product-summary-2-x-brandName"
+  #     price: ".vtex-product-price-1-x-sellingPriceValue"
+  #   base_url: "https://www.angeloni.com.br/"
+  #   search_url_pattern: "https://www.angeloni.com.br/super/{query}?_q={query}&map=ft"
+
+# ============================================================================
+# PRODUCTS CONFIGURATION
+# ============================================================================
+# Define the products you want to track across all sites
+# Use constraints to ensure you're comparing the same product sizes
+
+products:
+  # Example 1: Simple product with exact size match
+  - canonical_name: "Milk 2L"
+    constraints:
+      size: "2L"  # Exact match for "2L"
+  
+  # Example 2: Product with regex pattern for flexible matching
+  - canonical_name: "Rice 1kg"
+    constraints:
+      # Matches: "1 kg", "1kg", "1,0 kg", etc.
+      size: "regex:(?<!\\d,)(?:1\\s*kg|1,0+\\s*kg|kg)\\b"
+  
+  # Example 3: Product with exclude pattern
+  - canonical_name: "Eggs 30 units"
+    constraints:
+      size: "regex:30\\s*(units|eggs|uni)"
+      exclude: "regex:(quail|organic)"  # Exclude quail eggs and organic
+  
+  # Example 4: Product with specific brand and size
+  - canonical_name: "Premium Coffee 250g"
+    constraints:
+      size: "250g"
+      # You can add more constraints as needed
+  
+  # Example 5: Product without constraints (will match any variant)
+  - canonical_name: "Coffee Filters"
+  
+  # More examples - customize these for your needs:
+  # - canonical_name: "Bread"
+  #   constraints:
+  #     size: "500g"
+  # 
+  # - canonical_name: "Olive Oil"
+  #   constraints:
+  #     size: "500ml"
+  # 
+  # - canonical_name: "Pasta"
+  #   constraints:
+  #     size: "500g"
+  #     exclude: "regex:(whole wheat|gluten-free)"
+
+# ============================================================================
+# DATABASE CONFIGURATION
+# ============================================================================
+# SQLite is used by default. You can change to PostgreSQL or MySQL if needed.
+
+database:
+  url: "sqlite:///pricetracker.db"
+  # For PostgreSQL: "postgresql://user:password@localhost/pricetracker"
+  # For MySQL: "mysql://user:password@localhost/pricetracker"
+
+# ============================================================================
+# LLM AGENT CONFIGURATION
+# ============================================================================
+# Configure the LLM provider for intelligent product extraction
+# Supported providers: groq, openai, or any OpenAI-compatible API
+
+agent:
+  provider: "groq"  # Options: "groq", "openai", or custom
+  model: "llama-3.3-70b-versatile"  # Model name
+  api_key_env: "GROQ_API_KEY"  # Environment variable name for API key
+  base_url: "https://api.groq.com/openai/v1"  # API endpoint
+  
+  # Alternative: OpenAI configuration
+  # provider: "openai"
+  # model: "gpt-4o-mini"
+  # api_key_env: "OPENAI_API_KEY"
+  # base_url: "https://api.openai.com/v1"
+
+# ============================================================================
+# NOTES
+# ============================================================================
+# 
+# 1. CSS Selectors:
+#    - Use browser DevTools to find the right selectors
+#    - Test selectors to ensure they're stable across page loads
+#    - Prefer class-based selectors over complex hierarchies
+# 
+# 2. Constraints:
+#    - Use exact matches for simple cases (e.g., "2L", "500g")
+#    - Use regex for flexible matching (e.g., "1 kg" or "1kg")
+#    - Use exclude patterns to filter out unwanted variants
+# 
+# 3. API Keys:
+#    - Store API keys in a .env file (never commit to git!)
+#    - Example .env file:
+#      GROQ_API_KEY=gsk_your_api_key_here
+#      OPENAI_API_KEY=sk-your_api_key_here
+# 
+# 4. Performance Tips:
+#    - Use CSS selectors when possible (much faster than LLM)
+#    - Set skip_detail_extraction: true to avoid extra page loads
+#    - Disable sites you don't need with enabled: false
+# 
+# ============================================================================
