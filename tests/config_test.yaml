@@ -1,0 +1,18 @@
+sites:
+  - name: "MockSite"
+    enabled: true
+    base_url: "file://{cwd}/tests/mock_site"
+    search_url_pattern: "file://{cwd}/tests/mock_site/product.html"
+
+products:
+  - canonical_name: "Milk 2L"
+    sites:
+        MockSite:
+            search_term: "Milk"
+
+database:
+  url: "sqlite:///:memory:"
+
+agent:
+  provider: "openai"
+  model: "gpt-mock"
