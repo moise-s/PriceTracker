@@ -120,7 +120,12 @@ Drill down into individual product observations with direct links to products.
 
 4. **Configure sites and products**
    
-   Edit `config.yaml` to add your target supermarkets and products (see [Configuration](#-configuration) below).
+   Copy the sample configuration and customize it:
+   ```bash
+   cp config.sample.yaml config.yaml
+   ```
+   
+   Then edit `config.yaml` to add your target supermarkets and products (see [Configuration](#-configuration) below).
 
 5. **Run the dashboard**
    ```bash
