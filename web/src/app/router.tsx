@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import { Page, PublicOnly, RequireAuth } from "@/app/guards";
-import { AdminPage, ComparePage, HistoryPage, ProductFormPage, ProfilePage, SchedulesPage } from "@/app/lazy-pages";
+import { AdminPage, ComparePage, HistoryPage, NotificationsPage, ProductFormPage, ProfilePage, SchedulesPage } from "@/app/lazy-pages";
 import { AppShell } from "@/app/shell";
 import { ForcedPasswordChangePage, LoginPage, RecoverPage, RegisterPage, SetupPage } from "@/pages/auth";
 import { HomePage } from "@/pages/home";
@@ -30,6 +30,7 @@ export const router = createBrowserRouter([
       { path: "comparar", element: <Page><ComparePage /></Page> },
       { path: "historico", element: <Page><HistoryPage /></Page> },
       { path: "agendamentos", element: <Page><SchedulesPage /></Page> },
+      { path: "avisos", element: <Page><NotificationsPage /></Page> },
       { path: "perfil", element: <Page><ProfilePage /></Page> },
       { path: "admin", element: <Page><AdminPage /></Page> },
       { path: "mais", element: <MorePage /> },

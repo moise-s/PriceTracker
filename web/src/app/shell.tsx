@@ -1,4 +1,5 @@
 import {
+  Bell,
   CalendarClock,
   ChartLine,
   Home,
@@ -14,7 +15,7 @@ import {
 } from "lucide-react";
 import { type ReactNode, useEffect, useRef } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router";
-import { useActiveRun, useLogout, useMe } from "@/api/hooks";
+import { useActiveRun, useLogout, useMe, useNotifications } from "@/api/hooks";
 import { Button, Progress } from "@/components/ui";
 import { cn } from "@/components/ui/utils";
 
@@ -47,6 +48,7 @@ const PRIMARY: NavItem[] = [
   { to: "/buscar", label: "Buscar preços", icon: Search },
   { to: "/comparar", label: "Onde compensa", icon: Scale },
   { to: "/historico", label: "Histórico", icon: ChartLine },
+  { to: "/avisos", label: "Avisos", icon: Bell },
   { to: "/agendamentos", label: "Agendamentos", icon: CalendarClock },
   { to: "/perfil", label: "Perfil", icon: UserRound },
 ];
@@ -59,7 +61,13 @@ const MOBILE: NavItem[] = [
   { to: "/mais", label: "Mais", icon: Menu },
 ];
 
+function UnreadBadge({ count, className }: { count: number; className?: string }) {
+  if (!count) return null;
+  return <span aria-hidden className={cn("grid h-5 min-w-5 place-content-center rounded-full bg-accent px-1.5 text-[11px] font-bold text-on-accent tabular", className)}>{count > 9 ? "9+" : count}</span>;
+}
+
 function SideNav({ isAdmin }: { isAdmin: boolean }) {
+  const unread = useNotifications().data?.unread ?? 0;
   const items = isAdmin ? [...PRIMARY, { to: "/admin", label: "Administração", icon: Shield }] : PRIMARY;
   return (
     <nav aria-label="Principal" className="space-y-1">
@@ -77,6 +85,12 @@ function SideNav({ isAdmin }: { isAdmin: boolean }) {
         >
           <item.icon aria-hidden className="size-5" />
           {item.label}
+          {item.to === "/avisos" && unread ? (
+            <>
+              <span className="sr-only">, {unread} não lido{unread > 1 ? "s" : ""}</span>
+              <UnreadBadge count={unread} className="ml-auto" />
+            </>
+          ) : null}
         </NavLink>
       ))}
     </nav>
@@ -135,6 +149,7 @@ function ActiveRunBanner() {
 
 export function AppShell() {
   const { data: me } = useMe();
+  const unread = useNotifications().data?.unread ?? 0;
   const logout = useLogout();
   const location = useLocation();
   const mainRef = useRef<HTMLElement>(null);
@@ -153,28 +168,37 @@ export function AppShell() {
       <a href="#conteudo" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:bg-brand focus:px-4 focus:py-2 focus:text-on-brand">
         Pular para o conteúdo
       </a>
-      <aside className="sticky top-0 hidden h-dvh flex-col border-r border-line bg-surface-2 px-4 py-6 lg:flex">
-        <Link to="/" className="mb-8 px-2">
-          <Logo />
-        </Link>
-        <SideNav isAdmin={me?.user.role === "admin"} />
-        <div className="mt-auto rounded-xl border border-line bg-surface p-3">
-          <p className="truncate text-sm font-semibold">{me?.user.display_name}</p>
-          <p className="truncate text-xs text-ink-3">@{me?.user.username}</p>
-          <Button variant="ghost" size="sm" className="mt-2 w-full justify-start" onClick={() => logout.mutate()} loading={logout.isPending}>
-            <LogOut aria-hidden className="size-4" />
-            Sair
-          </Button>
-        </div>
-      </aside>
+      {/* The column carries the background so it spans the whole page; the nav itself sticks. */}
+      <div className="hidden border-r border-line bg-surface-2 lg:block">
+        <aside className="sticky top-0 flex h-dvh flex-col px-4 py-6">
+          <Link to="/" className="mb-8 px-2">
+            <Logo />
+          </Link>
+          <SideNav isAdmin={me?.user.role === "admin"} />
+          <div className="mt-auto rounded-xl border border-line bg-surface p-3">
+            <p className="truncate text-sm font-semibold">{me?.user.display_name}</p>
+            <p className="truncate text-xs text-ink-3">@{me?.user.username}</p>
+            <Button variant="ghost" size="sm" className="mt-2 w-full justify-start" onClick={() => logout.mutate()} loading={logout.isPending}>
+              <LogOut aria-hidden className="size-4" />
+              Sair
+            </Button>
+          </div>
+        </aside>
+      </div>
       <div className="min-w-0">
         <header className="sticky top-0 z-30 flex items-center justify-between border-b border-line bg-canvas/90 px-4 py-2.5 backdrop-blur lg:hidden">
           <Link to="/" aria-label="Início">
             <Logo withText={false} />
           </Link>
-          <Link to="/perfil" className="grid size-9 place-content-center rounded-full bg-brand-soft font-display text-sm font-bold text-brand-ink" aria-label="Perfil">
-            {me?.user.display_name?.slice(0, 1).toUpperCase() ?? <Settings2 className="size-4" />}
-          </Link>
+          <div className="flex items-center gap-1">
+            <Link to="/avisos" className="relative grid size-10 place-content-center rounded-full text-ink-2 hover:bg-surface-3" aria-label={unread ? `Avisos, ${unread} não lido${unread > 1 ? "s" : ""}` : "Avisos"}>
+              <Bell aria-hidden className="size-5" />
+              <UnreadBadge count={unread} className="absolute -top-0.5 -right-0.5 h-4 min-w-4 px-1 text-[10px]" />
+            </Link>
+            <Link to="/perfil" className="grid size-9 place-content-center rounded-full bg-brand-soft font-display text-sm font-bold text-brand-ink" aria-label="Perfil">
+              {me?.user.display_name?.slice(0, 1).toUpperCase() ?? <Settings2 className="size-4" />}
+            </Link>
+          </div>
         </header>
         <main id="conteudo" ref={mainRef} className="mx-auto w-full overflow-x-clip max-w-[84rem] px-4 pt-5 pb-32 sm:px-6 lg:px-8 lg:pt-10 lg:pb-16 xl:px-10">
           <Outlet />

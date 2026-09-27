@@ -232,3 +232,28 @@ test("7. frescor: preços antigos saem da recomendação até você autorizar", 
   await expect(page.getByText("Confiança baixa").filter({ visible: true }).first()).toBeVisible();
   await snap(page, testInfo, "7-antigos-autorizados");
 });
+
+test("8. alerta de preço: aviso quando uma busca encontra o preço-alvo", async ({ page, request }, testInfo) => {
+  await createUser(request, "e2e-gabi");
+  await login(page, "e2e-gabi");
+  await addToList(page, ["Arroz branco"]);
+  await selectStores(page, ["fort"]);
+  const lists = await apiAs(page, "GET", "/lists");
+  const rice = lists[0].items[0].product_id as string;
+
+  await page.goto(`/produtos/${rice}`);
+  await page.getByLabel("Preço-alvo por embalagem (R$)").fill("7,00");
+  await page.getByRole("button", { name: "Criar alerta" }).click();
+  await expect(page.getByText("Alerta salvo")).toBeVisible();
+
+  await runSearchFromUi(page);
+  await page.goto("/avisos");
+  await expect(page.getByRole("heading", { name: "Avisos", level: 1 })).toBeVisible();
+  await expect(page.getByText(/Arroz branco 1 kg: R\$\s6,79 por embalagem/)).toBeVisible();
+  await expect(page.getByText("No alvo")).toBeVisible();
+  await expect(page.getByRole("link", { name: /^Avisos\W+1 não lido$/ }).filter({ visible: true }).first()).toBeVisible();
+  await snap(page, testInfo, "8-aviso-de-preco");
+
+  await page.getByRole("button", { name: "Marcar todos como lidos" }).click();
+  await expect(page.getByRole("link", { name: /não lido/ })).toHaveCount(0);
+});

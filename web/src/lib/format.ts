@@ -95,3 +95,13 @@ export function ageDays(iso: string | null | undefined): number | null {
 export function pluralize(count: number, singular: string, plural: string): string {
   return `${count} ${count === 1 ? singular : plural}`;
 }
+
+/** Parses a money amount typed in pt-BR ("7,50", "1.234,50") or with a dot ("7.50"). */
+export function parseMoneyInput(text: string): number | null {
+  const cleaned = text.replace(/R\$|\s/g, "");
+  if (!cleaned) return null;
+  const normalized = cleaned.includes(",") ? cleaned.replace(/\./g, "").replace(",", ".") : cleaned;
+  if (!/^\d+(\.\d{1,2})?$/.test(normalized)) return null;
+  const value = Number(normalized);
+  return value > 0 ? value : null;
+}

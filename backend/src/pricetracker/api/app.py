@@ -13,7 +13,7 @@ from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from pricetracker import __version__
-from pricetracker.api.routes import admin, auth, catalog, lists, profile, runs, system
+from pricetracker.api.routes import admin, alerts, auth, catalog, lists, profile, runs, system
 from pricetracker.db.session import init_engine
 from pricetracker.logs import bind, configure_logging, log_event
 from pricetracker.services.errors import ServiceError
@@ -113,6 +113,7 @@ def create_app() -> FastAPI:
         lists.router,
         profile.router,
         runs.router,
+        alerts.router,
         admin.router,
     ):
         app.include_router(router, prefix=prefix)

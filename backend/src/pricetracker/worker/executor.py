@@ -788,7 +788,21 @@ class RunExecutor:
             )
             db.commit()
             log_event(logger, logging.INFO, "run finished", status=status.value, counts=counts)
-            return status
+        if status in (RunStatus.SUCCESS, RunStatus.PARTIAL):
+            self._evaluate_alerts(run_id)
+        return status
+
+    def _evaluate_alerts(self, run_id: uuid.UUID) -> None:
+        """Price alerts are a side effect: a failure here never changes the run's outcome."""
+        from pricetracker.services import alerts
+
+        try:
+            with self.factory() as db:
+                created = alerts.evaluate_run(db, run_id)
+            if created:
+                log_event(logger, logging.INFO, "price alerts triggered", count=created)
+        except Exception:
+            logger.exception("price alert evaluation failed")
 
 
 def market_domains(adapter: MarketAdapter, client: PoliteClient) -> list[str]:

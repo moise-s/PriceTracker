@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { ago, ageDays, km, money, packageLabel, pluralize, quantity, unitPrice } from "./format";
+import { ago, ageDays, km, money, packageLabel, parseMoneyInput, pluralize, quantity, unitPrice } from "./format";
 
 // Intl uses a non-breaking space between "R$" and the amount.
 const nb = (text: string) => text.replace(/ /g, " ");
@@ -55,5 +55,16 @@ describe("relative time", () => {
   it("computes age in days for freshness checks", () => {
     expect(ageDays("2026-09-20T12:00:00Z")).toBe(7);
     expect(ageDays(undefined)).toBeNull();
+  });
+});
+
+describe("parseMoneyInput", () => {
+  it("accepts pt-BR and dot decimals", () => {
+    expect(parseMoneyInput("7,50")).toBe(7.5);
+    expect(parseMoneyInput("R$ 1.234,56")).toBe(1234.56);
+    expect(parseMoneyInput("7.5")).toBe(7.5);
+  });
+  it("rejects anything that is not a positive amount", () => {
+    for (const text of ["", "0", "-3", "abc", "7,555", "1,2,3"]) expect(parseMoneyInput(text), text).toBeNull();
   });
 });

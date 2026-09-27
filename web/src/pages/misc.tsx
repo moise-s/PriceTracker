@@ -1,4 +1,4 @@
-import { ArrowRight, CalendarClock, ChartLine, ChevronRight, ListChecks, LogOut, MapPin, Shield, ShoppingBasket, Store, UserRound } from "lucide-react";
+import { ArrowRight, Bell, CalendarClock, ChartLine, ChevronRight, ListChecks, LogOut, MapPin, Shield, ShoppingBasket, Store, UserRound } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 import { useLogout, useMe, useUpdateProfile } from "@/api/hooks";
 import { Logo, PageHeader } from "@/app/shell";
@@ -49,6 +49,7 @@ export function MorePage() {
     { to: "/mercados", label: "Mercados e lojas", icon: Store },
     { to: "/lista", label: "Minha lista", icon: ListChecks },
     { to: "/historico", label: "Histórico de preços", icon: ChartLine },
+    { to: "/avisos", label: "Avisos e alertas de preço", icon: Bell },
     { to: "/agendamentos", label: "Agendamentos", icon: CalendarClock },
     { to: "/perfil", label: "Perfil, endereço e veículo", icon: UserRound },
     ...(me.data?.user.role === "admin" ? [{ to: "/admin", label: "Administração", icon: Shield }] : []),

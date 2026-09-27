@@ -20,6 +20,8 @@ export const keys = {
   schedules: ["schedules"] as const,
   sessions: ["sessions"] as const,
   admin: ["admin"] as const,
+  alerts: ["alerts"] as const,
+  notifications: ["notifications"] as const,
 };
 
 function onMutationError(error: unknown) {
@@ -239,6 +241,8 @@ export function useRun(id: string | undefined) {
         void client.invalidateQueries({ queryKey: ["comparison"] });
         void client.invalidateQueries({ queryKey: keys.activeRun });
         void client.invalidateQueries({ queryKey: keys.markets });
+        void client.invalidateQueries({ queryKey: keys.alerts });
+        void client.invalidateQueries({ queryKey: keys.notifications });
       }
       return run;
     },
@@ -301,5 +305,43 @@ export function useHistory(productId: string | undefined, days: number) {
     queryKey: keys.history(productId ?? "", days),
     enabled: Boolean(productId),
     queryFn: () => unwrap(api.GET("/api/v1/history/products/{product_id}", { params: { path: { product_id: productId! }, query: { days } } })),
+  });
+}
+
+// --- price alerts & notifications ---------------------------------------------------------------
+
+export function useAlerts() {
+  return useQuery({ queryKey: keys.alerts, queryFn: () => unwrap(api.GET("/api/v1/alerts")) });
+}
+
+export function useSetAlert() {
+  const client = useQueryClient();
+  return useMutation({
+    mutationFn: ({ productId, body }: { productId: string; body: Schemas["AlertIn"] }) =>
+      unwrap(api.PUT("/api/v1/products/{product_id}/alert", { params: { path: { product_id: productId } }, body })),
+    onSuccess: () => void client.invalidateQueries({ queryKey: keys.alerts }),
+    onError: onMutationError,
+  });
+}
+
+export function useDeleteAlert() {
+  const client = useQueryClient();
+  return useMutation({
+    mutationFn: (productId: string) => unwrap(api.DELETE("/api/v1/products/{product_id}/alert", { params: { path: { product_id: productId } } })),
+    onSuccess: () => void client.invalidateQueries({ queryKey: keys.alerts }),
+    onError: onMutationError,
+  });
+}
+
+export function useNotifications() {
+  return useQuery({ queryKey: keys.notifications, queryFn: () => unwrap(api.GET("/api/v1/notifications")), refetchInterval: 60_000 });
+}
+
+export function useMarkNotificationsRead() {
+  const client = useQueryClient();
+  return useMutation({
+    mutationFn: (ids?: string[]) => unwrap(api.POST("/api/v1/notifications/read", { body: { ids: ids ?? null } })),
+    onSuccess: () => void client.invalidateQueries({ queryKey: keys.notifications }),
+    onError: onMutationError,
   });
 }

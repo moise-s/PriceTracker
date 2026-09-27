@@ -98,6 +98,10 @@ test("telas principais em 360/390/1280/1440, sem rolagem horizontal nem viola√ß√
   await page.goto(`/produtos/${product.id}`);
   await page.locator('input[type="file"]').setInputFiles(path.resolve(path.dirname(fileURLToPath(import.meta.url)), "fixtures/granola.png"));
   await expect(page.getByText("Imagem atualizada")).toBeVisible();
+  // An alert that the next collection satisfies, so "Avisos" has content.
+  const rice = (await apiAs(page, "GET", "/lists"))[0].items.find((i: { product_name: string }) => i.product_name.startsWith("Arroz")).product_id;
+  await apiAs(page, "PUT", `/products/${rice}/alert`, { target_price: "4.00", enabled: true });
+  await runSearchViaApi(page);
 
   const screens: Array<[string, string]> = [
     ["inicio", "/"],
@@ -107,6 +111,7 @@ test("telas principais em 360/390/1280/1440, sem rolagem horizontal nem viola√ß√
     ["onde-compensa", "/comparar"],
     ["historico", "/historico"],
     ["produto", `/produtos/${product.id}`],
+    ["avisos", "/avisos"],
     ["perfil", "/perfil"],
     ["admin", "/admin"],
   ];

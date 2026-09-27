@@ -829,3 +829,46 @@ class LlmUsageOut(Model):
 class AdminHealthOut(Model):
     markets: list[MarketHealthOut]
     llm: LlmUsageOut
+
+
+# --- alerts & notifications -------------------------------------------------------------------
+
+
+class AlertIn(Model):
+    target_price: Decimal = Field(gt=0, le=100000)
+    enabled: bool = True
+
+
+class AlertOut(Model):
+    product_id: uuid.UUID
+    product_name: str
+    unit_label: str
+    target_price: Decimal
+    enabled: bool
+    last_triggered_at: datetime | None = None
+    best_price: Decimal | None = None
+    best_store: str | None = None
+    best_observed_at: datetime | None = None
+
+
+class NotificationOut(Model):
+    id: uuid.UUID
+    kind: str
+    title: str
+    body: str
+    data: dict[str, Any]
+    read_at: datetime | None = None
+    created_at: datetime
+
+
+class NotificationsOut(Model):
+    unread: int
+    items: list[NotificationOut]
+
+
+class MarkReadIn(Model):
+    ids: list[uuid.UUID] | None = Field(default=None, max_length=200)
+
+
+class MarkedOut(Model):
+    marked: int

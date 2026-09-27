@@ -1,16 +1,17 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
-import { ImagePlus, Link2, Trash2 } from "lucide-react";
+import { BellRing, ImagePlus, Link2, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
 import { z } from "zod";
 import { api, errorMessage, type Schemas, unwrap, uploadImage } from "@/api/client";
-import { keys, useCatalog, useDeleteProduct, useProducts, useSaveProduct } from "@/api/hooks";
+import { keys, useAlerts, useCatalog, useDeleteAlert, useDeleteProduct, useProducts, useSaveProduct, useSetAlert } from "@/api/hooks";
 import { PageHeader } from "@/app/shell";
 import { ProductImage } from "@/components/domain";
 import { Button, Card, Dialog, ErrorState, Field, InlineAlert, Input, LoadingBlock, Select, SwitchRow } from "@/components/ui";
+import { ago, money, parseMoneyInput } from "@/lib/format";
 import { SOLD_BY } from "@/lib/labels";
 
 const splitList = (value: string) =>
@@ -87,6 +88,54 @@ function toBody(values: FormValues, original?: Schemas["ProductOut"]): Schemas["
     },
     is_favorite: values.is_favorite,
   };
+}
+
+function PriceAlertCard({ product }: { product: Schemas["ProductOut"] }) {
+  const alerts = useAlerts();
+  const setAlert = useSetAlert();
+  const remove = useDeleteAlert();
+  const current = alerts.data?.find((a) => a.product_id === product.id);
+  const [draft, setDraft] = useState<string | null>(null);
+  const value = draft ?? (current ? String(current.target_price).replace(".", ",") : "");
+  const amount = parseMoneyInput(value);
+  const unit = product.sold_by === "weight" ? "kg" : product.sold_by === "unit" ? "unidade" : "embalagem";
+  const save = (enabled = current?.enabled ?? true) =>
+    amount !== null && setAlert.mutate({ productId: product.id, body: { target_price: String(amount), enabled } }, { onSuccess: () => { setDraft(null); toast.success("Alerta salvo"); } });
+  return (
+    <Card as="section" aria-labelledby="alerta-preco" className="mt-5 space-y-4 p-5">
+      <div className="flex items-start gap-3">
+        <span className="grid size-10 shrink-0 place-content-center rounded-full bg-accent-soft text-accent-ink">
+          <BellRing aria-hidden className="size-5" />
+        </span>
+        <div>
+          <h2 id="alerta-preco" className="text-lg font-semibold">Alerta de preço</h2>
+          <p className="text-sm text-ink-2">Avisamos em “Avisos” quando uma busca encontrar este produto por até este valor por {unit} em uma das suas lojas. Promoções contam; preço de clube só se você ativou o clube no perfil.</p>
+        </div>
+      </div>
+      <div className="flex flex-wrap items-end gap-2">
+        <Field label={`Preço-alvo por ${unit} (R$)`} htmlFor="alert_target" className="w-44">
+          <Input id="alert_target" inputMode="decimal" placeholder="0,00" value={value} onChange={(e) => setDraft(e.target.value)} />
+        </Field>
+        <Button disabled={amount === null} loading={setAlert.isPending} onClick={() => save()}>
+          {current ? "Atualizar alerta" : "Criar alerta"}
+        </Button>
+        {current ? (
+          <Button variant="ghost" loading={remove.isPending} onClick={() => remove.mutate(product.id, { onSuccess: () => { setDraft(null); toast.success("Alerta removido"); } })}>
+            Remover
+          </Button>
+        ) : null}
+      </div>
+      {current ? (
+        <>
+          <SwitchRow id="alert_enabled" label="Alerta ativo" description="Pause sem perder o preço-alvo." checked={current.enabled} onCheckedChange={(v) => save(v)} />
+          <p className="text-sm text-ink-2">
+            {current.best_price ? `Melhor preço atual: ${money(current.best_price)} por ${unit} em ${current.best_store} (${ago(current.best_observed_at)}).` : "Ainda sem preço atual para comparar."}
+            {current.last_triggered_at ? ` Último aviso ${ago(current.last_triggered_at)}.` : ""}
+          </p>
+        </>
+      ) : null}
+    </Card>
+  );
 }
 
 export function ProductFormPage() {
@@ -250,7 +299,7 @@ export function ProductFormPage() {
             <h2 className="text-lg font-semibold">Imagem</h2>
             <div className="flex flex-wrap items-start gap-5">
               <ProductImage image={product.image} category={product.category} name={product.name} className="size-32" />
-              <div className="min-w-0 flex-1 space-y-3">
+              <div className="min-w-0 flex-1 basis-60 space-y-3">
                 <label className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-surface px-4 py-2 text-sm font-semibold ring-1 ring-line-strong hover:bg-surface-2">
                   <ImagePlus aria-hidden className="size-4" /> Enviar foto
                   <input type="file" accept="image/jpeg,image/png,image/webp" className="sr-only" disabled={imageBusy} onChange={(ev) => ev.target.files?.[0] && void onUpload(ev.target.files[0])} />
@@ -265,6 +314,7 @@ export function ProductFormPage() {
               </div>
             </div>
           </Card>
+          <PriceAlertCard product={product} />
           <Card className="mt-5 flex flex-wrap items-center justify-between gap-3 p-5">
             <div>
               <h2 className="text-lg font-semibold">Remover produto</h2>
