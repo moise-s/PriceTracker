@@ -52,7 +52,7 @@ futuros funcionem nos dois bancos.
 | `alembic downgrade base` | ok, 0 tabelas | — |
 | novo `upgrade head` + `check` | ok, sem diferenças | — |
 | stack Docker (`migrate` → `db-init`) | migração + seed idempotente a cada subida | — |
-| suíte de testes | 127 testes em PostgreSQL (`make test-pg`) | 125 em SQLite |
+| suíte de testes | 135 testes em PostgreSQL (`make test-pg`) | 133 em SQLite |
 
 Reproduzir:
 

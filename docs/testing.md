@@ -19,12 +19,13 @@ O E2E usa o Google Chrome instalado (sem baixar navegador). Para usar o Chromium
 
 | Suíte | Resultado |
 | --- | --- |
-| Backend em SQLite | **125 passaram**, 6 pulados (4 ao vivo, 2 exclusivos de PostgreSQL) |
-| Backend em PostgreSQL 17.10 | **127 passaram**, 4 pulados (ao vivo) |
+| Backend em SQLite | **133 passaram**, 6 pulados (4 ao vivo, 2 exclusivos de PostgreSQL) |
+| Backend em PostgreSQL 17.10 | **135 passaram**, 4 pulados (ao vivo) |
 | Smoke ao vivo (`--live`) | **4 passaram** (22:27–22:29 UTC): Angeloni, Bistek e Fort com embalagem/peso/unidade; ofertas do Imperatriz |
 | Web unitários (Vitest) | **26 passaram** |
 | E2E (Playwright) | **17 passaram**: 8 cenários × desktop (1280×900) e mobile (390×844) + matriz de telas |
 | Lint e tipos | ruff, mypy strict, oxlint e tsc sem avisos |
+| Provedor de IA | `pricetracker llm check` na stack: Groq `qwen/qwen3.8-27b`, conexão ok (259 ms) |
 | Segredos | gitleaks: nenhum vazamento no histórico |
 
 ## Cenários E2E
