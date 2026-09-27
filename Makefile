@@ -1,4 +1,4 @@
-.PHONY: help bootstrap dev-db api worker scheduler web test test-live lint typecheck check openapi build up down logs backup restore-drill smoke e2e secrets-scan
+.PHONY: help bootstrap dev-db api worker scheduler web test test-pg test-live lint typecheck check openapi build up down logs backup restore-drill smoke e2e secrets-scan
 
 help: ## List targets
 	@grep -E '^[a-z-]+:.*##' Makefile | sed 's/:.*## / — /'
@@ -7,8 +7,10 @@ bootstrap: ## Install backend and web dependencies
 	cd backend && uv sync
 	cd web && npm ci
 
-dev-db: ## Start a throwaway PostgreSQL for development on 127.0.0.1:55433
+dev-db: ## Start a throwaway PostgreSQL for development on 127.0.0.1:55433 (+ pricetracker_test)
 	docker run -d --name pricetracker-dev-pg -e POSTGRES_USER=pricetracker -e POSTGRES_PASSWORD=pricetracker_local -e POSTGRES_DB=pricetracker -p 127.0.0.1:55433:5432 postgres:17.10-alpine@sha256:742f40ea20b9ff2ff31db5458d127452988a2164df9e17441e191f3b72252193
+	until docker exec pricetracker-dev-pg pg_isready -U pricetracker >/dev/null 2>&1; do sleep 1; done
+	docker exec pricetracker-dev-pg createdb -U pricetracker pricetracker_test
 
 api: ## Run the API against the dev database
 	cd backend && PRICETRACKER_DATABASE_URL=postgresql+psycopg://pricetracker:pricetracker_local@127.0.0.1:55433/pricetracker PRICETRACKER_COOKIE_SECURE=false uv run pricetracker serve
@@ -25,6 +27,9 @@ web: ## Run the Vite dev server (proxies /api to :8000)
 test: ## Deterministic backend tests + web unit tests
 	cd backend && uv run pytest -q
 	cd web && npm test
+
+test-pg: ## Backend suite on PostgreSQL (needs `make dev-db` and a pricetracker_test database)
+	cd backend && PRICETRACKER_TEST_DATABASE_URL=postgresql+psycopg://pricetracker:pricetracker_local@127.0.0.1:55433/pricetracker_test uv run pytest -q
 
 test-live: ## Opt-in live smoke tests against the real supermarket sites
 	cd backend && uv run pytest tests/live --live -q

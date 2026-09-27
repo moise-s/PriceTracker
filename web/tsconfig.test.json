@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.test.tsbuildinfo",
     "target": "es2023",
     "lib": [
       "ES2023",
@@ -10,7 +10,8 @@
     "module": "esnext",
     "types": [
       "vite/client",
-      "vite-plugin-pwa/react"
+      "vite-plugin-pwa/react",
+      "node"
     ],
     "skipLibCheck": true,
     "moduleResolution": "bundler",
@@ -32,11 +33,9 @@
     }
   },
   "include": [
-    "src"
-  ],
-  "exclude": [
     "src/**/*.test.ts",
     "src/**/*.test.tsx",
-    "src/test"
+    "src/test",
+    "src/vite-env.d.ts"
   ]
 }

@@ -44,4 +44,6 @@ def test_production_requires_secure_cookies_and_a_real_database(tmp_path: Path) 
             database_url="postgresql+psycopg://u:p@db/pricetracker",
         )
     with pytest.raises(ValueError, match="SQLite"):
-        make_settings(tmp_path, environment="production")
+        make_settings(
+            tmp_path, environment="production", database_url=f"sqlite:///{tmp_path / 'x.db'}"
+        )

@@ -18,6 +18,10 @@ from pricetracker.settings import Settings
 for name in ("GROQ_API_KEY", "OPENAI_API_KEY", "PRICETRACKER_COMPATIBLE_API_KEY"):
     os.environ.pop(name, None)
 
+# Opt-in: run the whole suite on PostgreSQL (a throwaway database; the schema is rebuilt per test).
+#   PRICETRACKER_TEST_DATABASE_URL=postgresql+psycopg://user:pw@127.0.0.1:55433/pricetracker_test
+TEST_DATABASE_URL = os.environ.get("PRICETRACKER_TEST_DATABASE_URL")
+
 
 def pytest_addoption(parser: pytest.Parser) -> None:
     parser.addoption(
@@ -26,19 +30,20 @@ def pytest_addoption(parser: pytest.Parser) -> None:
 
 
 def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item]) -> None:
-    if config.getoption("--live"):
-        return
-    skip = pytest.mark.skip(reason="live smoke test: pass --live to run")
+    skip_live = pytest.mark.skip(reason="live smoke test: pass --live to run")
+    skip_pg = pytest.mark.skip(reason="needs PRICETRACKER_TEST_DATABASE_URL (PostgreSQL)")
     for item in items:
-        if "live" in item.keywords:
-            item.add_marker(skip)
+        if "live" in item.keywords and not config.getoption("--live"):
+            item.add_marker(skip_live)
+        if "postgres" in item.keywords and not TEST_DATABASE_URL:
+            item.add_marker(skip_pg)
 
 
 def make_settings(tmp_path: Path, **overrides: Any) -> Settings:
     values: dict[str, Any] = {
         "_env_file": None,
         "environment": "test",
-        "database_url": f"sqlite:///{tmp_path / 'test.db'}",
+        "database_url": TEST_DATABASE_URL or f"sqlite:///{tmp_path / 'test.db'}",
         "data_dir": tmp_path / "data",
         "public_origin": "https://testserver",
         "cookie_secure": True,
@@ -64,6 +69,8 @@ def settings(tmp_path: Path) -> Iterator[Settings]:
     configured = make_settings(tmp_path)
     settings_module.configure_settings(configured)
     engine = init_engine(configured)
+    if TEST_DATABASE_URL:
+        Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
     yield configured
     engine.dispose()
