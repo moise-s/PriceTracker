@@ -1,0 +1,157 @@
+# PriceTracker — local full stack.
+#
+#   ./scripts/init-secrets.sh && docker compose up -d --build        (then open http://localhost:8090)
+#
+# Settings have safe defaults; override them in .env or with --env-file (see .env.example).
+#
+# Only the web entry point is published, and only on loopback (127.0.0.1).
+# Secrets are files under ./secrets (mode 0600, git-ignored), mounted as Docker secrets.
+name: pricetracker
+
+x-backend: &backend
+  image: pricetracker-backend:${PRICETRACKER_VERSION:-local}
+  build:
+    context: ./backend
+  environment: &backend-env
+    PRICETRACKER_ENVIRONMENT: ${PRICETRACKER_ENVIRONMENT:-production}
+    PRICETRACKER_LOG_LEVEL: ${PRICETRACKER_LOG_LEVEL:-INFO}
+    PRICETRACKER_LOG_JSON: "true"
+    PRICETRACKER_PUBLIC_ORIGIN: ${PRICETRACKER_PUBLIC_ORIGIN:-http://localhost:8090}
+    PRICETRACKER_COOKIE_SECURE: ${PRICETRACKER_COOKIE_SECURE:-true}
+    PRICETRACKER_SETUP_REQUIRE_CODE: ${PRICETRACKER_SETUP_REQUIRE_CODE:-true}
+    PRICETRACKER_DB_HOST: db
+    PRICETRACKER_DB_NAME: pricetracker
+    PRICETRACKER_DB_USER: pricetracker
+    PRICETRACKER_DB_PASSWORD_FILE: /run/secrets/postgres_password
+    PRICETRACKER_SECRET_KEY_FILE: /run/secrets/app_secret_key
+    GROQ_API_KEY_FILE: ${GROQ_API_KEY_FILE:-/run/secrets/groq_api_key}
+    OPENAI_API_KEY_FILE: ${OPENAI_API_KEY_FILE:-/run/secrets/openai_api_key}
+    PRICETRACKER_GROQ_MODEL: ${PRICETRACKER_GROQ_MODEL:-qwen/qwen3.8-27b}
+    PRICETRACKER_GEOCODER: ${PRICETRACKER_GEOCODER:-manual}
+    PRICETRACKER_NOMINATIM_CONTACT: ${PRICETRACKER_NOMINATIM_CONTACT:-}
+    PRICETRACKER_ROUTER: ${PRICETRACKER_ROUTER:-estimate}
+    PRICETRACKER_OSRM_URL: ${PRICETRACKER_OSRM_URL:-}
+    PRICETRACKER_WORKER_CONCURRENCY: ${PRICETRACKER_WORKER_CONCURRENCY:-3}
+    PRICETRACKER_DEFAULT_FRESHNESS_DAYS: ${PRICETRACKER_DEFAULT_FRESHNESS_DAYS:-7}
+    TZ: America/Sao_Paulo
+  secrets: [postgres_password, app_secret_key, groq_api_key, openai_api_key]
+  volumes:
+    - app_data:/data
+  networks: [backend]
+  restart: unless-stopped
+  security_opt: ["no-new-privileges:true"]
+  read_only: true
+  tmpfs: ["/tmp:size=64m"]
+
+services:
+  db:
+    image: postgres:17.10-alpine@sha256:742f40ea20b9ff2ff31db5458d127452988a2164df9e17441e191f3b72252193
+    environment:
+      POSTGRES_DB: pricetracker
+      POSTGRES_USER: pricetracker
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      TZ: UTC
+    secrets: [postgres_password]
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks: [backend]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pricetracker -d pricetracker"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+    security_opt: ["no-new-privileges:true"]
+    deploy:
+      resources:
+        limits: { cpus: "1.0", memory: 512M }
+
+  migrate:
+    <<: *backend
+    command: ["db-init"]
+    restart: "no"
+    depends_on:
+      db: { condition: service_healthy }
+    deploy:
+      resources:
+        limits: { cpus: "0.5", memory: 256M }
+
+  api:
+    <<: *backend
+    command: ["serve", "--host", "0.0.0.0", "--port", "8000"]
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health/ready', timeout=4).status == 200 else 1)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    deploy:
+      resources:
+        limits: { cpus: "1.0", memory: 512M }
+
+  worker:
+    <<: *backend
+    command: ["worker"]
+    stop_grace_period: 20s
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+    healthcheck:
+      test: ["CMD", "python", "-c", "import os,sys,time; sys.exit(0 if time.time() - os.path.getmtime('/tmp/worker.alive') < 90 else 1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits: { cpus: "1.0", memory: 768M }
+
+  scheduler:
+    <<: *backend
+    command: ["scheduler"]
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+    healthcheck:
+      test: ["CMD", "pricetracker", "health"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    deploy:
+      resources:
+        limits: { cpus: "0.25", memory: 256M }
+
+  web:
+    image: pricetracker-web:${PRICETRACKER_VERSION:-local}
+    build:
+      context: ./web
+    depends_on:
+      api: { condition: service_healthy }
+    ports:
+      - "127.0.0.1:${PRICETRACKER_PORT:-8090}:8080"
+    networks: [backend]
+    restart: unless-stopped
+    security_opt: ["no-new-privileges:true"]
+    read_only: true
+    tmpfs: ["/config:size=8m", "/data:size=8m"]
+    deploy:
+      resources:
+        limits: { cpus: "0.5", memory: 128M }
+
+networks:
+  backend: {}
+
+volumes:
+  pg_data: {}
+  app_data: {}
+
+secrets:
+  postgres_password:
+    file: ./secrets/postgres_password
+  app_secret_key:
+    file: ./secrets/app_secret_key
+  groq_api_key:
+    file: ./secrets/groq_api_key
+  openai_api_key:
+    file: ./secrets/openai_api_key

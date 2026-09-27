@@ -13,7 +13,7 @@ import os
 from functools import lru_cache
 from pathlib import Path
 from typing import Literal
-from urllib.parse import quote
+from urllib.parse import quote, urlsplit
 
 from pydantic import AliasChoices, Field, SecretStr, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -156,9 +156,11 @@ class Settings(BaseSettings):
                 raise ValueError("PRICETRACKER_SECRET_KEY must be set (>= 32 chars) in production")
             if not self.cookie_secure:
                 raise ValueError("PRICETRACKER_COOKIE_SECURE must be true in production")
-            if not self.public_origin.startswith("https://"):
+            origin = urlsplit(self.public_origin)
+            local = origin.scheme == "http" and origin.hostname in ("localhost", "127.0.0.1", "::1")
+            if not (origin.scheme == "https" or local):
                 raise ValueError(
-                    "PRICETRACKER_PUBLIC_ORIGIN must be an https:// origin in production"
+                    "PRICETRACKER_PUBLIC_ORIGIN must be https:// (or http://localhost for local use)"
                 )
             if self.resolved_database_url.startswith("sqlite"):
                 raise ValueError("SQLite is only supported for development and tests")

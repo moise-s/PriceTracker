@@ -70,6 +70,25 @@ def _bootstrap(config: Path | None, debug: bool = False) -> settings_module.Sett
     return settings
 
 
+def _alembic_config(settings: settings_module.Settings) -> Any:
+    import os
+
+    from alembic.config import Config
+
+    candidates = [
+        os.environ.get("PRICETRACKER_ALEMBIC_INI"),
+        str(Path.cwd() / "alembic.ini"),
+        str(Path(__file__).resolve().parents[2] / "alembic.ini"),
+    ]
+    ini = next((Path(c) for c in candidates if c and Path(c).is_file()), None)
+    if ini is None:
+        raise InputError("alembic.ini não encontrado (defina PRICETRACKER_ALEMBIC_INI)")
+    cfg = Config(str(ini))
+    cfg.attributes["database_url"] = settings.resolved_database_url
+    cfg.attributes["configure_logger"] = False
+    return cfg
+
+
 def _json_default(value: Any) -> Any:
     if isinstance(value, Decimal):
         return str(value)
@@ -345,14 +364,23 @@ def db_upgrade(config: Annotated[Path | None, typer.Option("--config")] = None) 
     """Aplica as migrations (alembic upgrade head)."""
     settings = _bootstrap(config)
     from alembic import command
-    from alembic.config import Config
 
-    ini = Path(__file__).resolve().parents[2] / "alembic.ini"
-    cfg = Config(str(ini))
-    cfg.attributes["database_url"] = settings.resolved_database_url
-    cfg.attributes["configure_logger"] = False
-    command.upgrade(cfg, "head")
+    command.upgrade(_alembic_config(settings), "head")
     typer.echo("migrations aplicadas", err=True)
+
+
+@app.command("db-init")
+def db_init(config: Annotated[Path | None, typer.Option("--config")] = None) -> None:
+    """Aplica as migrations e o seed idempotente (usado pelo job migrate do Compose)."""
+    settings = _bootstrap(config)
+    from alembic import command
+
+    from pricetracker.seed import seed_all
+
+    command.upgrade(_alembic_config(settings), "head")
+    with session_factory()() as db:
+        result = seed_all(db)
+    _emit({"migrated": True, "seeded": result})
 
 
 @app.command()
