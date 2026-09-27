@@ -226,7 +226,9 @@ def delete_product(db: Session, user: User, product_id: uuid.UUID) -> None:
 def set_product_image(db: Session, user: User, product_id: uuid.UUID, image: Image) -> Product:
     product = get_product(db, user, product_id)
     previous = product.image
-    product.image_id = image.id
+    # Assign the relationship (not just the FK) so the returned object reflects the new image;
+    # sessions use expire_on_commit=False, so a stale loaded relationship would survive commit.
+    product.image = image
     db.flush()
     if previous is not None and previous.owner_user_id == user.id and previous.id != image.id:
         still_used = db.scalar(select(func.count()).where(Product.image_id == previous.id))

@@ -64,7 +64,15 @@ def _process_image(data: bytes) -> tuple[bytes, int, int]:
             return out.getvalue(), converted.width, converted.height
     except ValidationFailed:
         raise
-    except (UnidentifiedImageError, OSError, PILImage.DecompressionBombError, SyntaxError) as exc:
+    except UnidentifiedImageError as exc:  # SVG, HTML, PDF, ... anything Pillow cannot identify
+        raise ValidationFailed(
+            "Formato não suportado. Use JPEG, PNG ou WebP.", code="image_format"
+        ) from exc
+    except PILImage.DecompressionBombError as exc:
+        raise ValidationFailed(
+            "A imagem tem dimensões grandes demais.", code="image_too_large"
+        ) from exc
+    except (OSError, SyntaxError) as exc:
         raise ValidationFailed(
             "Arquivo de imagem inválido ou corrompido.", code="image_invalid"
         ) from exc

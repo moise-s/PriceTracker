@@ -86,7 +86,7 @@ async def upload_catalog_image(
     image = images.store_image(
         db, data=data, owner_user_id=None, source=ImageSource.UPLOAD, alt_text=item.name
     )
-    item.image_id = image.id
+    item.image = image
     db.commit()
     return catalog_item_out(item, {})
 
