@@ -23,11 +23,11 @@ def test_first_access_creates_admin_and_disables_registration(client: TestClient
     assert weak.status_code == 422 and weak.json()["code"] == "weak_password"
     created = api(
         client, "POST", "/setup/admin",
-        json={"username": "Moises", "display_name": "Moisés", "password": "uma-senha-bem-forte"},
+        json={"username": "Beatriz", "display_name": "Beatriz Conceição", "password": "uma-senha-bem-forte"},
     )  # fmt: skip
     assert created.status_code == 201, created.text
     body = created.json()
-    assert body["user"]["role"] == "admin" and body["user"]["username"] == "moises"
+    assert body["user"]["role"] == "admin" and body["user"]["username"] == "beatriz"
     assert len(body["recovery_codes"]) == 10
     assert "password_hash" not in created.text
     assert api(client, "GET", "/setup/status").json()["needs_setup"] is False
@@ -39,7 +39,7 @@ def test_first_access_creates_admin_and_disables_registration(client: TestClient
     )
     assert again.status_code == 409
     me = api(client, "GET", "/auth/me").json()
-    assert me["user"]["username"] == "moises" and me["onboarding_completed"] is False
+    assert me["user"]["username"] == "beatriz" and me["onboarding_completed"] is False
     meta = api(client, "GET", "/meta").json()
     assert meta["registration_enabled"] is False
     register = api(

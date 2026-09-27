@@ -1,32 +1,24 @@
-# React + TypeScript + Vite
+# PriceTracker — web
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+PWA em React 19 + TypeScript + Vite, em pt-BR, consumindo o contrato OpenAPI tipado do backend.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm ci
+npm run dev          # http://localhost:5173, proxy /api → http://127.0.0.1:8000 (PRICETRACKER_API_URL)
+npm run build        # tsc -b + vite build (gera o service worker)
+npm run typecheck && npm run lint
+npm test             # Vitest (unitários e componentes)
+npm run e2e          # Playwright (sobe backend/tests/e2e_harness.py + vite preview)
+npm run api:generate # regenera src/api/schema.d.ts a partir de openapi.json
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+- `src/api/` — cliente `openapi-fetch` com CSRF, hooks TanStack Query e tipos gerados.
+- `src/app/` — shell (navegação lateral/inferior), guardas de rota, rotas com code splitting.
+- `src/pages/` — telas: primeiro acesso, lista, mercados, busca, onde compensa, histórico, produto,
+  avisos, agendamentos, perfil, administração.
+- `src/components/` — kit de UI (Radix + Tailwind) e componentes de domínio (recomendação,
+  cobertura, frescor).
+- `e2e/` — cenários obrigatórios e matriz de telas; screenshots em `../docs/screenshots/`.
+
+Tokens de cor, tipografia e modo escuro ficam em `src/styles.css`; as cores dos mercados vêm de uma
+paleta validada para daltonismo e contraste, e o nome do mercado sempre acompanha a cor.
