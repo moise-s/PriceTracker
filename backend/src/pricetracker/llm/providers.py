@@ -43,6 +43,18 @@ class LlmModelNotFound(LlmError):
 class LlmRateLimited(LlmError):
     error_type = "llm_rate_limited"
 
+    def __init__(self, message: str, *, retry_after: float | None = None, daily: bool = False):
+        super().__init__(message)
+        self.retry_after = retry_after  # seconds, from the provider's Retry-After header
+        self.daily = daily  # the provider reported a per-day quota (e.g. tokens per day)
+
+
+def _retry_after_seconds(value: str | None) -> float | None:
+    try:
+        return max(0.0, float(value)) if value else None
+    except ValueError:
+        return None
+
 
 class LlmBadResponse(LlmError):
     error_type = "llm_bad_response"
@@ -200,7 +212,13 @@ class OpenAICompatibleClient:
         ):
             raise LlmModelNotFound(f"model '{self.config.model}' is not available at this provider")
         if response.status_code == 429:
-            raise LlmRateLimited("provider rate limit reached (HTTP 429)")
+            # Only derived facts are kept: the body can name the provider account.
+            daily = "per day" in body
+            raise LlmRateLimited(
+                "provider rate limit reached (HTTP 429" + (", daily quota)" if daily else ")"),
+                retry_after=_retry_after_seconds(response.headers.get("retry-after")),
+                daily=daily,
+            )
         raise LlmBadResponse(f"provider error (HTTP {response.status_code})")
 
     def list_models(self) -> list[str]:

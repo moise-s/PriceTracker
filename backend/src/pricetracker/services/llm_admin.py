@@ -12,6 +12,7 @@ from sqlalchemy.orm import Session
 from pricetracker.db.base import utcnow
 from pricetracker.llm.providers import (
     LlmError,
+    LlmRateLimited,
     OpenAICompatibleClient,
     ProviderConfig,
     config_from_row,
@@ -159,7 +160,17 @@ def _check(config: ProviderConfig) -> dict[str, Any]:
     }
 
 
+def _rate_limit_message(exc: LlmRateLimited) -> str:
+    kind = "Cota diária do provedor esgotada" if exc.daily else "Limite de uso do provedor atingido"
+    if exc.retry_after:
+        minutes = max(1, round(exc.retry_after / 60))
+        return f"{kind}. Tente de novo em cerca de {minutes} min; a coleta segue sem IA até lá."
+    return f"{kind}. Tente mais tarde; a coleta segue sem IA até lá."
+
+
 def _friendly(exc: LlmError) -> str:
+    if isinstance(exc, LlmRateLimited):
+        return _rate_limit_message(exc)
     return {
         "llm_auth": "A chave foi recusada pelo provedor. Verifique a chave configurada no servidor.",
         "llm_model_not_found": "O modelo configurado não existe mais neste provedor. Escolha outro modelo.",
