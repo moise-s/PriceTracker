@@ -18,8 +18,9 @@ const username = z
   .regex(/^[a-z0-9][a-z0-9._-]{2,31}$/, "Use 3 a 32 caracteres: letras minúsculas, números, ponto, hífen ou sublinhado.");
 const password = z.string().min(10, "A senha precisa ter pelo menos 10 caracteres.").max(256);
 
-export function RecoveryCodes({ codes, onDone }: { codes: string[]; onDone: () => void }) {
+export function RecoveryCodes({ codes, onDone }: { codes: string[]; onDone: () => void | Promise<void> }) {
   const [confirmed, setConfirmed] = useState(false);
+  const [leaving, setLeaving] = useState(false);
   const text = codes.join("\n");
   return (
     <Card className="space-y-4 p-6">
@@ -56,7 +57,15 @@ export function RecoveryCodes({ codes, onDone }: { codes: string[]; onDone: () =
         <input type="checkbox" className="size-4 accent-[var(--color-brand)]" checked={confirmed} onChange={(e) => setConfirmed(e.target.checked)} />
         Guardei os códigos em um lugar seguro
       </label>
-      <Button className="w-full" disabled={!confirmed} onClick={onDone}>
+      <Button
+        className="w-full"
+        disabled={!confirmed}
+        loading={leaving}
+        onClick={() => {
+          setLeaving(true);
+          void Promise.resolve(onDone()).finally(() => setLeaving(false));
+        }}
+      >
         Continuar
       </Button>
     </Card>
@@ -92,9 +101,9 @@ export function SetupPage() {
       <AuthLayout>
         <RecoveryCodes
           codes={codes}
-          onDone={() => {
-            void client.invalidateQueries({ queryKey: keys.meta });
-            void client.invalidateQueries({ queryKey: keys.me });
+          onDone={async () => {
+            // Wait for fresh meta/me so the route guards don't act on the pre-setup cache.
+            await Promise.all([client.invalidateQueries({ queryKey: keys.meta }), client.invalidateQueries({ queryKey: keys.me })]);
             navigate("/boas-vindas", { replace: true });
           }}
         />
@@ -130,7 +139,7 @@ export function SetupPage() {
           <Field label="Seu nome" htmlFor="display_name" error={e.display_name?.message}>
             <Input id="display_name" autoComplete="name" aria-invalid={Boolean(e.display_name)} {...form.register("display_name")} />
           </Field>
-          <Field label="Nome de usuário" htmlFor="username" error={e.username?.message} hint="Usado para entrar. Ex.: moises">
+          <Field label="Nome de usuário" htmlFor="username" error={e.username?.message} hint="Usado para entrar. Ex.: ana.souza">
             <Input id="username" autoComplete="username" autoCapitalize="none" aria-invalid={Boolean(e.username)} {...form.register("username")} />
           </Field>
           <Field label="Senha" htmlFor="password" error={e.password?.message} hint="Pelo menos 10 caracteres.">
@@ -222,7 +231,7 @@ export function RegisterPage() {
   if (codes) {
     return (
       <AuthLayout>
-        <RecoveryCodes codes={codes} onDone={() => { void client.invalidateQueries({ queryKey: keys.me }); navigate("/boas-vindas", { replace: true }); }} />
+        <RecoveryCodes codes={codes} onDone={async () => { await client.invalidateQueries({ queryKey: keys.me }); navigate("/boas-vindas", { replace: true }); }} />
       </AuthLayout>
     );
   }
