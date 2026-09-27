@@ -171,7 +171,7 @@ export function LoginPage() {
     try {
       const me = await unwrap(api.POST("/api/v1/auth/login", { body: values }));
       client.setQueryData(keys.me, me);
-      navigate(me.user.must_change_password ? "/trocar-senha" : "/", { replace: true });
+      navigate(me.user.must_change_password ? "/trocar-senha" : me.onboarding_completed ? "/" : "/boas-vindas", { replace: true });
     } catch (e) {
       setError(e instanceof ApiError && e.status === 429 ? e.message : errorMessage(e));
     }

@@ -46,7 +46,8 @@ const csrfMiddleware: Middleware = {
   },
 };
 
-export const api = createClient<paths>({ baseUrl: "", credentials: "same-origin" });
+// Same-origin API behind the web server; an absolute base also works where Request needs one (tests).
+export const api = createClient<paths>({ baseUrl: globalThis.location?.origin ?? "", credentials: "same-origin" });
 api.use(csrfMiddleware);
 
 type Result<T> = { data?: T; error?: unknown; response: Response };

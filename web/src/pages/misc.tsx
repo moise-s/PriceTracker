@@ -2,7 +2,8 @@ import { ArrowRight, CalendarClock, ChartLine, ChevronRight, ListChecks, LogOut,
 import { Link, useNavigate } from "react-router";
 import { useLogout, useMe, useUpdateProfile } from "@/api/hooks";
 import { Logo, PageHeader } from "@/app/shell";
-import { Button, buttonClass, Card } from "@/components/ui";
+import { Button, Card } from "@/components/ui";
+import { buttonClass } from "@/components/ui/utils";
 
 export function OnboardingPage() {
   const me = useMe();

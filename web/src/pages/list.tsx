@@ -5,7 +5,8 @@ import type { Schemas } from "@/api/client";
 import { useAddToList, useCatalog, useDefaultList, useProducts, useRemoveListItem, useUpdateListItem } from "@/api/hooks";
 import { PageHeader } from "@/app/shell";
 import { ProductImage } from "@/components/domain";
-import { Button, buttonClass, Card, cn, EmptyState, ErrorState, Input, LoadingBlock, Select, Stepper } from "@/components/ui";
+import { Button, Card, EmptyState, ErrorState, Input, LoadingBlock, Select, Stepper } from "@/components/ui";
+import { buttonClass, cn } from "@/components/ui/utils";
 import { packageLabel, pluralize } from "@/lib/format";
 import { UNIT_OPTIONS } from "@/lib/labels";
 
@@ -87,6 +88,7 @@ function ProductCard({ model, listId }: { model: CardModel; listId: string }) {
             size="sm"
             className="w-full"
             loading={add.isPending}
+            aria-label={`Adicionar ${model.name}`}
             onClick={() => add.mutate({ listId, body: model.catalogItemId ? { catalog_item_id: model.catalogItemId } : { product_id: model.productId } })}
           >
             <Plus aria-hidden className="size-4" /> Adicionar
@@ -228,7 +230,7 @@ export function ListPage() {
       {count ? <div aria-hidden className="h-20 lg:hidden" /> : null}
       {count ? (
         <div className="fixed inset-x-4 bottom-24 z-30 lg:hidden">
-          <Link to="/mercados" className="flex items-center justify-between rounded-2xl bg-brand px-5 py-3.5 text-white shadow-lift">
+          <Link to="/mercados" className="flex items-center justify-between rounded-2xl bg-brand px-5 py-3.5 text-on-brand shadow-lift">
             <span className="flex items-center gap-2 font-semibold">
               <ShoppingBasket aria-hidden className="size-5" /> {pluralize(count, "item", "itens")} na lista
             </span>

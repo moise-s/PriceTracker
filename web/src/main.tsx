@@ -1,12 +1,12 @@
 import "./styles.css";
 import { MutationCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { StrictMode, useEffect } from "react";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router";
-import { toast, Toaster } from "sonner";
-import { useRegisterSW } from "virtual:pwa-register/react";
+import { Toaster } from "sonner";
 import { ApiError } from "@/api/client";
 import { router } from "@/app/router";
+import { UpdatePrompt } from "@/app/update-prompt";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,19 +22,6 @@ const queryClient = new QueryClient({
     },
   }),
 });
-
-function UpdatePrompt() {
-  const {
-    needRefresh: [needRefresh],
-    updateServiceWorker,
-  } = useRegisterSW();
-  useEffect(() => {
-    if (needRefresh) {
-      toast("Nova versão disponível", { action: { label: "Atualizar", onClick: () => void updateServiceWorker(true) }, duration: Infinity });
-    }
-  }, [needRefresh, updateServiceWorker]);
-  return null;
-}
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

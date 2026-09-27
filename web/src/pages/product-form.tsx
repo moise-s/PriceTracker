@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { ImagePlus, Link2, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -100,6 +100,9 @@ export function ProductFormPage() {
   const remove = useDeleteProduct();
   const product = products.data?.find((p) => p.id === id);
   const form = useForm<FormValues>({ resolver: zodResolver(schema) as never, defaultValues: toForm() });
+  const soldBy = useWatch({ control: form.control, name: "sold_by" });
+  const strictBrand = useWatch({ control: form.control, name: "strict_brand" });
+  const favorite = useWatch({ control: form.control, name: "is_favorite" });
   const [imageUrl, setImageUrl] = useState("");
   const [imageBusy, setImageBusy] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -111,7 +114,6 @@ export function ProductFormPage() {
   if (!isNew && products.isLoading) return <LoadingBlock label="Carregando produto" />;
   if (!isNew && !product) return <ErrorState error="Produto não encontrado." />;
 
-  const soldBy = form.watch("sold_by");
   const e = form.formState.errors;
   const categories = catalog.data?.categories ?? ["Mercearia"];
 
@@ -207,7 +209,7 @@ export function ProductFormPage() {
           <Field label="Marca preferida" htmlFor="preferred_brand" hint="Opcional. Deixe em branco para aceitar qualquer marca.">
             <Input id="preferred_brand" {...form.register("preferred_brand")} />
           </Field>
-          <SwitchRow id="strict_brand" label="Aceitar somente esta marca" description="Se desligado, a marca preferida só ajuda a ordenar os resultados." checked={form.watch("strict_brand")} onCheckedChange={(v) => form.setValue("strict_brand", v)} />
+          <SwitchRow id="strict_brand" label="Aceitar somente esta marca" description="Se desligado, a marca preferida só ajuda a ordenar os resultados." checked={strictBrand} onCheckedChange={(v) => form.setValue("strict_brand", v)} />
           <Field label="Marcas aceitas como substitutas" htmlFor="substitute_brands" hint="Separadas por vírgula.">
             <Input id="substitute_brands" {...form.register("substitute_brands")} />
           </Field>
@@ -229,7 +231,7 @@ export function ProductFormPage() {
           <Field label="Palavras que excluem" htmlFor="excluded_words" hint="Anúncios com qualquer uma delas são descartados (ex.: integral, orgânico).">
             <Input id="excluded_words" {...form.register("excluded_words")} />
           </Field>
-          <SwitchRow id="is_favorite" label="Favorito" checked={form.watch("is_favorite")} onCheckedChange={(v) => form.setValue("is_favorite", v)} />
+          <SwitchRow id="is_favorite" label="Favorito" checked={favorite} onCheckedChange={(v) => form.setValue("is_favorite", v)} />
         </Card>
 
         <div className="flex flex-wrap gap-2">

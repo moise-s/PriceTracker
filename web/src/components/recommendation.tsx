@@ -2,15 +2,11 @@ import { AlertTriangle, Car, ChevronDown, Info, MapPin, PiggyBank, ShoppingBag, 
 import { useState } from "react";
 import type { Schemas } from "@/api/client";
 import { BigMoney, ConfidenceBadge, CoverageMeter, FreshnessBadge, MarketDot } from "@/components/domain";
-import { Badge, Card, cn } from "@/components/ui";
+import { Badge, Card } from "@/components/ui";
+import { cn } from "@/components/ui/utils";
 import { money } from "@/lib/format";
 
 type Comparison = Schemas["ComparisonOut"];
-
-export function storeLabel(comparison: Comparison, storeId: string): { market: string; store: string; color?: string | null } {
-  const store = comparison.stores.find((s) => s.store_id === storeId);
-  return { market: store?.market_name ?? "Loja", store: store?.store_name ?? "", color: undefined };
-}
 
 export function RecommendationCard({ comparison, colors, compact = false }: { comparison: Comparison; colors: Record<string, string | null | undefined>; compact?: boolean }) {
   const rec = comparison.recommendation;

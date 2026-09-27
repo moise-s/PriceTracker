@@ -2,9 +2,11 @@ import { ArrowRight, CheckCircle2, ListChecks, Scale, Search, Store } from "luci
 import { Link } from "react-router";
 import { useActiveRun, useComparison, useDefaultList, useMarkets, useMe, useRuns } from "@/api/hooks";
 import { PageHeader } from "@/app/shell";
-import { ProductImage, marketColor } from "@/components/domain";
+import { ProductImage } from "@/components/domain";
+import { marketColor } from "@/lib/markets";
 import { RecommendationCard } from "@/components/recommendation";
-import { Badge, buttonClass, Card, cn, LoadingBlock, Progress } from "@/components/ui";
+import { Badge, Card, LoadingBlock, Progress } from "@/components/ui";
+import { buttonClass, cn } from "@/components/ui/utils";
 import { ago, pluralize } from "@/lib/format";
 import { RUN_STATUS } from "@/lib/labels";
 
@@ -17,8 +19,8 @@ function greeting(): string {
 
 function Step({ index, done, title, detail, to, cta, icon: Icon }: { index: number; done: boolean; title: string; detail: string; to: string; cta: string; icon: typeof ListChecks }) {
   return (
-    <li className="flex items-center gap-3 rounded-xl border border-line bg-surface px-4 py-3">
-      <span className={cn("grid size-10 shrink-0 place-content-center rounded-full", done ? "bg-brand text-white" : "bg-surface-3 text-ink-2")}>
+    <li className="flex min-w-0 items-center gap-3 rounded-xl border border-line bg-surface px-4 py-3">
+      <span className={cn("grid size-10 shrink-0 place-content-center rounded-full", done ? "bg-brand text-on-brand" : "bg-surface-3 text-ink-2")}>
         {done ? <CheckCircle2 aria-hidden className="size-5" /> : <Icon aria-hidden className="size-5" />}
       </span>
       <div className="min-w-0 flex-1">
@@ -85,7 +87,7 @@ export function HomePage() {
         <h2 id="passos" className="text-lg font-semibold">
           {hasRecommendation ? "Sua semana" : "Comece em 4 passos"}
         </h2>
-        <ol className="grid gap-2.5 lg:grid-cols-2">
+        <ol className="grid grid-cols-1 gap-2.5 lg:grid-cols-2">
           <Step index={1} done={itemCount > 0} icon={ListChecks} title="Monte sua lista" detail={listLoading ? "Carregando…" : itemCount ? pluralize(itemCount, "item na lista", "itens na lista") : "Escolha produtos do catálogo"} to="/lista" cta={itemCount ? "Editar" : "Começar"} />
           <Step index={2} done={selectedStores.length > 0} icon={Store} title="Escolha onde comparar" detail={selectedStores.length ? selectedStores.map((s) => `${s.market.name} ${s.name}`).join(", ") : "Nenhum mercado escolhido"} to="/mercados" cta={selectedStores.length ? "Alterar" : "Escolher"} />
           <Step index={3} done={Boolean(lastRun && ["success", "partial"].includes(lastRun.status))} icon={Search} title="Busque os preços" detail={lastRun ? `${RUN_STATUS[lastRun.status]?.label ?? lastRun.status} · ${ago(lastRun.finished_at ?? lastRun.created_at)}` : "Ainda não houve busca"} to="/buscar" cta="Buscar" />
@@ -99,7 +101,7 @@ export function HomePage() {
             <h2 id="na-lista" className="text-lg font-semibold">Na sua lista</h2>
             <Link to="/lista" className="text-sm font-semibold text-brand hover:underline">Editar lista</Link>
           </div>
-          <ul className="scrollbar-none -mx-4 flex gap-3 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0">
+          <ul tabIndex={0} aria-label="Itens da sua lista (role para o lado para ver todos)" className="scrollbar-none -mx-4 flex gap-3 overflow-x-auto rounded-lg px-4 pb-1 sm:mx-0 sm:px-0">
             {list.items.map((item) => (
               <li key={item.id} className="w-28 shrink-0">
                 <ProductImage image={item.image} category={item.category} name={item.product_name} className="rounded-xl" />

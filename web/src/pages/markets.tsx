@@ -1,11 +1,13 @@
 import { ArrowRight, ChevronDown, Info, MapPin, Store as StoreIcon } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import type { Schemas } from "@/api/client";
 import { useAddresses, useMarkets, useSaveStores } from "@/api/hooks";
 import { PageHeader } from "@/app/shell";
-import { MarketDot, marketColor } from "@/components/domain";
-import { Badge, Button, buttonClass, Card, Checkbox, cn, ErrorState, InlineAlert, Input, LoadingBlock } from "@/components/ui";
+import { MarketDot } from "@/components/domain";
+import { marketColor } from "@/lib/markets";
+import { Badge, Button, Card, Checkbox, ErrorState, InlineAlert, Input, LoadingBlock } from "@/components/ui";
+import { buttonClass, cn } from "@/components/ui/utils";
 import { ago, km, pluralize } from "@/lib/format";
 import { HEALTH } from "@/lib/labels";
 
@@ -48,15 +50,16 @@ function MarketCard({ market, selection, setSelection }: { market: Schemas["Mark
   const health = HEALTH[market.health] ?? HEALTH.sem_dados!;
   const selectedCount = market.stores.filter((s) => selection[s.id]?.selected).length;
   const visible = expanded ? market.stores : market.stores.slice(0, 5);
+  const headingId = `market-${market.id}`;
   return (
-    <Card className="overflow-hidden">
+    <Card as="section" aria-labelledby={headingId} className="overflow-hidden">
       <div className="flex flex-wrap items-start justify-between gap-3 border-b border-line px-4 py-4 sm:px-5">
         <div className="flex items-center gap-3">
           <span className="grid size-11 place-content-center rounded-xl text-white" style={{ background: marketColor(market.slug, market.brand_color) }}>
             <StoreIcon aria-hidden className="size-5" />
           </span>
           <div>
-            <h2 className="text-lg font-bold">{market.name}</h2>
+            <h2 id={headingId} className="text-lg font-bold">{market.name}</h2>
             <p className="text-sm text-ink-3">
               {pluralize(market.stores.length, "loja", "lojas")}
               {selectedCount ? ` · ${selectedCount} selecionada${selectedCount > 1 ? "s" : ""}` : ""}
@@ -105,24 +108,27 @@ export function MarketsPage() {
   const addresses = useAddresses();
   const save = useSaveStores();
   const navigate = useNavigate();
-  const [selection, setSelection] = useState<Selection>({});
+  // Unsaved edits are layered over the saved selection (no effect needed to copy server state).
+  const [edits, setEdits] = useState<Selection>({});
 
   const initial = useMemo(() => {
     const state: Selection = {};
     for (const market of markets.data ?? []) for (const store of market.stores) state[store.id] = { selected: store.selected ?? false, toll: Number(store.toll_round_trip) ? String(store.toll_round_trip) : "" };
     return state;
   }, [markets.data]);
-  useEffect(() => setSelection(initial), [initial]);
+  const selection = useMemo(() => ({ ...initial, ...edits }), [initial, edits]);
+  const setSelection = (updater: (s: Selection) => Selection) => setEdits(() => updater(selection));
 
   if (markets.isLoading) return <LoadingBlock label="Carregando mercados" rows={4} />;
   if (markets.error || !markets.data) return <ErrorState error="Não foi possível carregar os mercados." onRetry={() => void markets.refetch()} />;
 
   const selectedIds = Object.entries(selection).filter(([, v]) => v.selected);
-  const dirty = JSON.stringify(selection) !== JSON.stringify(initial);
+  const dirty = Object.entries(edits).some(([id, value]) => JSON.stringify(value) !== JSON.stringify(initial[id] ?? { selected: false, toll: "" }));
   const hasHome = (addresses.data ?? []).some((a) => a.latitude !== null && a.latitude !== undefined);
 
   async function persist(goSearch: boolean) {
     await save.mutateAsync(selectedIds.map(([store_id, v]) => ({ store_id, toll_round_trip: v.toll ? v.toll.replace(",", ".") : "0" })));
+    setEdits({});
     if (goSearch) navigate("/buscar");
   }
 

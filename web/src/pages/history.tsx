@@ -6,7 +6,8 @@ import { toast } from "sonner";
 import { api, errorMessage, type Schemas, unwrap } from "@/api/client";
 import { useDefaultList, useHistory } from "@/api/hooks";
 import { PageHeader } from "@/app/shell";
-import { Badge, Button, Card, cn, EmptyState, ErrorState, LoadingBlock, Select } from "@/components/ui";
+import { Badge, Button, Card, EmptyState, ErrorState, LoadingBlock, Select } from "@/components/ui";
+import { cn } from "@/components/ui/utils";
 import { formatDate, formatShortDate, money, unitPrice } from "@/lib/format";
 
 // Validated categorical palette (dataviz reference order), light/dark steps.
@@ -83,6 +84,7 @@ export function HistoryPage() {
   const [productId, setProductId] = useState<string | undefined>();
   const [days, setDays] = useState(90);
   const [asTable, setAsTable] = useState(false);
+  const [now] = useState(() => Date.now());
   const current = productId ?? products[0]?.product_id;
   const history = useHistory(current, days);
   const client = useQueryClient();
@@ -93,7 +95,7 @@ export function HistoryPage() {
   const names = Object.fromEntries(series.map((s) => [s.store_id, `${s.market_name} · ${s.store_name}`]));
   const unit = series.flatMap((s) => s.points).find((p) => p.unit_price_unit)?.unit_price_unit ?? "un";
   const freshness = history.data?.freshness_days ?? 7;
-  const staleCutoff = Date.now() - freshness * 86_400_000;
+  const staleCutoff = now - freshness * 86_400_000;
   const flagged = series.flatMap((s) => s.points.filter((p) => p.flagged).map((p) => ({ ...p, store: names[s.store_id] })));
 
   async function review(observationId: string, decision: "confirm" | "reject") {
@@ -123,7 +125,7 @@ export function HistoryPage() {
       <div className="flex flex-wrap items-end gap-3">
         <label className="min-w-56 flex-1 space-y-1.5 sm:flex-none">
           <span className="text-sm font-semibold">Produto</span>
-          <Select value={current} onChange={(e) => setProductId(e.target.value)}>
+          <Select aria-label="Produto" value={current} onChange={(e) => setProductId(e.target.value)}>
             {products.map((item) => (
               <option key={item.product_id} value={item.product_id}>
                 {item.product_name}

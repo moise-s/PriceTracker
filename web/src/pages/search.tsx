@@ -5,8 +5,10 @@ import { toast } from "sonner";
 import { errorMessage, type Schemas } from "@/api/client";
 import { useActiveRun, useCancelRun, useDefaultList, useMarkets, useRetryRun, useRun, useRuns, useStartRun } from "@/api/hooks";
 import { PageHeader } from "@/app/shell";
-import { MarketDot, StatusPill, marketColor } from "@/components/domain";
-import { Badge, Button, buttonClass, Card, EmptyState, ErrorState, InlineAlert, LoadingBlock, Progress, SwitchRow } from "@/components/ui";
+import { MarketDot, StatusPill } from "@/components/domain";
+import { marketColor } from "@/lib/markets";
+import { Badge, Button, Card, EmptyState, ErrorState, InlineAlert, LoadingBlock, Progress, SwitchRow } from "@/components/ui";
+import { buttonClass } from "@/components/ui/utils";
 import { ago, formatDateTime, money, pluralize, unitPrice } from "@/lib/format";
 import { RUN_STATUS, TARGET_STATUS } from "@/lib/labels";
 

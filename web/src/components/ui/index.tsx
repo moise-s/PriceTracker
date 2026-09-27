@@ -1,42 +1,12 @@
-import { cva, type VariantProps } from "class-variance-authority";
-import { clsx, type ClassValue } from "clsx";
 import { Loader2, Minus, Plus, X } from "lucide-react";
 import { Checkbox as CheckboxPrimitive, Dialog as DialogPrimitive, Switch as SwitchPrimitive, Tabs as TabsPrimitive } from "radix-ui";
 import { type ComponentProps, forwardRef, type ReactNode, useId } from "react";
-import { twMerge } from "tailwind-merge";
 import type { Tone } from "@/lib/labels";
-
-export function cn(...inputs: ClassValue[]): string {
-  return twMerge(clsx(inputs));
-}
+import { buttonClass, buttonStyles, type ButtonVariants, cn } from "./utils";
 
 // --- Button ---------------------------------------------------------------------------------
 
-const buttonStyles = cva(
-  "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-[background,box-shadow,color,transform] duration-150 active:translate-y-px disabled:pointer-events-none disabled:opacity-55 select-none whitespace-nowrap",
-  {
-    variants: {
-      variant: {
-        primary: "bg-brand text-white shadow-[0_1px_0_rgb(255_255_255/0.2)_inset,0_6px_16px_-8px_rgb(22_85_58/0.8)] hover:bg-brand-strong",
-        secondary: "bg-surface text-ink ring-1 ring-line-strong hover:bg-surface-2 hover:ring-ink-3/40",
-        ghost: "text-ink-2 hover:bg-surface-3 hover:text-ink",
-        subtle: "bg-brand-soft text-brand-ink hover:bg-brand-soft/70",
-        danger: "bg-danger text-white hover:bg-danger/90",
-        accent: "bg-accent text-white hover:bg-accent/90",
-      },
-      size: {
-        sm: "h-9 px-3.5 text-sm",
-        md: "h-11 px-5 text-[15px]",
-        lg: "h-13 px-6 text-base",
-        icon: "size-10",
-        "icon-sm": "size-8",
-      },
-    },
-    defaultVariants: { variant: "primary", size: "md" },
-  },
-);
-
-export interface ButtonProps extends ComponentProps<"button">, VariantProps<typeof buttonStyles> {
+export interface ButtonProps extends ComponentProps<"button">, ButtonVariants {
   loading?: boolean;
 }
 
@@ -52,14 +22,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   );
 });
 
-export function buttonClass(options: VariantProps<typeof buttonStyles> & { className?: string } = {}): string {
-  return cn(buttonStyles({ variant: options.variant, size: options.size }), options.className);
-}
-
 // --- Card / surfaces ------------------------------------------------------------------------------
 
-export function Card({ className, ...props }: ComponentProps<"div">) {
-  return <div className={cn("rounded-xl border border-line bg-surface shadow-card", className)} {...props} />;
+export function Card({ className, as: Tag = "div", ...props }: ComponentProps<"div"> & { as?: "div" | "section" | "article" }) {
+  return <Tag className={cn("rounded-xl border border-line bg-surface shadow-card", className)} {...props} />;
 }
 
 export function Section({ title, description, action, children, className, id }: { title: ReactNode; description?: ReactNode; action?: ReactNode; children: ReactNode; className?: string; id?: string }) {
@@ -147,7 +113,7 @@ export function Checkbox({ className, ...props }: ComponentProps<typeof Checkbox
   return (
     <CheckboxPrimitive.Root className={cn("peer grid size-5 shrink-0 place-content-center rounded-[6px] border-2 border-line-strong bg-surface transition-colors data-[state=checked]:border-brand data-[state=checked]:bg-brand", className)} {...props}>
       <CheckboxPrimitive.Indicator>
-        <svg viewBox="0 0 16 16" className="size-3.5 text-white" aria-hidden>
+        <svg viewBox="0 0 16 16" className="size-3.5 text-on-brand" aria-hidden>
           <path d="M3.5 8.5 6.5 11.5 12.5 4.5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </CheckboxPrimitive.Indicator>

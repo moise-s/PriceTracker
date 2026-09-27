@@ -30,8 +30,8 @@ function Preferences() {
   const profile = useProfile();
   const markets = useMarkets();
   const update = useUpdateProfile();
-  const [name, setName] = useState("");
-  useEffect(() => setName(profile.data?.display_name ?? ""), [profile.data?.display_name]);
+  const [draftName, setName] = useState<string | null>(null);
+  const name = draftName ?? profile.data?.display_name ?? "";
   if (!profile.data) return <LoadingBlock rows={1} />;
   const p = profile.data;
   const clubs = new Set(p.use_club_prices);
@@ -41,7 +41,7 @@ function Preferences() {
         <Field label="Seu nome" htmlFor="display_name" className="flex-1">
           <Input id="display_name" value={name} onChange={(e) => setName(e.target.value)} />
         </Field>
-        <Button variant="secondary" className="mt-7" disabled={!name || name === p.display_name} onClick={() => update.mutate({ display_name: name })}>
+        <Button variant="secondary" className="mt-7" disabled={!name || name === p.display_name} onClick={() => update.mutate({ display_name: name }, { onSuccess: () => setName(null) })}>
           Salvar
         </Button>
       </div>
@@ -98,11 +98,12 @@ function AddressSection() {
   const save = useSaveAddress();
   const client = useQueryClient();
   const current = addresses.data?.[0];
-  const [form, setForm] = useState<Schemas["AddressIn"]>(emptyAddress);
+  // Edits live in a draft over the saved address, so fresh server data shows until the user types.
+  const [draft, setDraft] = useState<Schemas["AddressIn"] | null>(null);
+  const base: Schemas["AddressIn"] = current ? { ...emptyAddress, ...current } : emptyAddress;
+  const form = draft ?? base;
+  const setForm = (update: (f: Schemas["AddressIn"]) => Schemas["AddressIn"]) => setDraft((d) => update(d ?? base));
   const [locating, setLocating] = useState(false);
-  useEffect(() => {
-    if (current) setForm({ ...emptyAddress, ...current });
-  }, [current]);
   const set = (key: keyof Schemas["AddressIn"]) => (e: React.ChangeEvent<HTMLInputElement>) => setForm((f) => ({ ...f, [key]: e.target.value }));
 
   function useBrowserLocation() {
@@ -184,7 +185,7 @@ function AddressSection() {
         </div>
         {current?.geocode_source ? <p className="mt-2 text-xs text-ink-3">Origem: {current.geocode_source === "manual" ? "informada por você" : current.geocode_source} · {formatDateTime(current.geocoded_at)}</p> : null}
       </div>
-      <Button onClick={() => save.mutate({ id: current?.id, body: { ...form, latitude: form.latitude || null, longitude: form.longitude || null } }, { onSuccess: () => toast.success("Endereço salvo") })} loading={save.isPending}>
+      <Button onClick={() => save.mutate({ id: current?.id, body: { ...form, latitude: form.latitude || null, longitude: form.longitude || null } }, { onSuccess: () => { setDraft(null); toast.success("Endereço salvo"); } })} loading={save.isPending}>
         <Save aria-hidden className="size-4" /> Salvar endereço
       </Button>
     </SectionCard>
@@ -195,10 +196,12 @@ function VehicleSection() {
   const vehicles = useVehicles();
   const save = useSaveVehicle();
   const current = vehicles.data?.[0];
-  const [form, setForm] = useState<Schemas["VehicleIn"]>({ name: "Meu carro", fuel_type: "gasolina", km_per_liter: "11", fuel_price_per_liter: "6.29", is_primary: true });
-  useEffect(() => {
-    if (current) setForm({ name: current.name, fuel_type: current.fuel_type, km_per_liter: current.km_per_liter, fuel_price_per_liter: current.fuel_price_per_liter, is_primary: true });
-  }, [current]);
+  const [draft, setDraft] = useState<Schemas["VehicleIn"] | null>(null);
+  const base: Schemas["VehicleIn"] = current
+    ? { name: current.name, fuel_type: current.fuel_type, km_per_liter: current.km_per_liter, fuel_price_per_liter: current.fuel_price_per_liter, is_primary: true }
+    : { name: "Meu carro", fuel_type: "gasolina", km_per_liter: "11", fuel_price_per_liter: "6.29", is_primary: true };
+  const form = draft ?? base;
+  const setForm = (update: (f: Schemas["VehicleIn"]) => Schemas["VehicleIn"]) => setDraft((d) => update(d ?? base));
   const kmpl = Number(String(form.km_per_liter).replace(",", "."));
   const price = Number(String(form.fuel_price_per_liter).replace(",", "."));
   const example = kmpl > 0 && price >= 0 ? (20 / kmpl) * price : null;
@@ -228,7 +231,7 @@ function VehicleSection() {
         custo = distância de ida e volta ÷ consumo × preço do combustível + pedágios.
         {example !== null ? ` Exemplo: 20 km ÷ ${kmpl.toLocaleString("pt-BR")} km/l × ${money(price)}/l = ${money(example)}.` : ""}
       </InlineAlert>
-      <Button onClick={() => save.mutate({ id: current?.id, body: { ...form, km_per_liter: String(kmpl), fuel_price_per_liter: String(price) } }, { onSuccess: () => toast.success("Veículo salvo") })} loading={save.isPending} disabled={!(kmpl > 0)}>
+      <Button onClick={() => save.mutate({ id: current?.id, body: { ...form, km_per_liter: String(kmpl), fuel_price_per_liter: String(price) } }, { onSuccess: () => { setDraft(null); toast.success("Veículo salvo"); } })} loading={save.isPending} disabled={!(kmpl > 0)}>
         <Save aria-hidden className="size-4" /> Salvar veículo
       </Button>
     </SectionCard>

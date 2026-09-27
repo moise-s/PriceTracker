@@ -26,6 +26,10 @@
   --color-brand-strong: #16553a;
   --color-brand-soft: #e5f1ea;
   --color-brand-ink: #134a33;
+  /* Text/icons placed on solid brand, accent or danger fills. */
+  --color-on-brand: #ffffff;
+  --color-on-accent: #ffffff;
+  --color-on-danger: #ffffff;
 
   --color-accent: #e2662f;
   --color-accent-soft: #fdebdd;
@@ -98,6 +102,9 @@
       --color-brand-strong: #7fd0a5;
       --color-brand-soft: #1f3a2c;
       --color-brand-ink: #b8ebcd;
+      --color-on-brand: #0b2117;
+      --color-on-accent: #2a1206;
+      --color-on-danger: #2b0d0a;
       --color-accent: #f28c5b;
       --color-accent-soft: #3d2618;
       --color-accent-ink: #ffcfb4;

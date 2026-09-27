@@ -16,16 +16,16 @@ function HealthTab() {
   return (
     <div className="space-y-4">
       <p className="text-sm text-ink-3">Últimos 14 dias, agregados sem dados de usuários. IA: {health.data.llm.calls} chamadas ({health.data.llm.cache_hits} em cache, {health.data.llm.errors} com erro) em {health.data.llm.days} dias.</p>
-      <ul className="grid gap-3 lg:grid-cols-2">
+      <ul className="grid grid-cols-1 gap-3 lg:grid-cols-2">
         {health.data.markets.map((m) => {
           const state = HEALTH[m.state] ?? HEALTH.sem_dados!;
           return (
-            <li key={m.market_id}>
+            <li key={m.market_id} className="min-w-0">
               <Card className="space-y-3 p-4">
                 <div className="flex items-start justify-between gap-2">
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-lg font-bold">{m.name}</p>
-                    <p className="text-xs text-ink-3">
+                    <p className="text-xs break-words text-ink-3">
                       adaptador {m.adapter_version} · {m.strategy}
                     </p>
                   </div>

@@ -15,7 +15,8 @@ import {
 import { type ReactNode, useEffect, useRef } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router";
 import { useActiveRun, useLogout, useMe } from "@/api/hooks";
-import { Button, cn, Progress } from "@/components/ui";
+import { Button, Progress } from "@/components/ui";
+import { cn } from "@/components/ui/utils";
 
 export function Logo({ className, withText = true }: { className?: string; withText?: boolean }) {
   return (
@@ -70,7 +71,7 @@ function SideNav({ isAdmin }: { isAdmin: boolean }) {
           className={({ isActive }) =>
             cn(
               "flex items-center gap-3 rounded-full px-4 py-2.5 text-[15px] font-semibold transition-colors",
-              isActive ? "bg-brand text-white shadow-card" : "text-ink-2 hover:bg-surface-3 hover:text-ink",
+              isActive ? "bg-brand text-on-brand shadow-card" : "text-ink-2 hover:bg-surface-3 hover:text-ink",
             )
           }
         >
@@ -97,7 +98,7 @@ function BottomNav() {
             >
               {({ isActive }) => (
                 <>
-                  <span className={cn("grid h-8 w-12 place-content-center rounded-full transition-colors", item.to === "/buscar" ? (isActive ? "bg-brand text-white" : "bg-brand-soft text-brand") : isActive ? "bg-brand-soft" : "")}>
+                  <span className={cn("grid h-8 w-12 place-content-center rounded-full transition-colors", item.to === "/buscar" ? (isActive ? "bg-brand text-on-brand" : "bg-brand-soft text-brand") : isActive ? "bg-brand-soft" : "")}>
                     <item.icon aria-hidden className="size-5" />
                   </span>
                   {item.label}
@@ -118,7 +119,7 @@ function ActiveRunBanner() {
   return (
     <Link
       to={`/buscas/${run.id}`}
-      className="fixed right-4 bottom-24 z-40 flex w-[min(20rem,calc(100vw-2rem))] items-center gap-3 rounded-2xl bg-ink px-4 py-3 text-white shadow-lift lg:bottom-6"
+      className="fixed right-4 bottom-24 z-40 flex w-[min(20rem,calc(100vw-2rem))] items-center gap-3 rounded-2xl bg-ink px-4 py-3 text-canvas shadow-lift lg:bottom-6"
     >
       <Search aria-hidden className="size-5 shrink-0 animate-pulse" />
       <span className="min-w-0 flex-1">
@@ -149,7 +150,7 @@ export function AppShell() {
 
   return (
     <div className="min-h-dvh lg:grid lg:grid-cols-[17rem_1fr]">
-      <a href="#conteudo" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:bg-brand focus:px-4 focus:py-2 focus:text-white">
+      <a href="#conteudo" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:bg-brand focus:px-4 focus:py-2 focus:text-on-brand">
         Pular para o conteúdo
       </a>
       <aside className="sticky top-0 hidden h-dvh flex-col border-r border-line bg-surface-2 px-4 py-6 lg:flex">

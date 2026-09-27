@@ -14,7 +14,8 @@ import {
   Wheat,
 } from "lucide-react";
 import type { Schemas } from "@/api/client";
-import { Badge, cn } from "@/components/ui";
+import { Badge } from "@/components/ui";
+import { cn } from "@/components/ui/utils";
 import { ago, ageDays, money, unitPrice } from "@/lib/format";
 import { CONFIDENCE, PRICE_KIND, TARGET_STATUS } from "@/lib/labels";
 
@@ -51,14 +52,6 @@ export function ProductImage({ image, category, name, className }: { image?: Sch
       )}
     </div>
   );
-}
-
-const KNOWN_MARKETS = new Set(["angeloni", "bistek", "fort", "imperatriz"]);
-
-/** Market identity colour: CSS token (with a validated dark step) when known. */
-export function marketColor(slug: string | null | undefined, fallback?: string | null): string {
-  if (slug && KNOWN_MARKETS.has(slug)) return `var(--color-market-${slug})`;
-  return fallback ?? "var(--color-ink-3)";
 }
 
 export function MarketDot({ color, className }: { color?: string | null; className?: string }) {
