@@ -1280,6 +1280,7 @@ export interface components {
         CellOut: {
             /** Age Days */
             age_days?: string | null;
+            last_search?: components["schemas"]["LastSearchOut"] | null;
             line?: components["schemas"]["LineOut"] | null;
             offer?: components["schemas"]["OfferOut"] | null;
             /** Reason */
@@ -1545,6 +1546,12 @@ export interface components {
             attribution?: string | null;
             /** Url */
             url: string;
+        };
+        /** LastSearchOut */
+        LastSearchOut: {
+            /** Finished At */
+            finished_at?: string | null;
+            status: components["schemas"]["TargetStatus"];
         };
         /** LineOut */
         LineOut: {
@@ -2331,8 +2338,7 @@ export interface components {
             product_name: string;
             /** Started At */
             started_at?: string | null;
-            /** Status */
-            status: string;
+            status: components["schemas"]["TargetStatus"];
             /**
              * Store Id
              * Format: uuid
@@ -2568,6 +2574,11 @@ export interface components {
             /** Travel Known */
             travel_known: boolean;
         };
+        /**
+         * TargetStatus
+         * @enum {string}
+         */
+        TargetStatus: "pending" | "running" | "found" | "not_found" | "unavailable" | "no_price" | "blocked" | "timeout" | "adapter_error" | "needs_llm" | "cancelled";
         /** TravelOut */
         TravelOut: {
             /** Distance Km */

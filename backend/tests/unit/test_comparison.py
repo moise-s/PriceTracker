@@ -138,7 +138,21 @@ def test_stale_prices_do_not_win_silently() -> None:
     assert stale_cell.status == "stale" and not stale_cell.usable
     consented = compare(ITEMS, [A, B], offers, options(allow_stale=True))
     assert consented.recommendation.store_ids == ["B"]
+    assert consented.recommendation.confidence == "baixa"  # every price used is stale
+
+
+def test_partly_stale_consented_basket_has_medium_confidence() -> None:
+    offers = [
+        offer("rice", "A", "6.00"), offer("beans", "A", "8.00"), offer("eggs", "A", "20.00"), offer("coffee", "A", "18.00"),
+        offer("rice", "B", "1.00", days_old=20), offer("beans", "B", "1.00"),
+        offer("eggs", "B", "1.00"), offer("coffee", "B", "1.00"),
+    ]  # fmt: skip
+    consented = compare(ITEMS, [A, B], offers, options(allow_stale=True))
+    assert consented.recommendation.store_ids == ["B"]
     assert consented.recommendation.confidence == "media"
+    assert any(
+        "1 preço(s) desatualizado(s)" in r for r in consented.recommendation.confidence_reasons
+    )
 
 
 def test_flagged_outlier_and_unavailable_are_not_used() -> None:

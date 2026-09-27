@@ -25,12 +25,16 @@ from pricetracker.domain.pricing import OfferPricing
 from pricetracker.domain.travel import GeoPoint, VehicleSpec
 from pricetracker.domain.units import Measure
 from pricetracker.geo.providers import DistanceService
-from pricetracker.models import ListItem, Market, Observation, Product, Store, User
-from pricetracker.models.enums import Availability, ReviewStatus, SoldBy, Unit
+from pricetracker.models import ListItem, Market, Observation, Product, RunTarget, Store, User
+from pricetracker.models.enums import Availability, ReviewStatus, SoldBy, TargetStatus, Unit
 from pricetracker.services import catalog, profile
 from pricetracker.services.errors import ValidationFailed
 
 LOOKBACK_DAYS = 120
+# Outcomes worth showing next to a price cell ("why is this empty?").
+INFORMATIVE_SEARCH_STATUSES = {s.value for s in TargetStatus if s.is_terminal} - {
+    TargetStatus.CANCELLED.value
+}
 
 
 @dataclass
@@ -40,6 +44,7 @@ class ComparisonContext:
     stores: dict[str, Store]
     markets: dict[uuid.UUID, Market]
     observations: dict[str, Observation]
+    last_searches: dict[tuple[str, str], tuple[str, Any]]
     home_located: bool
     vehicle_configured: bool
 
@@ -106,6 +111,27 @@ def latest_observations(
     latest: dict[tuple[uuid.UUID, uuid.UUID], Observation] = {}
     for obs in rows:
         latest.setdefault((obs.product_id, obs.store_id), obs)
+    return latest
+
+
+def last_searches(
+    db: Session, user_id: uuid.UUID, product_ids: set[uuid.UUID], store_ids: set[uuid.UUID]
+) -> dict[tuple[str, str], tuple[str, Any]]:
+    """Outcome of the most recent finished search per (product, store): not found, blocked, ..."""
+    rows = db.execute(
+        select(RunTarget.product_id, RunTarget.store_id, RunTarget.status, RunTarget.finished_at)
+        .where(
+            RunTarget.user_id == user_id,
+            RunTarget.product_id.in_(product_ids),
+            RunTarget.store_id.in_(store_ids),
+            RunTarget.status.in_(INFORMATIVE_SEARCH_STATUSES),
+            RunTarget.finished_at > utcnow() - timedelta(days=LOOKBACK_DAYS),
+        )
+        .order_by(RunTarget.finished_at.desc())
+    )
+    latest: dict[tuple[str, str], tuple[str, Any]] = {}
+    for product_id, store_id, status, finished_at in rows:
+        latest.setdefault((str(product_id), str(store_id)), (status, finished_at))
     return latest
 
 
@@ -207,6 +233,7 @@ def build_comparison(
         stores={str(s.id): s for s in stores.values()},
         markets=markets,
         observations={str(o.id): o for o in latest.values()},
+        last_searches=last_searches(db, user.id, set(products), set(stores)),
         home_located=home_located,
         vehicle_configured=vehicle is not None,
     )
@@ -268,11 +295,15 @@ def serialize(context: ComparisonContext) -> dict[str, Any]:
         cells = {}
         for store_id, cell in row.cells.items():
             obs = context.observations.get(cell.offer.observation_id) if cell.offer else None
+            search = context.last_searches.get((row.request.product_id, store_id))
             cells[store_id] = {
                 "status": cell.status,
                 "usable": cell.usable,
                 "reason": cell.reason,
                 "age_days": cell.age_days,
+                "last_search": None
+                if search is None
+                else {"status": search[0], "finished_at": search[1]},
                 "line": None
                 if cell.line is None
                 else {

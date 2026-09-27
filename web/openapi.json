@@ -943,6 +943,16 @@
             ],
             "title": "Age Days"
           },
+          "last_search": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/LastSearchOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "line": {
             "anyOf": [
               {
@@ -1852,6 +1862,30 @@
           "url"
         ],
         "title": "ImageUrlIn",
+        "type": "object"
+      },
+      "LastSearchOut": {
+        "properties": {
+          "finished_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Finished At"
+          },
+          "status": {
+            "$ref": "#/components/schemas/TargetStatus"
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "title": "LastSearchOut",
         "type": "object"
       },
       "LineOut": {
@@ -4463,8 +4497,7 @@
             "title": "Started At"
           },
           "status": {
-            "title": "Status",
-            "type": "string"
+            "$ref": "#/components/schemas/TargetStatus"
           },
           "store_id": {
             "format": "uuid",
@@ -5121,6 +5154,23 @@
         ],
         "title": "StoreTotalsOut",
         "type": "object"
+      },
+      "TargetStatus": {
+        "enum": [
+          "pending",
+          "running",
+          "found",
+          "not_found",
+          "unavailable",
+          "no_price",
+          "blocked",
+          "timeout",
+          "adapter_error",
+          "needs_llm",
+          "cancelled"
+        ],
+        "title": "TargetStatus",
+        "type": "string"
       },
       "TravelOut": {
         "properties": {

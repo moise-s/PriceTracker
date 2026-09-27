@@ -549,9 +549,13 @@ def _confidence(
         for row in rows
         if row.request.item_id in stop.item_ids
     ]
-    if any(c.status == STALE for c in used_cells):
+    stale = sum(1 for c in used_cells if c.status == STALE)
+    if stale and stale == len(used_cells):
+        level = min(level, 0)
+        reasons.append("Todos os preços usados estão desatualizados (uso autorizado por você).")
+    elif stale:
         level = min(level, 1)
-        reasons.append("Inclui preços desatualizados que você autorizou.")
+        reasons.append(f"Inclui {stale} preço(s) desatualizado(s) que você autorizou.")
     else:
         reasons.append(f"Todos os preços usados têm até {options.freshness_days} dias.")
     if any(c.offer is not None and c.offer.method == "llm" for c in used_cells):

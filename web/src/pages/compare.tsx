@@ -6,11 +6,13 @@ import { toast } from "sonner";
 import { api, errorMessage, type Schemas, unwrap } from "@/api/client";
 import { type ComparisonParams, useComparison, useMarkets, useProfile } from "@/api/hooks";
 import { PageHeader } from "@/app/shell";
-import { CoverageMeter, MarketDot, OfferDetails, PriceKindBadge, ProductImage, marketColor } from "@/components/domain";
+import { CoverageMeter, MarketDot, OfferDetails, PriceKindBadge, ProductImage } from "@/components/domain";
+import { marketColor } from "@/lib/markets";
 import { RecommendationCard } from "@/components/recommendation";
-import { Badge, Button, buttonClass, Card, cn, Dialog, EmptyState, ErrorState, InlineAlert, LoadingBlock, Select, Spinner, Switch, Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui";
+import { Badge, Button, Card, Dialog, EmptyState, ErrorState, InlineAlert, LoadingBlock, Select, Spinner, Switch, Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui";
+import { buttonClass, cn } from "@/components/ui/utils";
 import { ago, km, money, quantity, unitPrice } from "@/lib/format";
-import { CELL_STATUS, explainReason, METHOD } from "@/lib/labels";
+import { CELL_STATUS, METHOD, TARGET_STATUS, explainReason } from "@/lib/labels";
 
 type Comparison = Schemas["ComparisonOut"];
 
@@ -101,13 +103,21 @@ function CandidatesDialog({ productId, storeId, productName, open, onOpenChange 
 
 function Cell({ item, storeId, cell, best, onExplain }: { item: Schemas["ComparisonItemOut"]; storeId: string; cell: Schemas["CellOut"]; best: boolean; onExplain: () => void }) {
   const status = CELL_STATUS[cell.status] ?? { label: cell.status, tone: "neutral" as const };
+  const search = cell.last_search ? TARGET_STATUS[cell.last_search.status] : undefined;
   if (!cell.line && !cell.offer) {
+    // Say *why* there is no price: not found, blocked, timeout... never a silent blank.
     return (
-      <div className="text-sm text-ink-3">
-        <Badge tone={status.tone}>{status.label}</Badge>
+      <div className="space-y-1 p-1 text-sm text-ink-3">
+        <Badge tone={search?.tone ?? status.tone} icon={search?.icon}>{search?.label ?? status.label}</Badge>
+        <p className="text-xs">
+          {search && cell.last_search?.status !== "not_found" ? `${search.help} ` : ""}
+          {cell.last_search ? `Última busca ${ago(cell.last_search.finished_at)}.` : "Ainda não buscado nesta loja."}
+        </p>
       </div>
     );
   }
+  const newerFailure =
+    search && cell.offer && cell.last_search && !["found", "unavailable", "no_price"].includes(cell.last_search.status) && (cell.last_search.finished_at ?? "") > cell.offer.observed_at;
   return (
     <div className={cn("space-y-1.5 rounded-lg p-2.5", best && "bg-accent-soft/70 ring-1 ring-accent/30")}>
       <div className="flex flex-wrap items-center gap-1.5">
@@ -129,6 +139,7 @@ function Cell({ item, storeId, cell, best, onExplain }: { item: Schemas["Compari
         </p>
       ) : null}
       {cell.reason && cell.status !== "ok" ? <p className="text-xs text-ink-3">{cell.reason}</p> : null}
+      {newerFailure ? <p className="text-xs font-medium text-warn">Última busca: {search.label.toLowerCase()} ({ago(cell.last_search!.finished_at)}); mostrando o preço anterior.</p> : null}
       <div className="flex flex-wrap gap-x-3">
         {cell.offer?.url ? (
           <a href={cell.offer.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-semibold text-brand hover:underline">

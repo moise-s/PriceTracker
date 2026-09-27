@@ -9,7 +9,7 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from pricetracker.models.enums import Role, RunStatus, RunTrigger, SoldBy, Unit
+from pricetracker.models.enums import Role, RunStatus, RunTrigger, SoldBy, TargetStatus, Unit
 
 
 class Model(BaseModel):
@@ -406,7 +406,7 @@ class RunTargetOut(Model):
     store_name: str
     market_slug: str
     market_name: str
-    status: str
+    status: TargetStatus
     method: str | None = None
     error_type: str | None = None
     error_detail: str | None = None
@@ -620,11 +620,17 @@ class OfferOut(Model):
     outlier_reason: str | None = None
 
 
+class LastSearchOut(Model):
+    status: TargetStatus
+    finished_at: datetime | None = None
+
+
 class CellOut(Model):
     status: Literal["ok", "stale", "flagged", "unavailable", "missing", "incompatible"]
     usable: bool
     reason: str | None = None
     age_days: Decimal | None = None
+    last_search: LastSearchOut | None = None
     line: LineOut | None = None
     offer: OfferOut | None = None
 

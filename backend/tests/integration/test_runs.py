@@ -320,3 +320,28 @@ async def test_run_validation(client: TestClient, seeded: Any, bad: dict[str, An
     login(client, "vazio")
     response = api(client, "POST", "/runs", json=bad)
     assert response.status_code in (404, 422)
+
+
+async def test_comparison_explains_empty_cells_with_the_last_search_outcome(
+    client: TestClient, seeded: Any, settings: Any
+) -> None:
+    db = seeded
+    fort = store_id(db, "fort", "kobrasol-160")
+    bistek = store_id(db, "bistek", "costeira-do-pirajubae-florianopolis")
+    prepare(client, db, ["arroz-branco-1kg", "maca-fuji-kg"], [fort, bistek])
+    run_id = api(client, "POST", "/runs", json={}).json()["id"]
+    blocked = combined_handler({"www.bistek.com.br": lambda request: httpx.Response(403)})
+    assert await execute(settings, run_id, handler=blocked) == RunStatus.PARTIAL
+
+    comparison = api(client, "GET", "/comparison").json()
+    cells = {
+        (item["name"].split()[0], store): cell
+        for item in comparison["items"]
+        for store, cell in item["cells"].items()
+    }
+    assert cells[("Maçã", fort)]["status"] == "missing"
+    assert cells[("Maçã", fort)]["last_search"]["status"] == "not_found"
+    assert cells[("Arroz", bistek)]["status"] == "missing"
+    assert cells[("Arroz", bistek)]["last_search"]["status"] == "blocked"
+    assert cells[("Arroz", fort)]["status"] == "ok"
+    assert cells[("Arroz", fort)]["last_search"]["status"] == "found"
