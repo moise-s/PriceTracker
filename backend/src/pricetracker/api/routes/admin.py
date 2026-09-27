@@ -148,7 +148,7 @@ def reset_password(
     return schemas.Ok()
 
 
-@router.get("/admin/health", tags=["admin"])
+@router.get("/admin/health", response_model=schemas.AdminHealthOut, tags=["admin"])
 def adapter_health(admin_user: AdminUser, db: DbSession, days: int = 14) -> dict[str, Any]:
     return {
         "markets": admin.adapter_health(db, days=min(max(days, 1), 90)),

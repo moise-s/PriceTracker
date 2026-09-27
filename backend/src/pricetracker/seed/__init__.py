@@ -23,7 +23,7 @@ MARKETS: list[dict[str, Any]] = [
         "website": "https://super.angeloni.com.br",
         "adapter_key": "angeloni",
         "allowed_domains": ["super.angeloni.com.br"],
-        "brand_color": "#0E7C66",
+        "brand_color": "#1BAF7A",
         "notes": (
             "API pública de busca do VTEX (Intelligent Search) por filial (region-id resolvido pelo CEP da "
             "loja). Promoções por quantidade via Master Data público. Preço de clube/app exige CPF e não é coletado."
@@ -35,7 +35,7 @@ MARKETS: list[dict[str, Any]] = [
         "website": "https://www.bistek.com.br",
         "adapter_key": "bistek",
         "allowed_domains": ["bistek.com.br"],
-        "brand_color": "#C8372D",
+        "brand_color": "#4A3AA7",
         "notes": (
             "robots.txt proíbe /api/ e a busca: produtos descobertos pelo sitemap e lidos na página do "
             "produto. Não é possível escolher a filial dentro do robots.txt: o preço é o online de referência "
@@ -48,7 +48,7 @@ MARKETS: list[dict[str, Any]] = [
         "website": "https://www.fortatacadista.com.br",
         "adapter_key": "fort",
         "allowed_domains": ["fortatacadista.com.br"],
-        "brand_color": "#E0701B",
+        "brand_color": "#EB6834",
         "notes": (
             "robots.txt proíbe a busca e URLs com query string: produtos descobertos pelo sitemap e lidos em "
             "/produtos/ com o cookie de loja do próprio site. Preços normal, promocional, 'Mais por Menos', "
@@ -61,7 +61,7 @@ MARKETS: list[dict[str, Any]] = [
         "website": "https://superimperatriz.com.br",
         "adapter_key": "imperatriz",
         "allowed_domains": ["api.zoombox.com.br", "9zli2drdqe.execute-api.us-east-1.amazonaws.com"],
-        "brand_color": "#2457A6",
+        "brand_color": "#2A78D6",
         "notes": (
             "O site não tem mais catálogo nem preços. Fonte oficial disponível: ofertas vigentes do Super "
             "Clube por loja (cobertura parcial). O catálogo completo só existe no iFood, protegido por "
@@ -84,7 +84,14 @@ def seed_markets(db: Session) -> dict[str, Market]:
             market = Market(**data)
             db.add(market)
         else:
-            for key in ("name", "website", "adapter_key", "allowed_domains", "notes"):
+            for key in (
+                "name",
+                "website",
+                "adapter_key",
+                "allowed_domains",
+                "notes",
+                "brand_color",
+            ):
                 setattr(market, key, data[key])
         markets[data["slug"]] = market
     db.flush()

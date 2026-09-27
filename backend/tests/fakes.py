@@ -132,7 +132,9 @@ def angeloni_handler(request: httpx.Request) -> httpx.Response:
                 return httpx.Response(200, json=_json(base / name))
         return httpx.Response(200, json={"products": [], "recordsFiltered": 0})
     if path == "/api/dataentities/PR/search":
-        return httpx.Response(200, json=_json(base / "promotions_pr_superangeloni14.json", "batch_lookup_rows"))
+        return httpx.Response(
+            200, json=_json(base / "promotions_pr_superangeloni14.json", "batch_lookup_rows")
+        )
     return httpx.Response(404, text="not found")
 
 
@@ -149,13 +151,21 @@ def bistek_handler(request: httpx.Request) -> httpx.Response:
     if path == "/sitemap/product-0.xml":
         return httpx.Response(200, text=(base / "sitemap_products_trimmed.xml").read_text())
     if path.startswith("/sitemap/"):
-        return httpx.Response(200, text=EMPTY_URLSET) if "product-" not in path else httpx.Response(404)
+        return (
+            httpx.Response(200, text=EMPTY_URLSET)
+            if "product-" not in path
+            else httpx.Response(404)
+        )
     match = re.match(r"^/([a-z0-9-]+)/p$", path)
     if match:
         page = base / f"product_{match.group(1)}.html"
         if page.exists():
-            return httpx.Response(200, text=page.read_text(encoding="utf-8"), headers={"etag": f'"{match.group(1)}"'})
-        return httpx.Response(404, text=(base / "product_not_found_404.html").read_text(encoding="utf-8"))
+            return httpx.Response(
+                200, text=page.read_text(encoding="utf-8"), headers={"etag": f'"{match.group(1)}"'}
+            )
+        return httpx.Response(
+            404, text=(base / "product_not_found_404.html").read_text(encoding="utf-8")
+        )
     return httpx.Response(404)
 
 
@@ -192,7 +202,9 @@ def fort_handler(request: httpx.Request) -> httpx.Response:
 # --- Imperatriz ------------------------------------------------------------------------------------
 
 
-def imperatriz_handler_factory(offers: list[dict[str, object]] | None = None) -> Callable[[httpx.Request], httpx.Response]:
+def imperatriz_handler_factory(
+    offers: list[dict[str, object]] | None = None,
+) -> Callable[[httpx.Request], httpx.Response]:
     base = FIXTURES / "imperatriz"
 
     def handler(request: httpx.Request) -> httpx.Response:
@@ -201,7 +213,9 @@ def imperatriz_handler_factory(offers: list[dict[str, object]] | None = None) ->
             return httpx.Response(404)
         if request.url.host == "api.zoombox.com.br" and path == "/admin/v1/varejista":
             assert request.method == "POST"
-            return httpx.Response(200, json=_json(base / "clube_bootstrap_response.json", "response"))
+            return httpx.Response(
+                200, json=_json(base / "clube_bootstrap_response.json", "response")
+            )
         if path == "/v1/ofertas":
             if request.headers.get("x-api-key") != "<public-token>":
                 return httpx.Response(403, json={"message": "Forbidden"})
@@ -215,7 +229,9 @@ def imperatriz_handler_factory(offers: list[dict[str, object]] | None = None) ->
     return handler
 
 
-def combined_handler(overrides: dict[str, Callable[[httpx.Request], httpx.Response]] | None = None) -> Callable[[httpx.Request], httpx.Response]:
+def combined_handler(
+    overrides: dict[str, Callable[[httpx.Request], httpx.Response]] | None = None,
+) -> Callable[[httpx.Request], httpx.Response]:
     """One transport for every market, routed by host (used by executor tests)."""
     routes: dict[str, Callable[[httpx.Request], httpx.Response]] = {
         "super.angeloni.com.br": angeloni_handler,

@@ -42,6 +42,9 @@ class MatchSpec(BaseModel):
     approx_unit_weight_kg: Decimal | None = Field(default=None, gt=0)
     max_piece_kg: Decimal = Field(default=Decimal("3"), gt=0)
     allow_bulk: bool = False
+    # The first required group must appear among the first N title words, so that
+    # "Sal para Picanha, Alcatra e Fraldinha" is not taken for alcatra. 0 disables it.
+    head_window: int = Field(default=3, ge=0, le=10)
 
     @field_validator("search_terms", "excluded", "brands", "gtins")
     @classmethod
@@ -108,6 +111,10 @@ def evaluate(listing: Listing, spec: MatchSpec, pins: Pins | None = None) -> Mat
     for group in spec.required:
         if not any(phrase_in(option, haystack) for option in group):
             result.reject(f"missing_required:{group[0]}")
+    if spec.required and spec.head_window and result.accepted:
+        head = " ".join(tokens(listing.title)[: spec.head_window])
+        if not any(phrase_in(option, head) for option in spec.required[0]):
+            result.reject(f"not_main_product:{spec.required[0][0]}")
     for excluded in spec.excluded:
         if phrase_in(excluded, haystack):
             result.reject(f"excluded:{excluded}")

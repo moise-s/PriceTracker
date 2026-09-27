@@ -569,3 +569,257 @@ class LlmTestOut(Model):
     message: str
     latency_ms: int | None = None
     available_models: list[str] | None = None
+
+
+# --- comparison & history (typed contract for the web client) ---------------------------------
+
+
+class TravelOut(Model):
+    distance_km: Decimal
+    liters: Decimal
+    fuel_cost: Decimal
+    tolls: Decimal
+    total: Decimal
+    method: str
+    route: list[str]
+    formula: str
+
+
+class LineOut(Model):
+    cost: Decimal
+    sale_units: Decimal
+    sale_unit_label: str
+    price_kind: str
+    unit_price: Decimal | None = None
+    unit_price_unit: str | None = None
+    approximate: bool
+    notes: list[str]
+
+
+class OfferOut(Model):
+    observation_id: uuid.UUID
+    title: str
+    brand: str | None = None
+    url: str | None = None
+    image_url: str | None = None
+    observed_at: datetime
+    regular_price: Decimal | None = None
+    promo_price: Decimal | None = None
+    club_price: Decimal | None = None
+    club_label: str | None = None
+    quantity_min: int | None = None
+    quantity_price: Decimal | None = None
+    quantity_mode: str | None = None
+    extra_prices: list[dict[str, Any]]
+    unit_price: Decimal | None = None
+    unit_price_unit: str | None = None
+    availability: str
+    method: str
+    confidence: Decimal
+    review_status: str
+    outlier_reason: str | None = None
+
+
+class CellOut(Model):
+    status: Literal["ok", "stale", "flagged", "unavailable", "missing", "incompatible"]
+    usable: bool
+    reason: str | None = None
+    age_days: Decimal | None = None
+    line: LineOut | None = None
+    offer: OfferOut | None = None
+
+
+class ComparisonItemOut(Model):
+    item_id: str
+    product_id: str
+    name: str
+    quantity: Decimal
+    unit: str
+    image_id: uuid.UUID | None = None
+    category: str | None = None
+    best_store_id: str | None = None
+    best_cost: Decimal | None = None
+    worst_cost: Decimal | None = None
+    cells: dict[str, CellOut]
+
+
+class ComparisonStoreOut(Model):
+    store_id: str
+    market_slug: str
+    market_name: str
+    store_name: str
+    use_club: bool
+    tolls: Decimal
+    has_location: bool
+    price_scope_note: str | None = None
+    travel: TravelOut | None = None
+
+
+class StoreTotalsOut(Model):
+    store_id: str
+    covered: int
+    total_items: int
+    products_total: Decimal
+    missing_item_ids: list[str]
+    stale_used: int
+    oldest_age_days: Decimal | None = None
+    travel: TravelOut | None = None
+    effective_total: Decimal
+    travel_known: bool
+    complete: bool
+
+
+class CommonBasketOut(Model):
+    item_ids: list[str]
+    excluded_item_ids: list[str]
+    stores: list[StoreTotalsOut]
+    winner_store_id: str | None = None
+    savings_vs_runner_up: Decimal | None = None
+    savings_vs_most_expensive: Decimal | None = None
+    comparable: bool
+    note: str
+
+
+class CoverageOut(Model):
+    stores: list[StoreTotalsOut]
+    max_coverage: int
+    best_store_id: str | None = None
+    note: str
+
+
+class PlanStopOut(Model):
+    store_id: str
+    item_ids: list[str]
+    products_total: Decimal
+
+
+class PlanOut(Model):
+    kind: Literal["single", "split"]
+    stops: list[PlanStopOut]
+    covered: int
+    missing_item_ids: list[str]
+    products_total: Decimal
+    travel: TravelOut | None = None
+    effective_total: Decimal
+    travel_known: bool
+
+
+class EconomicPlanOut(Model):
+    best: PlanOut | None = None
+    best_single: PlanOut | None = None
+    alternatives: list[PlanOut]
+    split_savings: Decimal | None = None
+    assumptions: list[str]
+
+
+class RecommendationOut(Model):
+    kind: Literal["single", "split", "none"]
+    store_ids: list[str]
+    headline: str
+    explanation: list[str]
+    products_total: Decimal | None = None
+    travel_total: Decimal | None = None
+    effective_total: Decimal | None = None
+    savings: Decimal | None = None
+    savings_reference_store_id: str | None = None
+    covered: int
+    total_items: int
+    newest_observed_at: datetime | None = None
+    oldest_observed_at: datetime | None = None
+    confidence: Literal["alta", "media", "baixa"]
+    confidence_reasons: list[str]
+    warnings: list[str]
+
+
+class ComparisonOut(Model):
+    generated_at: datetime
+    freshness_days: int
+    allow_stale: bool
+    include_travel: bool
+    max_stops: int
+    home_located: bool
+    vehicle_configured: bool
+    distance_method: str | None = None
+    stores: list[ComparisonStoreOut]
+    items: list[ComparisonItemOut]
+    common: CommonBasketOut
+    coverage: CoverageOut
+    plan: EconomicPlanOut
+    recommendation: RecommendationOut
+
+
+class HistoryPointOut(Model):
+    observation_id: uuid.UUID
+    observed_at: datetime
+    price: Decimal | None = None
+    regular_price: Decimal | None = None
+    promo_price: Decimal | None = None
+    club_price: Decimal | None = None
+    unit_price: Decimal | None = None
+    unit_price_unit: str | None = None
+    title: str
+    url: str | None = None
+    availability: str
+    stale: bool
+    flagged: bool
+    review_status: str
+    outlier_reason: str | None = None
+    method: str
+
+
+class HistoryStatsOut(Model):
+    min: Decimal | None = None
+    max: Decimal | None = None
+    median: Decimal | None = None
+    last: Decimal | None = None
+    count: int
+
+
+class HistorySeriesOut(Model):
+    store_id: uuid.UUID
+    store_name: str
+    market_slug: str
+    market_name: str
+    points: list[HistoryPointOut]
+    stats: HistoryStatsOut
+
+
+class HistoryOut(Model):
+    product_id: uuid.UUID
+    product_name: str
+    freshness_days: int
+    days: int
+    series: list[HistorySeriesOut]
+
+
+class MarketHealthOut(Model):
+    market_id: uuid.UUID
+    slug: str
+    name: str
+    enabled: bool
+    adapter_version: str | None = None
+    strategy: str | None = None
+    state: str
+    targets: int
+    success_rate: float | None = None
+    statuses: dict[str, int]
+    methods: dict[str, int]
+    errors: dict[str, int]
+    llm_used: int
+    llm_needed: int
+    median_duration_ms: int | None = None
+    last_success_at: datetime | None = None
+    last_failure_at: datetime | None = None
+    notes: str | None = None
+
+
+class LlmUsageOut(Model):
+    days: int
+    calls: int
+    cache_hits: int
+    errors: int
+
+
+class AdminHealthOut(Model):
+    markets: list[MarketHealthOut]
+    llm: LlmUsageOut

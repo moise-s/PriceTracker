@@ -20,7 +20,9 @@ for name in ("GROQ_API_KEY", "OPENAI_API_KEY", "PRICETRACKER_COMPATIBLE_API_KEY"
 
 
 def pytest_addoption(parser: pytest.Parser) -> None:
-    parser.addoption("--live", action="store_true", default=False, help="run live smoke tests against real sites")
+    parser.addoption(
+        "--live", action="store_true", default=False, help="run live smoke tests against real sites"
+    )
 
 
 def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item]) -> None:
@@ -106,11 +108,13 @@ def api(client: TestClient, method: str, path: str, **kwargs: Any) -> Any:
     return client.request(method, f"/api/v1{path}", headers=headers, **kwargs)
 
 
-def create_user(db: Session, username: str, password: str = "senha-forte-123", admin: bool = False) -> Any:
+def create_user(
+    db: Session, username: str, password: str = "senha-forte-123", admin: bool = False
+) -> Any:
     from pricetracker.models.enums import Role
     from pricetracker.services import accounts
 
-    account = accounts._create_user(  # noqa: SLF001 - test helper
+    account = accounts._create_user(
         db,
         username=username,
         display_name=username.title(),

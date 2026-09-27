@@ -20,7 +20,7 @@
     "postal_code": "88058001",
     "seller": "superangeloni5"
    },
-   "price_scope_note": "Preço online desta filial (seller superangeloni5)."
+   "price_scope_note": "Preço online de cada filial (pode variar na gôndola)."
   },
   {
    "market": "angeloni",
@@ -40,7 +40,7 @@
     "postal_code": "88704306",
     "seller": "superangeloni6"
    },
-   "price_scope_note": "Preço online desta filial (seller superangeloni6)."
+   "price_scope_note": "Preço online de cada filial (pode variar na gôndola)."
   },
   {
    "market": "angeloni",
@@ -60,7 +60,7 @@
     "postal_code": "88801001",
     "seller": "superangeloni7"
    },
-   "price_scope_note": "Preço online desta filial (seller superangeloni7)."
+   "price_scope_note": "Preço online de cada filial (pode variar na gôndola)."
   },
   {
    "market": "angeloni",
@@ -80,7 +80,7 @@
     "postal_code": "88330304",
     "seller": "superangeloni8"
    },
-   "price_scope_note": "Preço online desta filial (seller superangeloni8)."
+   "price_scope_note": "Preço online de cada filial (pode variar na gôndola)."
   },
   {
    "market": "angeloni",
@@ -100,7 +100,7 @@
     "postal_code": "89251400",
     "seller": "superangeloni10"
    },
-   "price_scope_note": "Preço online desta filial (seller superangeloni10)."
+   "price_scope_note": "Preço online de cada filial (pode variar na gôndola)."
   },
   {
    "market": "angeloni",
@@ -120,7 +120,7 @@
     "postal_code": "88502199",
     "seller": "superangeloni12"
    },
-   "price_scope_note": "Preço online desta filial (seller superangeloni12)."
+   "price_scope_note": "Preço online de cada filial (pode variar na gôndola)."
   },
   {
    "market": "angeloni",
@@ -140,7 +140,7 @@
     "postal_code": "88085001",
     "seller": "superangeloni13"
    },
-   "price_scope_note": "Preço online desta filial (seller superangeloni13)."
+   "price_scope_note": "Preço online de cada filial (pode variar na gôndola)."
   },
   {
    "market": "angeloni",
@@ -160,7 +160,7 @@
     "postal_code": "88025202",
     "seller": "superangeloni14"
    },
-   "price_scope_note": "Preço online desta filial (seller superangeloni14)."
+   "price_scope_note": "Preço online de cada filial (pode variar na gôndola)."
   },
   {
    "market": "angeloni",
@@ -180,7 +180,7 @@
     "postal_code": "89041070",
     "seller": "superangeloni15"
    },
-   "price_scope_note": "Preço online desta filial (seller superangeloni15)."
+   "price_scope_note": "Preço online de cada filial (pode variar na gôndola)."
   },
   {
    "market": "angeloni",
@@ -200,7 +200,7 @@
     "postal_code": "88303000",
     "seller": "superangeloni19"
    },
-   "price_scope_note": "Preço online desta filial (seller superangeloni19)."
+   "price_scope_note": "Preço online de cada filial (pode variar na gôndola)."
   },
   {
    "market": "angeloni",
@@ -220,7 +220,7 @@
     "postal_code": "89218035",
     "seller": "superangeloni21"
    },
-   "price_scope_note": "Preço online desta filial (seller superangeloni21)."
+   "price_scope_note": "Preço online de cada filial (pode variar na gôndola)."
   },
   {
    "market": "angeloni",
@@ -240,7 +240,7 @@
     "postal_code": "89202005",
     "seller": "superangeloni23"
    },
-   "price_scope_note": "Preço online desta filial (seller superangeloni23)."
+   "price_scope_note": "Preço online de cada filial (pode variar na gôndola)."
   },
   {
    "market": "angeloni",
@@ -260,7 +260,7 @@
     "postal_code": "80730201",
     "seller": "superangeloni24"
    },
-   "price_scope_note": "Preço online desta filial (seller superangeloni24)."
+   "price_scope_note": "Preço online de cada filial (pode variar na gôndola)."
   },
   {
    "market": "angeloni",
@@ -280,7 +280,7 @@
     "postal_code": "87045200",
     "seller": "superangeloni26"
    },
-   "price_scope_note": "Preço online desta filial (seller superangeloni26)."
+   "price_scope_note": "Preço online de cada filial (pode variar na gôndola)."
   },
   {
    "market": "angeloni",
@@ -300,7 +300,7 @@
     "postal_code": "86050490",
     "seller": "superangeloni27"
    },
-   "price_scope_note": "Preço online desta filial (seller superangeloni27)."
+   "price_scope_note": "Preço online de cada filial (pode variar na gôndola)."
   },
   {
    "market": "angeloni",
@@ -320,7 +320,7 @@
     "postal_code": "88210000",
     "seller": "superangeloni28"
    },
-   "price_scope_note": "Preço online desta filial (seller superangeloni28)."
+   "price_scope_note": "Preço online de cada filial (pode variar na gôndola)."
   },
   {
    "market": "angeloni",
@@ -340,7 +340,7 @@
     "postal_code": "83005000",
     "seller": "superangeloni29"
    },
-   "price_scope_note": "Preço online desta filial (seller superangeloni29)."
+   "price_scope_note": "Preço online de cada filial (pode variar na gôndola)."
   },
   {
    "market": "bistek",
@@ -357,7 +357,7 @@
    "longitude": "-49.377619",
    "coordinates_source": "institucional.bistek.com.br/lojas",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -374,7 +374,7 @@
    "longitude": "-49.0570483",
    "coordinates_source": "institucional.bistek.com.br/lojas",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -391,7 +391,7 @@
    "longitude": "-50.305143",
    "coordinates_source": "institucional.bistek.com.br/lojas",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -408,7 +408,7 @@
    "longitude": null,
    "coordinates_source": null,
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -425,7 +425,7 @@
    "longitude": "-48.9141371",
    "coordinates_source": "institucional.bistek.com.br/lojas",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -442,7 +442,7 @@
    "longitude": "-48.819662",
    "coordinates_source": "institucional.bistek.com.br/lojas",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -459,7 +459,7 @@
    "longitude": "-49.3691876",
    "coordinates_source": "institucional.bistek.com.br/lojas",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -476,7 +476,7 @@
    "longitude": "-48.626947",
    "coordinates_source": "institucional.bistek.com.br/lojas",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -493,7 +493,7 @@
    "longitude": "-48.5264335",
    "coordinates_source": "institucional.bistek.com.br/lojas",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -510,7 +510,7 @@
    "longitude": "-49.50450146",
    "coordinates_source": "institucional.bistek.com.br/lojas",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -527,7 +527,7 @@
    "longitude": "-48.624654",
    "coordinates_source": "institucional.bistek.com.br/lojas",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -544,7 +544,7 @@
    "longitude": "-49.067575",
    "coordinates_source": "institucional.bistek.com.br/lojas",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -561,7 +561,7 @@
    "longitude": "-48.673871",
    "coordinates_source": "institucional.bistek.com.br/lojas",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -578,7 +578,7 @@
    "longitude": "-48.496353",
    "coordinates_source": "institucional.bistek.com.br/lojas",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -595,7 +595,7 @@
    "longitude": "-48.6761009",
    "coordinates_source": "OpenStreetMap Nominatim (street)",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -612,7 +612,7 @@
    "longitude": "-48.649412",
    "coordinates_source": "institucional.bistek.com.br/lojas",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -629,7 +629,7 @@
    "longitude": "-48.510202",
    "coordinates_source": "institucional.bistek.com.br/lojas",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -646,7 +646,7 @@
    "longitude": "-48.638787",
    "coordinates_source": "institucional.bistek.com.br/lojas",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -663,7 +663,7 @@
    "longitude": "-48.6575886",
    "coordinates_source": "institucional.bistek.com.br/lojas",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -680,7 +680,7 @@
    "longitude": "-48.650595",
    "coordinates_source": "institucional.bistek.com.br/lojas",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -697,7 +697,7 @@
    "longitude": "-51.151293",
    "coordinates_source": "institucional.bistek.com.br/lojas",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -714,7 +714,7 @@
    "longitude": "-49.739392",
    "coordinates_source": "institucional.bistek.com.br/lojas",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -731,7 +731,7 @@
    "longitude": "-49.322776",
    "coordinates_source": "institucional.bistek.com.br/lojas",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -748,7 +748,7 @@
    "longitude": "-48.5927214",
    "coordinates_source": "OpenStreetMap Nominatim (street)",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -765,7 +765,7 @@
    "longitude": "-51.1720295",
    "coordinates_source": "OpenStreetMap Nominatim (street)",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -782,7 +782,7 @@
    "longitude": "-51.1904624",
    "coordinates_source": "OpenStreetMap Nominatim (street)",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -799,7 +799,7 @@
    "longitude": "-51.0013283",
    "coordinates_source": "OpenStreetMap Nominatim (street)",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "bistek",
@@ -816,7 +816,7 @@
    "longitude": "-50.1312264",
    "coordinates_source": "institucional.bistek.com.br/lojas",
    "price_context": {},
-   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); pode variar na loja física."
+   "price_scope_note": "Preço online de referência do Bistek (loja de Florianópolis/SC); o site não permite escolher a filial. Pode variar na loja física."
   },
   {
    "market": "fort",
@@ -835,7 +835,7 @@
    "price_context": {
     "store_id": "1687"
    },
-   "price_scope_note": "Preço online desta loja do Fort."
+   "price_scope_note": "Preço online de cada loja (pode variar na gôndola)."
   },
   {
    "market": "fort",
@@ -854,7 +854,7 @@
    "price_context": {
     "store_id": "1665"
    },
-   "price_scope_note": "Preço online desta loja do Fort."
+   "price_scope_note": "Preço online de cada loja (pode variar na gôndola)."
   },
   {
    "market": "fort",
@@ -873,7 +873,7 @@
    "price_context": {
     "store_id": "1697"
    },
-   "price_scope_note": "Preço online desta loja do Fort."
+   "price_scope_note": "Preço online de cada loja (pode variar na gôndola)."
   },
   {
    "market": "fort",
@@ -892,7 +892,7 @@
    "price_context": {
     "store_id": "1678"
    },
-   "price_scope_note": "Preço online desta loja do Fort."
+   "price_scope_note": "Preço online de cada loja (pode variar na gôndola)."
   },
   {
    "market": "fort",
@@ -911,7 +911,7 @@
    "price_context": {
     "store_id": "1694"
    },
-   "price_scope_note": "Preço online desta loja do Fort."
+   "price_scope_note": "Preço online de cada loja (pode variar na gôndola)."
   },
   {
    "market": "fort",
@@ -930,7 +930,7 @@
    "price_context": {
     "store_id": "1667"
    },
-   "price_scope_note": "Preço online desta loja do Fort."
+   "price_scope_note": "Preço online de cada loja (pode variar na gôndola)."
   },
   {
    "market": "fort",
@@ -949,7 +949,7 @@
    "price_context": {
     "store_id": "1585"
    },
-   "price_scope_note": "Preço online desta loja do Fort."
+   "price_scope_note": "Preço online de cada loja (pode variar na gôndola)."
   },
   {
    "market": "fort",
@@ -968,7 +968,7 @@
    "price_context": {
     "store_id": "1645"
    },
-   "price_scope_note": "Preço online desta loja do Fort."
+   "price_scope_note": "Preço online de cada loja (pode variar na gôndola)."
   },
   {
    "market": "fort",
@@ -987,7 +987,7 @@
    "price_context": {
     "store_id": "1636"
    },
-   "price_scope_note": "Preço online desta loja do Fort."
+   "price_scope_note": "Preço online de cada loja (pode variar na gôndola)."
   },
   {
    "market": "fort",
@@ -1006,7 +1006,7 @@
    "price_context": {
     "store_id": "1646"
    },
-   "price_scope_note": "Preço online desta loja do Fort."
+   "price_scope_note": "Preço online de cada loja (pode variar na gôndola)."
   },
   {
    "market": "fort",
@@ -1025,7 +1025,7 @@
    "price_context": {
     "store_id": "1660"
    },
-   "price_scope_note": "Preço online desta loja do Fort."
+   "price_scope_note": "Preço online de cada loja (pode variar na gôndola)."
   },
   {
    "market": "fort",
@@ -1044,7 +1044,7 @@
    "price_context": {
     "store_id": "1658"
    },
-   "price_scope_note": "Preço online desta loja do Fort."
+   "price_scope_note": "Preço online de cada loja (pode variar na gôndola)."
   },
   {
    "market": "fort",
@@ -1063,7 +1063,7 @@
    "price_context": {
     "store_id": "1633"
    },
-   "price_scope_note": "Preço online desta loja do Fort."
+   "price_scope_note": "Preço online de cada loja (pode variar na gôndola)."
   },
   {
    "market": "fort",
@@ -1082,7 +1082,7 @@
    "price_context": {
     "store_id": "1644"
    },
-   "price_scope_note": "Preço online desta loja do Fort."
+   "price_scope_note": "Preço online de cada loja (pode variar na gôndola)."
   },
   {
    "market": "fort",
@@ -1101,7 +1101,7 @@
    "price_context": {
     "store_id": "1638"
    },
-   "price_scope_note": "Preço online desta loja do Fort."
+   "price_scope_note": "Preço online de cada loja (pode variar na gôndola)."
   },
   {
    "market": "fort",
@@ -1120,7 +1120,7 @@
    "price_context": {
     "store_id": "1666"
    },
-   "price_scope_note": "Preço online desta loja do Fort."
+   "price_scope_note": "Preço online de cada loja (pode variar na gôndola)."
   },
   {
    "market": "fort",
@@ -1139,7 +1139,7 @@
    "price_context": {
     "store_id": "1690"
    },
-   "price_scope_note": "Preço online desta loja do Fort."
+   "price_scope_note": "Preço online de cada loja (pode variar na gôndola)."
   },
   {
    "market": "fort",
@@ -1158,7 +1158,7 @@
    "price_context": {
     "store_id": "1689"
    },
-   "price_scope_note": "Preço online desta loja do Fort."
+   "price_scope_note": "Preço online de cada loja (pode variar na gôndola)."
   },
   {
    "market": "fort",
@@ -1177,7 +1177,7 @@
    "price_context": {
     "store_id": "1688"
    },
-   "price_scope_note": "Preço online desta loja do Fort."
+   "price_scope_note": "Preço online de cada loja (pode variar na gôndola)."
   },
   {
    "market": "fort",
@@ -1196,7 +1196,7 @@
    "price_context": {
     "store_id": "1637"
    },
-   "price_scope_note": "Preço online desta loja do Fort."
+   "price_scope_note": "Preço online de cada loja (pode variar na gôndola)."
   },
   {
    "market": "imperatriz",
@@ -1215,7 +1215,7 @@
    "price_context": {
     "store_id": "1"
    },
-   "price_scope_note": "Ofertas do Super Clube desta loja (cobertura parcial: só itens em oferta)."
+   "price_scope_note": "Somente ofertas vigentes do Super Clube de cada loja (cobertura parcial: item sem oferta não aparece)."
   },
   {
    "market": "imperatriz",
@@ -1234,7 +1234,7 @@
    "price_context": {
     "store_id": "2"
    },
-   "price_scope_note": "Ofertas do Super Clube desta loja (cobertura parcial: só itens em oferta)."
+   "price_scope_note": "Somente ofertas vigentes do Super Clube de cada loja (cobertura parcial: item sem oferta não aparece)."
   },
   {
    "market": "imperatriz",
@@ -1253,7 +1253,7 @@
    "price_context": {
     "store_id": "3"
    },
-   "price_scope_note": "Ofertas do Super Clube desta loja (cobertura parcial: só itens em oferta)."
+   "price_scope_note": "Somente ofertas vigentes do Super Clube de cada loja (cobertura parcial: item sem oferta não aparece)."
   },
   {
    "market": "imperatriz",
@@ -1272,7 +1272,7 @@
    "price_context": {
     "store_id": "4"
    },
-   "price_scope_note": "Ofertas do Super Clube desta loja (cobertura parcial: só itens em oferta)."
+   "price_scope_note": "Somente ofertas vigentes do Super Clube de cada loja (cobertura parcial: item sem oferta não aparece)."
   },
   {
    "market": "imperatriz",
@@ -1291,7 +1291,7 @@
    "price_context": {
     "store_id": "5"
    },
-   "price_scope_note": "Ofertas do Super Clube desta loja (cobertura parcial: só itens em oferta)."
+   "price_scope_note": "Somente ofertas vigentes do Super Clube de cada loja (cobertura parcial: item sem oferta não aparece)."
   },
   {
    "market": "imperatriz",
@@ -1310,7 +1310,7 @@
    "price_context": {
     "store_id": "6"
    },
-   "price_scope_note": "Ofertas do Super Clube desta loja (cobertura parcial: só itens em oferta)."
+   "price_scope_note": "Somente ofertas vigentes do Super Clube de cada loja (cobertura parcial: item sem oferta não aparece)."
   },
   {
    "market": "imperatriz",
@@ -1329,7 +1329,7 @@
    "price_context": {
     "store_id": "7"
    },
-   "price_scope_note": "Ofertas do Super Clube desta loja (cobertura parcial: só itens em oferta)."
+   "price_scope_note": "Somente ofertas vigentes do Super Clube de cada loja (cobertura parcial: item sem oferta não aparece)."
   },
   {
    "market": "imperatriz",
@@ -1348,7 +1348,7 @@
    "price_context": {
     "store_id": "8"
    },
-   "price_scope_note": "Ofertas do Super Clube desta loja (cobertura parcial: só itens em oferta)."
+   "price_scope_note": "Somente ofertas vigentes do Super Clube de cada loja (cobertura parcial: item sem oferta não aparece)."
   },
   {
    "market": "imperatriz",
@@ -1367,7 +1367,7 @@
    "price_context": {
     "store_id": "9"
    },
-   "price_scope_note": "Ofertas do Super Clube desta loja (cobertura parcial: só itens em oferta)."
+   "price_scope_note": "Somente ofertas vigentes do Super Clube de cada loja (cobertura parcial: item sem oferta não aparece)."
   },
   {
    "market": "imperatriz",
@@ -1386,7 +1386,7 @@
    "price_context": {
     "store_id": "10"
    },
-   "price_scope_note": "Ofertas do Super Clube desta loja (cobertura parcial: só itens em oferta)."
+   "price_scope_note": "Somente ofertas vigentes do Super Clube de cada loja (cobertura parcial: item sem oferta não aparece)."
   },
   {
    "market": "imperatriz",
@@ -1405,7 +1405,7 @@
    "price_context": {
     "store_id": "11"
    },
-   "price_scope_note": "Ofertas do Super Clube desta loja (cobertura parcial: só itens em oferta)."
+   "price_scope_note": "Somente ofertas vigentes do Super Clube de cada loja (cobertura parcial: item sem oferta não aparece)."
   },
   {
    "market": "imperatriz",
@@ -1424,7 +1424,7 @@
    "price_context": {
     "store_id": "12"
    },
-   "price_scope_note": "Ofertas do Super Clube desta loja (cobertura parcial: só itens em oferta)."
+   "price_scope_note": "Somente ofertas vigentes do Super Clube de cada loja (cobertura parcial: item sem oferta não aparece)."
   },
   {
    "market": "imperatriz",
@@ -1443,7 +1443,7 @@
    "price_context": {
     "store_id": "13"
    },
-   "price_scope_note": "Ofertas do Super Clube desta loja (cobertura parcial: só itens em oferta)."
+   "price_scope_note": "Somente ofertas vigentes do Super Clube de cada loja (cobertura parcial: item sem oferta não aparece)."
   },
   {
    "market": "imperatriz",
@@ -1462,7 +1462,7 @@
    "price_context": {
     "store_id": "14"
    },
-   "price_scope_note": "Ofertas do Super Clube desta loja (cobertura parcial: só itens em oferta)."
+   "price_scope_note": "Somente ofertas vigentes do Super Clube de cada loja (cobertura parcial: item sem oferta não aparece)."
   },
   {
    "market": "imperatriz",
@@ -1481,7 +1481,7 @@
    "price_context": {
     "store_id": "15"
    },
-   "price_scope_note": "Ofertas do Super Clube desta loja (cobertura parcial: só itens em oferta)."
+   "price_scope_note": "Somente ofertas vigentes do Super Clube de cada loja (cobertura parcial: item sem oferta não aparece)."
   },
   {
    "market": "imperatriz",
@@ -1500,7 +1500,7 @@
    "price_context": {
     "store_id": "16"
    },
-   "price_scope_note": "Ofertas do Super Clube desta loja (cobertura parcial: só itens em oferta)."
+   "price_scope_note": "Somente ofertas vigentes do Super Clube de cada loja (cobertura parcial: item sem oferta não aparece)."
   },
   {
    "market": "imperatriz",
@@ -1519,7 +1519,7 @@
    "price_context": {
     "store_id": "17"
    },
-   "price_scope_note": "Ofertas do Super Clube desta loja (cobertura parcial: só itens em oferta)."
+   "price_scope_note": "Somente ofertas vigentes do Super Clube de cada loja (cobertura parcial: item sem oferta não aparece)."
   },
   {
    "market": "imperatriz",
@@ -1538,7 +1538,7 @@
    "price_context": {
     "store_id": "18"
    },
-   "price_scope_note": "Ofertas do Super Clube desta loja (cobertura parcial: só itens em oferta)."
+   "price_scope_note": "Somente ofertas vigentes do Super Clube de cada loja (cobertura parcial: item sem oferta não aparece)."
   },
   {
    "market": "imperatriz",
@@ -1557,7 +1557,7 @@
    "price_context": {
     "store_id": "19"
    },
-   "price_scope_note": "Ofertas do Super Clube desta loja (cobertura parcial: só itens em oferta)."
+   "price_scope_note": "Somente ofertas vigentes do Super Clube de cada loja (cobertura parcial: item sem oferta não aparece)."
   },
   {
    "market": "imperatriz",
@@ -1576,7 +1576,7 @@
    "price_context": {
     "store_id": "20"
    },
-   "price_scope_note": "Ofertas do Super Clube desta loja (cobertura parcial: só itens em oferta)."
+   "price_scope_note": "Somente ofertas vigentes do Super Clube de cada loja (cobertura parcial: item sem oferta não aparece)."
   }
  ]
 }

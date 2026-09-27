@@ -641,7 +641,8 @@ def _recommend(
     if plan.kind == "single":
         headline = f"Compre no {labels[0]}"
     else:
-        headline = "Divida a compra: " + " + ".join(labels)
+        markets = list(dict.fromkeys(stores_by_id[sid].market_name for sid in plan.store_ids))
+        headline = "Divida a compra entre " + " e ".join(markets)
     explanation = [
         f"Produtos: {format_brl(plan.products_total)}"
         + (f" · deslocamento: {format_brl(travel_total)}" if travel_total is not None else "")

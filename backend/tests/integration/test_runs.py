@@ -35,7 +35,12 @@ from pricetracker.worker.queue import claim_next_run, recover_stale_runs
 from tests.conftest import api, create_user, login
 from tests.fakes import combined_handler
 
-WEEKLY = ["arroz-branco-1kg", "feijao-1kg", "ovos-30-unidades", "cafe-tres-coracoes-gourmet-sul-de-minas-250g"]
+WEEKLY = [
+    "arroz-branco-1kg",
+    "feijao-1kg",
+    "ovos-30-unidades",
+    "cafe-tres-coracoes-gourmet-sul-de-minas-250g",
+]
 
 
 def store_id(db: Any, market: str, slug: str) -> str:
@@ -50,8 +55,18 @@ def prepare(client: TestClient, db: Any, items: list[str], stores: list[str]) ->
     list_id = api(client, "GET", "/lists").json()[0]["id"]
     for slug in items:
         item = db.scalar(select(CatalogItem).where(CatalogItem.slug == slug))
-        assert api(client, "POST", f"/lists/{list_id}/items", json={"catalog_item_id": str(item.id)}).status_code == 201
-    assert api(client, "PUT", "/me/stores", json={"selections": [{"store_id": s} for s in stores]}).status_code == 200
+        assert (
+            api(
+                client, "POST", f"/lists/{list_id}/items", json={"catalog_item_id": str(item.id)}
+            ).status_code
+            == 201
+        )
+    assert (
+        api(
+            client, "PUT", "/me/stores", json={"selections": [{"store_id": s} for s in stores]}
+        ).status_code
+        == 200
+    )
     return list_id
 
 
@@ -78,12 +93,18 @@ def statuses(db: Any, run_id: str) -> dict[str, str]:
     return {f"{market}:{slug}": status for slug, market, status in rows}
 
 
-async def test_weekly_basket_run_and_recommendation(client: TestClient, seeded: Any, settings: Any) -> None:
+async def test_weekly_basket_run_and_recommendation(
+    client: TestClient, seeded: Any, settings: Any
+) -> None:
     db = seeded
     stores = [store_id(db, "angeloni", "beira-mar"), store_id(db, "fort", "kobrasol-160")]
     prepare(client, db, WEEKLY, stores)
     created = api(client, "POST", "/runs", json={})
-    assert created.status_code == 201 and created.json()["status"] == "queued" and created.json()["total_targets"] == 8
+    assert (
+        created.status_code == 201
+        and created.json()["status"] == "queued"
+        and created.json()["total_targets"] == 8
+    )
     conflict = api(client, "POST", "/runs", json={})
     assert conflict.status_code == 409 and conflict.json()["code"] == "run_in_progress"
     status = await execute(settings, created.json()["id"])
@@ -100,13 +121,20 @@ async def test_weekly_basket_run_and_recommendation(client: TestClient, seeded: 
     assert rec["kind"] in ("single", "split") and rec["total_items"] == 4
     assert rec["covered"] >= 3 and rec["effective_total"] is not None
     assert comparison["common"]["item_ids"]
-    fort_rice = next(i for i in comparison["items"] if i["name"].startswith("Arroz"))["cells"][stores[1]]
+    fort_rice = next(i for i in comparison["items"] if i["name"].startswith("Arroz"))["cells"][
+        stores[1]
+    ]
     assert fort_rice["offer"]["title"] and fort_rice["line"]["cost"]
 
 
-async def test_partial_failure_retry_keeps_results(client: TestClient, seeded: Any, settings: Any) -> None:
+async def test_partial_failure_retry_keeps_results(
+    client: TestClient, seeded: Any, settings: Any
+) -> None:
     db = seeded
-    stores = [store_id(db, "fort", "kobrasol-160"), store_id(db, "bistek", "costeira-do-pirajubae-florianopolis")]
+    stores = [
+        store_id(db, "fort", "kobrasol-160"),
+        store_id(db, "bistek", "costeira-do-pirajubae-florianopolis"),
+    ]
     prepare(client, db, ["arroz-branco-1kg", "feijao-1kg"], stores)
     run_id = api(client, "POST", "/runs", json={}).json()["id"]
 
@@ -163,9 +191,14 @@ def fake_llm(content: dict[str, Any]) -> Any:
     return Client
 
 
-async def test_llm_unavailable_affects_only_targets_that_need_it(client: TestClient, seeded: Any, settings: Any) -> None:
+async def test_llm_unavailable_affects_only_targets_that_need_it(
+    client: TestClient, seeded: Any, settings: Any
+) -> None:
     db = seeded
-    stores = [store_id(db, "fort", "kobrasol-160"), store_id(db, "bistek", "costeira-do-pirajubae-florianopolis")]
+    stores = [
+        store_id(db, "fort", "kobrasol-160"),
+        store_id(db, "bistek", "costeira-do-pirajubae-florianopolis"),
+    ]
     prepare(client, db, ["arroz-branco-1kg"], stores)
     run_id = api(client, "POST", "/runs", json={}).json()["id"]
     factory = lambda key: NeedsLlmAdapter() if key == "bistek" else get_adapter(key)  # noqa: E731
@@ -174,28 +207,61 @@ async def test_llm_unavailable_affects_only_targets_that_need_it(client: TestCli
     result = statuses(db, run_id)
     assert result["fort:arroz-branco-1kg"] == "found"
     assert result["bistek:arroz-branco-1kg"] == "needs_llm"
-    target = db.scalar(select(RunTarget).where(RunTarget.run_id == uuid.UUID(run_id), RunTarget.status == "needs_llm"))
+    target = db.scalar(
+        select(RunTarget).where(
+            RunTarget.run_id == uuid.UUID(run_id), RunTarget.status == "needs_llm"
+        )
+    )
     assert target.error_type == "llm_unavailable" and target.llm_needed and not target.llm_used
 
 
-async def test_llm_fallback_is_verified_against_source(client: TestClient, seeded: Any, settings: Any) -> None:
+async def test_llm_fallback_is_verified_against_source(
+    client: TestClient, seeded: Any, settings: Any
+) -> None:
     from pricetracker import settings as settings_module
 
     db = seeded
-    settings_module.configure_settings(settings.model_copy(update={"groq_api_key": SecretStr("gsk_test_key_not_real_123456")}))
+    settings_module.configure_settings(
+        settings.model_copy(update={"groq_api_key": SecretStr("gsk_test_key_not_real_123456")})
+    )
     stores = [store_id(db, "bistek", "costeira-do-pirajubae-florianopolis")]
     prepare(client, db, ["arroz-branco-1kg"], stores)
     run_id = api(client, "POST", "/runs", json={}).json()["id"]
     content = {
         "items": [
-            {"index": 1, "title": "Arroz Branco Tio Joao 1kg", "price_text": "R$ 8,29", "url": "/arroz-branco-tio-joao-1kg-1002236/p", "available": True},
-            {"index": 2, "title": "Arroz Branco Tio Joao 1kg", "price_text": "R$ 0,01", "url": None, "available": True},  # fabricated
-            {"index": 1, "title": "Arroz Premium Inventado 1kg", "price_text": "R$ 1,00", "url": None, "available": True},
+            {
+                "index": 1,
+                "title": "Arroz Branco Tio Joao 1kg",
+                "price_text": "R$ 8,29",
+                "url": "/arroz-branco-tio-joao-1kg-1002236/p",
+                "available": True,
+            },
+            {
+                "index": 2,
+                "title": "Arroz Branco Tio Joao 1kg",
+                "price_text": "R$ 0,01",
+                "url": None,
+                "available": True,
+            },  # fabricated
+            {
+                "index": 1,
+                "title": "Arroz Premium Inventado 1kg",
+                "price_text": "R$ 1,00",
+                "url": None,
+                "available": True,
+            },
         ]
     }
-    llm_factory = lambda session: LlmService(session, settings_module.get_settings(), client_factory=fake_llm(content))  # noqa: E731
-    factory = lambda key: NeedsLlmAdapter()  # noqa: E731
-    status = await execute(settings_module.get_settings(), run_id, adapter_factory=factory, llm_factory=llm_factory)
+
+    def llm_factory(session: Any) -> LlmService:
+        return LlmService(session, settings_module.get_settings(), client_factory=fake_llm(content))
+
+    def factory(key: str) -> NeedsLlmAdapter:
+        return NeedsLlmAdapter()
+
+    status = await execute(
+        settings_module.get_settings(), run_id, adapter_factory=factory, llm_factory=llm_factory
+    )
     assert status == RunStatus.SUCCESS
     obs = db.scalar(select(Observation).where(Observation.run_id == uuid.UUID(run_id)))
     assert obs is not None and obs.method == "llm" and str(obs.regular_price) == "8.29"
@@ -217,7 +283,9 @@ async def test_cancel_queued_run(client: TestClient, seeded: Any, settings: Any)
     assert api(client, "POST", "/runs", json={}).status_code == 201  # no longer blocks new runs
 
 
-async def test_restart_recovery_and_idempotency(client: TestClient, seeded: Any, settings: Any) -> None:
+async def test_restart_recovery_and_idempotency(
+    client: TestClient, seeded: Any, settings: Any
+) -> None:
     db = seeded
     stores = [store_id(db, "fort", "kobrasol-160")]
     prepare(client, db, ["arroz-branco-1kg", "feijao-1kg"], stores)

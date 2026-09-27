@@ -80,7 +80,7 @@ async def run_worker(stop: asyncio.Event | None = None, once: bool = False) -> N
             task.cancel()
             try:
                 await task
-            except (asyncio.CancelledError, Exception) as exc:  # noqa: BLE001
+            except (asyncio.CancelledError, Exception) as exc:
                 logger.info("in-flight run stopped: %s", type(exc).__name__)
             with factory() as db:
                 release_run(db, run_id, reason="worker desligado; busca devolvida à fila")

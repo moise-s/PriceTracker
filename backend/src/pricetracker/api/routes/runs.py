@@ -177,7 +177,7 @@ def retry_run(run_id: uuid.UUID, user: CurrentUser, db: DbSession) -> schemas.Ru
 # --- comparison & history -----------------------------------------------------------------------
 
 
-@router.get("/comparison", tags=["comparison"])
+@router.get("/comparison", response_model=schemas.ComparisonOut, tags=["comparison"])
 def comparison(
     user: CurrentUser,
     db: DbSession,
@@ -196,7 +196,7 @@ def comparison(
     return serialize(context)
 
 
-@router.get("/history/products/{product_id}", tags=["history"])
+@router.get("/history/products/{product_id}", response_model=schemas.HistoryOut, tags=["history"])
 def product_history(
     product_id: uuid.UUID, user: CurrentUser, db: DbSession, days: int = 180
 ) -> dict[str, Any]:

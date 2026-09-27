@@ -50,3 +50,6 @@ debug_snapshot*.txt
 .DS_Store
 .idea/
 .vscode/
+
+# Local agent/editor launch configuration
+.claude/

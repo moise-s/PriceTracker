@@ -115,11 +115,11 @@ def to_base(quantity: Decimal, unit: Unit) -> Measure:
     return Measure(quantity * TO_BASE_FACTOR[unit], BASE_UNIT[unit])
 
 
-def _unit_from_token(token: str) -> tuple[Unit, Decimal] | None:
-    token = token.lower()
-    if token == "mg":
+def _unit_from_token(raw_unit: str) -> tuple[Unit, Decimal] | None:
+    word = raw_unit.lower()
+    if word == "mg":
         return Unit.KG, Decimal("0.000001")
-    unit = _UNIT_ALIASES.get(token) or _UNIT_ALIASES.get(token.rstrip("s"))
+    unit = _UNIT_ALIASES.get(word) or _UNIT_ALIASES.get(word.rstrip("s"))
     if unit is None:
         return None
     return BASE_UNIT[unit], TO_BASE_FACTOR[unit]

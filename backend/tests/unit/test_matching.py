@@ -138,3 +138,13 @@ def test_select_best_compares_unit_price_within_tolerance() -> None:
     items = [listing("Ovos c/30", "21.00"), listing("Ovos c/20", "13.00")]  # 0.70 vs 0.65 per egg
     _, best = select_best(items, spec)
     assert best == 1
+
+
+def test_main_product_must_lead_the_title() -> None:
+    salt = evaluate(listing("Sal Médio TEMPEREX para Picanha, Alcatra e Fraldinha 1kg"), STEAK)
+    assert not salt.accepted and "not_main_product:alcatra" in salt.reasons
+    assert evaluate(listing("Bife de Alcatra Bandeja 1kg"), STEAK).accepted
+    assert evaluate(listing("Tio João Arroz Branco 1kg"), RICE).accepted
+    assert not evaluate(listing("Biscoito de Polvilho com Arroz 1kg"), RICE).accepted
+    relaxed = STEAK.model_copy(update={"head_window": 0})
+    assert evaluate(listing("Sal Médio para Picanha, Alcatra 1kg"), relaxed).accepted

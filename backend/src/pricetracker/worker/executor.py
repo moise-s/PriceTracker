@@ -369,7 +369,11 @@ class RunExecutor:
                         "notes": [*shared.notes, "mesmo contexto de preço de outra filial"],
                     }
                 )
-            self._persist(plan, target, adapter, market, spec, result)
+            try:
+                self._persist(plan, target, adapter, market, spec, result)
+            except Exception:
+                logger.exception("failed to persist target result")
+                self._persist_failure(plan, target, "falha interna ao gravar o resultado")
 
     async def _search_and_match(
         self,
@@ -663,6 +667,20 @@ class RunExecutor:
             requests=result.requests,
             error_type=result.error_type,
         )
+
+    def _persist_failure(self, plan: RunPlan, target: TargetPlan, detail: str) -> None:
+        with self.factory() as db:
+            row = db.get(RunTarget, target.id)
+            if row is None:
+                return
+            row.status = TargetStatus.ADAPTER_ERROR.value
+            row.error_type = "internal_error"
+            row.error_detail = detail
+            row.finished_at = utcnow()
+            run = db.get(Run, plan.run_id)
+            if run is not None:
+                run.done_targets = (run.done_targets or 0) + 1
+            db.commit()
 
     def _adapter_version(self, db: Session, market: MarketPlan, adapter: MarketAdapter) -> str:
         found = db.scalar(

@@ -37,7 +37,10 @@ def test_bistek_robots(url: str, allowed: bool) -> None:
 @pytest.mark.parametrize(
     ("url", "allowed"),
     [
-        ("https://www.fortatacadista.com.br/produtos/7895191/arroz-polido-tio-joao-tipo-1-com-1kg", True),
+        (
+            "https://www.fortatacadista.com.br/produtos/7895191/arroz-polido-tio-joao-tipo-1-com-1kg",
+            True,
+        ),
         # RFC 9309 longest match: "Allow: /produtos/" (10 chars) beats "Disallow: /*?*" (4 chars).
         # The Fort adapter still never sends query strings (asserted in the adapter tests).
         ("https://www.fortatacadista.com.br/produtos/7895191/arroz?loja=1638", True),
@@ -54,8 +57,12 @@ def test_fort_robots(url: str, allowed: bool) -> None:
 def test_angeloni_robots_allows_api_but_not_legacy_search() -> None:
     policy = parse_robots((FIXTURES / "angeloni" / "robots_super.angeloni.com.br.txt").read_text())
     base = "https://super.angeloni.com.br"
-    assert policy.is_allowed(base + "/api/io/_v/api/intelligent-search/product_search/trade-policy/1?query=arroz", UA)
-    assert policy.is_allowed(base + "/api/checkout/pub/regions?country=BRA&postalCode=88010000&sc=1", UA)
+    assert policy.is_allowed(
+        base + "/api/io/_v/api/intelligent-search/product_search/trade-policy/1?query=arroz", UA
+    )
+    assert policy.is_allowed(
+        base + "/api/checkout/pub/regions?country=BRA&postalCode=88010000&sc=1", UA
+    )
     assert not policy.is_allowed(base + "/api/catalog_system/pub/products/search?ft=arroz", UA)
     assert not policy.is_allowed(base + "/arroz?map=ft", UA)
     assert not policy.is_allowed(base + "/busca?q=arroz", UA)
@@ -70,12 +77,16 @@ def test_rfc9309_longest_match_and_status_semantics() -> None:
     assert policy.is_allowed("https://x.test/doc.pdf?x=1", UA)
     assert parse_robots("", 404).is_allowed("https://x.test/anything", UA)
     assert not parse_robots("", 503).is_allowed("https://x.test/anything", UA)
-    specific = parse_robots("User-agent: pricetracker\nDisallow: /private\n\nUser-agent: *\nDisallow: /\n")
+    specific = parse_robots(
+        "User-agent: pricetracker\nDisallow: /private\n\nUser-agent: *\nDisallow: /\n"
+    )
     assert specific.is_allowed("https://x.test/public", UA)
     assert not specific.is_allowed("https://x.test/private", UA)
 
 
-def _client(handler: httpx.MockTransport, domains: tuple[str, ...], settings: object) -> PoliteClient:
+def _client(
+    handler: httpx.MockTransport, domains: tuple[str, ...], settings: object
+) -> PoliteClient:
     return PoliteClient(allowed_domains=domains, settings=settings, transport=handler)  # type: ignore[arg-type]
 
 
@@ -109,7 +120,10 @@ async def test_client_types_blocks_and_breaks_circuit(settings: object) -> None:
         if request.url.path == "/blocked":
             return httpx.Response(403, text="Access denied")
         if request.url.path == "/challenge":
-            return httpx.Response(200, text="<html><title>Just a moment...</title><script src='/cdn-cgi/challenge-platform/x'></script></html>")
+            return httpx.Response(
+                200,
+                text="<html><title>Just a moment...</title><script src='/cdn-cgi/challenge-platform/x'></script></html>",
+            )
         return httpx.Response(503, text="down")
 
     async with _client(httpx.MockTransport(handler), ("x.test",), settings) as client:

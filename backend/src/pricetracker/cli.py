@@ -161,7 +161,8 @@ def run(
     except typer.Exit:
         raise
     except Exception as exc:
-        _fail(f"erro inesperado: {type(exc).__name__}: {exc}", EXIT_ERROR)
+        first_line = str(exc).splitlines()[0][:300] if str(exc) else ""
+        _fail(f"erro inesperado: {type(exc).__name__}: {first_line}", EXIT_ERROR)
         return
     _emit(summary)
     raise typer.Exit(summary["exit_code"])
@@ -508,6 +509,25 @@ def health(config: Annotated[Path | None, typer.Option("--config")] = None) -> N
         _fail(f"banco indisponível: {type(exc).__name__}", EXIT_FAILED)
         return
     _emit({"ok": True, "schema": version})
+
+
+@app.command()
+def openapi(
+    output: Annotated[Path, typer.Option(help="Arquivo de saída.")] = Path("var/openapi.json"),
+) -> None:
+    """Exporta o contrato OpenAPI (usado para gerar o cliente tipado do frontend)."""
+    import os
+
+    os.environ.setdefault("PRICETRACKER_DATABASE_URL", "sqlite://")
+    settings_module.configure_settings(settings_module.Settings(_env_file=None, log_level="ERROR"))
+    from pricetracker.api.app import create_app
+
+    output.parent.mkdir(parents=True, exist_ok=True)
+    spec = create_app().openapi()
+    output.write_text(
+        json.dumps(spec, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+    typer.echo(f"OpenAPI salvo em {output} ({len(spec['paths'])} rotas)", err=True)
 
 
 def main() -> None:

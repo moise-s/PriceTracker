@@ -229,7 +229,8 @@ class AngeloniAdapter(MarketAdapter):
                 outcome.listings.append(listing)
             outcome.query_used = term
             if any(
-                evaluate(l, query.spec).accepted and l.price is not None for l in outcome.listings
+                evaluate(item, query.spec).accepted and item.price is not None
+                for item in outcome.listings
             ):
                 break
         if outcome.listings and seller:
