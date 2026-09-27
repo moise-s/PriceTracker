@@ -22,7 +22,7 @@ class JobRunner:
 
     async def run(self, site_name: Optional[str] = None, product_name: Optional[str] = None):
         logger.info("Starting job run")
-        async with BrowserManager(headless=True) as browser_manager:
+        async with BrowserManager(headless=False) as browser_manager:
             page = await browser_manager.get_page()
             # agent = LLMAgent(self.llm_client) # Defer creation until site loop or pass None initially
 

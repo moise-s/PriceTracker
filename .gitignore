@@ -5,9 +5,48 @@ build/
 dist/
 wheels/
 *.egg-info
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+coverage.xml
+htmlcov/
 
 # Virtual environments
 .venv
 
-# Environment variables
+# Environment variables and config (never commit real values)
 .env
+.env.*
+!.env.example
+!**/.env.example
+config.yaml
+secrets/
+!deploy/secrets/README.md
+
+# Database files
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Node / web build output
+node_modules/
+web/dist/
+web/dev-dist/
+web/test-results/
+web/playwright-report/
+web/blob-report/
+*.tsbuildinfo
+
+# Runtime data, uploads, backups and local artefacts
+var/
+backups/
+*.dump
+.preserved/
+debug_snapshot*.txt
+
+# Editors and OS
+.DS_Store
+.idea/
+.vscode/
