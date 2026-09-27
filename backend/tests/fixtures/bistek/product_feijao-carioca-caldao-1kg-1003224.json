@@ -1,0 +1,63 @@
+{
+ "url": "https://www.bistek.com.br/feijao-carioca-caldao-1kg-1003224/p",
+ "slug": "feijao-carioca-caldao-1kg-1003224",
+ "http_status": 200,
+ "source": "__STATE__ (Apollo SSR cache)",
+ "status": "ok",
+ "name": "Feijão Carioca Caldão 1kg",
+ "brand": "Caldao",
+ "brand_id": 475,
+ "product_id": "1003224",
+ "sku": "1003224",
+ "ref_id": "1003224",
+ "ean": "7897656600059",
+ "categories": [
+  "/Mercearia/Alimentos Básicos/Feijões/",
+  "/Mercearia/Alimentos Básicos/",
+  "/Mercearia/"
+ ],
+ "list_price": "11.49",
+ "selling_price": "9.97",
+ "price_without_discount": "9.97",
+ "spot_price": "9.97",
+ "is_promo": true,
+ "discount_pct": "13.23",
+ "club_price": null,
+ "club_price_note": "Not in SSR. The site computes 'R$ X no Clube' client-side via POST /api/checkout/pub/orderForms/simulation?RnbBehavior=0&sc=2 (robots-disallowed).",
+ "quantity_offer_hints": [],
+ "teasers": [],
+ "discount_highlights": [],
+ "unit_price": {
+  "value": "9.97",
+  "per": "kg",
+  "rule": "Price / properties['Peso Produto']"
+ },
+ "measurement_unit": "un",
+ "unit_multiplier": 1,
+ "package_size": {
+  "value": "1.0",
+  "unit": "kg",
+  "source": "properties"
+ },
+ "package_size_in_name": "1kg",
+ "slug_vs_name_size_note": null,
+ "available": true,
+ "available_quantity": 99999,
+ "price_valid_until": "2027-09-27T00:00:00Z",
+ "image_url": "https://bistek.vtexassets.com/arquivos/ids/192724/feijao-carioca-caldao-1kg.jpg?v=638537986884070000",
+ "jsonld_offer": {
+  "price": "9.97",
+  "availability": "http://schema.org/InStock",
+  "priceValidUntil": "2027-09-27T00:00:00Z"
+ },
+ "store_context": {
+  "seller_id": "1",
+  "seller_name": "Bistek Supermercados",
+  "sales_channel": "1",
+  "region_id": null,
+  "price_tables": null,
+  "note": "Default SSR context (no CEP/region). Site disclaimer: prices reference the Florianópolis/SC store and may vary by location."
+ },
+ "_fixture_note": "parsed by prototype.parse_offer_html from fixtures/product_feijao-carioca-caldao-1kg-1003224.html",
+ "_fetched_at": "2026-09-27T16:49:08-0300"
+}

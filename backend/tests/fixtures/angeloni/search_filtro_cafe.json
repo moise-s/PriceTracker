@@ -1,0 +1,501 @@
+{
+ "_fixture_meta": {
+  "source": "VTEX Intelligent Search product_search (public, robots-allowed)",
+  "request": "/api/io/_v/api/intelligent-search/product_search/trade-policy/1/region-id/v2.6470C9DD8410520F44B2C757ECBDE327?query=filtro%20caf%C3%A9%20102&page=1&count=10&locale=pt-BR&hideUnavailableItems=false",
+  "fetched": "2026-09-27",
+  "store_context": {
+   "postal_code": "88010-000",
+   "region_id": "v2.6470C9DD8410520F44B2C757ECBDE327",
+   "white_label_seller": "superangeloni14 (Angeloni Beira Mar)",
+   "trade_policy": "1"
+  },
+  "trimmed": "4 of 4 products returned (recordsFiltered=4); properties/commertialOffer reduced to parsing-relevant fields; Installments cut to 1",
+  "note": "Unit/pack of 30 filters. Two available, two unavailable (Price=0)."
+ },
+ "recordsFiltered": 4,
+ "correction": {
+  "misspelled": false
+ },
+ "fuzzy": "0",
+ "operator": "and",
+ "translated": false,
+ "redirect": null,
+ "pagination": {
+  "count": 1,
+  "perPage": 10,
+  "current": {
+   "index": 1,
+   "proxyUrl": "search/trade-policy/1?an=superangeloni&query=filtro café 102&page=1&count=10&locale=pt-BR&hide-unavailable-items=false&operator=and&fuzzy=0"
+  },
+  "next": {
+   "index": 0
+  },
+  "last": {
+   "index": 0
+  }
+ },
+ "options": {
+  "sorts": [],
+  "counts": [],
+  "deliveryPromisesEnabled": false,
+  "dpStatus": "not_requested"
+ },
+ "products": [
+  {
+   "productId": "2590953",
+   "productName": "Filtro de papel MELITTA médio 102 com 30 unidades",
+   "brand": "MELITTA",
+   "brandId": 2000019,
+   "productReference": "2590953",
+   "linkText": "filtro-de-papel-melitta-medio-102-com-30-unidades-2590953",
+   "link": "/filtro-de-papel-melitta-medio-102-com-30-unidades-2590953/p",
+   "categoryId": "275",
+   "categories": [
+    "/Mercearia/Cafés e Chás/Filtros de Papel/",
+    "/Mercearia/Cafés e Chás/",
+    "/Mercearia/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 5.29,
+     "lowPrice": 5.29
+    },
+    "listPrice": {
+     "highPrice": 5.29,
+     "lowPrice": 5.29
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "un"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "30"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "2590953",
+     "name": "Filtro de papel MELITTA médio  102 com 30 unidades",
+     "nameComplete": "Filtro de papel MELITTA médio 102 com 30 unidades Filtro de papel MELITTA médio  102 com 30 unidades",
+     "ean": "7891021001885",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "2590953"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "291287",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/291287/2590953.jpg?v=638900952257800000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 5.29,
+        "ListPrice": 5.29,
+        "PriceWithoutDiscount": 5.29,
+        "spotPrice": 5.29,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:50:01Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 5.29,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 5.29,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "5099946",
+   "productName": "Filtro de Papel IGUAÇU 102 30un",
+   "brand": "IGUAÇU",
+   "brandId": 2000016,
+   "productReference": "5099946",
+   "linkText": "5099946-filtro-de-papel-iguacu-102-30un",
+   "link": "/5099946-filtro-de-papel-iguacu-102-30un/p",
+   "categoryId": "275",
+   "categories": [
+    "/Mercearia/Cafés e Chás/Filtros de Papel/",
+    "/Mercearia/Cafés e Chás/",
+    "/Mercearia/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 4.49,
+     "lowPrice": 4.49
+    },
+    "listPrice": {
+     "highPrice": 4.49,
+     "lowPrice": 4.49
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "un"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "30"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "5099946",
+     "name": "Filtro de Papel IGUAÇU 102 30un",
+     "nameComplete": "Filtro de Papel IGUAÇU 102 30un",
+     "ean": "7896081805282",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "5099946"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "279578",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/279578/5099946.jpg.jpg?v=638760840905000000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 4.49,
+        "ListPrice": 4.49,
+        "PriceWithoutDiscount": 4.49,
+        "spotPrice": 4.49,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:53:01Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 4.49,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 4.49,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "2618080",
+   "productName": "Filtro de papel BRIGITTA 102 com 30 Unidades",
+   "brand": "BRIGITTA",
+   "brandId": 2000024,
+   "productReference": "2618080",
+   "linkText": "filtro-de-papel-brigitta-102-com-30-unidades-2618080",
+   "link": "/filtro-de-papel-brigitta-102-com-30-unidades-2618080/p",
+   "categoryId": "275",
+   "categories": [
+    "/Mercearia/Cafés e Chás/Filtros de Papel/",
+    "/Mercearia/Cafés e Chás/",
+    "/Mercearia/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 0,
+     "lowPrice": null
+    },
+    "listPrice": {
+     "highPrice": 0,
+     "lowPrice": null
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "un"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "30"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "2618080",
+     "name": "Filtro de papel BRIGITTA 102 com 30 Unidades",
+     "nameComplete": "Filtro de papel BRIGITTA 102 com 30 Unidades",
+     "ean": "7891021002103",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "2618080"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "278389",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/278389/2618080.jpg.jpg?v=638754994437830000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": false,
+       "commertialOffer": {
+        "Price": 0,
+        "ListPrice": 0,
+        "PriceWithoutDiscount": 0,
+        "spotPrice": 0,
+        "AvailableQuantity": 0,
+        "PriceValidUntil": null,
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": null,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": []
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "4301147",
+   "productName": "Filtro Permanente Para Café Michelon 102",
+   "brand": "MICHELON",
+   "brandId": 2000255,
+   "productReference": "4301147",
+   "linkText": "filtro-permanente-para-cafe-michelon-102-4301147",
+   "link": "/filtro-permanente-para-cafe-michelon-102-4301147/p",
+   "categoryId": "342",
+   "categories": [
+    "/Utilidades Domésticas/Copa e Cozinha/Acessórios para Mesa/",
+    "/Utilidades Domésticas/Copa e Cozinha/",
+    "/Utilidades Domésticas/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 0,
+     "lowPrice": null
+    },
+    "listPrice": {
+     "highPrice": 0,
+     "lowPrice": null
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "un"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "4301147",
+     "name": "Filtro Permanente Para Café Michelon 102",
+     "nameComplete": "Filtro Permanente Para Café Michelon 102",
+     "ean": "7896672706431",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "4301147"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "166685",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/166685/4301147_1_zoom.jpg?v=638037866870400000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": false,
+       "commertialOffer": {
+        "Price": 0,
+        "ListPrice": 0,
+        "PriceWithoutDiscount": 0,
+        "spotPrice": 0,
+        "AvailableQuantity": 0,
+        "PriceValidUntil": null,
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": null,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": []
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  }
+ ]
+}

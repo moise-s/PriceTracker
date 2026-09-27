@@ -1,0 +1,62 @@
+{
+ "url": "https://www.bistek.com.br/mamao-papaia-unidade-3070530/p",
+ "slug": "mamao-papaia-unidade-3070530",
+ "http_status": 200,
+ "source": "__STATE__ (Apollo SSR cache)",
+ "status": "ok",
+ "name": "Mamão Papaia Unid.",
+ "brand": "Bistek",
+ "brand_id": 1,
+ "product_id": "3070530",
+ "sku": "3070530",
+ "ref_id": "3070530",
+ "ean": "3000030705309",
+ "categories": [
+  "/Hortifrúti/Frutas/",
+  "/Hortifrúti/"
+ ],
+ "list_price": "6.99",
+ "selling_price": "6.99",
+ "price_without_discount": "6.99",
+ "spot_price": "6.99",
+ "is_promo": false,
+ "discount_pct": null,
+ "club_price": null,
+ "club_price_note": "Not in SSR. The site computes 'R$ X no Clube' client-side via POST /api/checkout/pub/orderForms/simulation?RnbBehavior=0&sc=2 (robots-disallowed).",
+ "quantity_offer_hints": [],
+ "teasers": [],
+ "discount_highlights": [],
+ "unit_price": {
+  "value": "6.99",
+  "per": "un",
+  "rule": "Price / properties['Peso Produto']"
+ },
+ "measurement_unit": "un",
+ "unit_multiplier": 1,
+ "package_size": {
+  "value": "1.0",
+  "unit": "un",
+  "source": "properties"
+ },
+ "package_size_in_name": null,
+ "slug_vs_name_size_note": null,
+ "available": true,
+ "available_quantity": 99999,
+ "price_valid_until": "2027-09-27T00:00:00Z",
+ "image_url": "https://bistek.vtexassets.com/arquivos/ids/201788/mamao-papaia-unidade.jpg?v=639015889774700000",
+ "jsonld_offer": {
+  "price": "6.99",
+  "availability": "http://schema.org/InStock",
+  "priceValidUntil": "2027-09-27T00:00:00Z"
+ },
+ "store_context": {
+  "seller_id": "1",
+  "seller_name": "Bistek Supermercados",
+  "sales_channel": "1",
+  "region_id": null,
+  "price_tables": null,
+  "note": "Default SSR context (no CEP/region). Site disclaimer: prices reference the Florianópolis/SC store and may vary by location."
+ },
+ "_fixture_note": "parsed by prototype.parse_offer_html from fixtures/product_mamao-papaia-unidade-3070530.html",
+ "_fetched_at": "2026-09-27T16:49:48-0300"
+}

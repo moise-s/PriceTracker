@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Mamão papaia">
+  <rect width="512" height="512" rx="96" fill="#FFF0DA"/>
+  <circle cx="256" cy="244" r="180" fill="#FFF8EC"/>
+  <ellipse cx="256" cy="414" rx="170" ry="24" fill="#F3DEBC"/>
+  <g transform="translate(196 262) rotate(-18)">
+    <path d="M0 -150 C 70 -150, 96 -60, 92 20 C 88 110, 50 160, 0 160 C -50 160, -88 110, -92 20 C -96 -60, -70 -150, 0 -150 Z" fill="#7FAE45"/>
+    <path d="M0 -150 C 50 -148, 80 -80, 80 -10 C 50 -70, 30 -120, 0 -150 Z" fill="#F3B23C" opacity="0.85"/>
+    <path d="M0 -150 C 6 -166, 12 -174, 22 -180" stroke="#5E7F2F" stroke-width="10" fill="none" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(330 300) rotate(12)">
+    <path d="M0 -118 C 58 -118, 80 -48, 76 16 C 72 88, 40 128, 0 128 C -40 128, -72 88, -76 16 C -80 -48, -58 -118, 0 -118 Z" fill="#F29B38"/>
+    <path d="M0 -96 C 44 -96, 60 -40, 57 12 C 54 70, 30 104, 0 104 C -30 104, -54 70, -57 12 C -60 -40, -44 -96, 0 -96 Z" fill="#F7B35B"/>
+    <path d="M0 -60 C 18 -60, 26 -30, 25 0 C 24 32, 14 50, 0 50 C -14 50, -24 32, -25 0 C -26 -30, -18 -60, 0 -60 Z" fill="#E4833A"/>
+    <g fill="#2F2A26">
+      <circle cx="-8" cy="-34" r="6"/><circle cx="8" cy="-22" r="6"/><circle cx="-10" cy="-8" r="6"/><circle cx="9" cy="4" r="6"/>
+      <circle cx="-7" cy="18" r="6"/><circle cx="8" cy="30" r="5"/><circle cx="2" cy="-46" r="5"/>
+    </g>
+  </g>
+  <rect x="338" y="92" width="96" height="42" rx="21" fill="#D9762B"/>
+  <text x="386" y="121" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF">1 un</text>
+</svg>

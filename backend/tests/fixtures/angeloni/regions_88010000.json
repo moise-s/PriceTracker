@@ -1,0 +1,18 @@
+{
+ "_fixture_meta": {
+  "request": "/api/checkout/pub/regions?country=BRA&postalCode=88010000&sc=1",
+  "fetched": "2026-09-27"
+ },
+ "response": [
+  {
+   "id": "v2.6470C9DD8410520F44B2C757ECBDE327",
+   "sellers": [
+    {
+     "id": "superangeloni14",
+     "name": "Angeloni Beira Mar",
+     "logo": ""
+    }
+   ]
+  }
+ ]
+}

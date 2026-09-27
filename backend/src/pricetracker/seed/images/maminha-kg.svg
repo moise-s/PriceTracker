@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Peça de maminha">
+  <rect width="512" height="512" rx="96" fill="#F9E2DF"/>
+  <circle cx="256" cy="246" r="180" fill="#FEF1EF"/>
+  <ellipse cx="256" cy="402" rx="176" ry="26" fill="#EDCBC6"/>
+  <rect x="84" y="300" width="344" height="86" rx="30" fill="#8C5A3C"/>
+  <rect x="84" y="300" width="344" height="30" rx="15" fill="#A36E4D"/>
+  <path d="M118 262 C 128 208, 196 176, 262 180 C 322 184, 368 170, 398 196 C 420 216, 404 254, 380 276 C 348 304, 278 320, 204 312 C 150 306, 110 294, 118 262 Z" fill="#EDB7A6"/>
+  <path d="M136 258 C 146 214, 202 190, 262 194 C 318 198, 360 186, 384 206 C 400 222, 388 250, 368 266 C 338 290, 276 302, 208 296 C 160 292, 130 282, 136 258 Z" fill="#B8473A"/>
+  <path d="M178 232 C 214 218, 262 222, 300 236 C 330 248, 352 244, 370 232" stroke="#EDB7A6" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <path d="M186 270 C 226 262, 262 268, 300 276" stroke="#EDB7A6" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.85"/>
+  <rect x="330" y="96" width="96" height="42" rx="21" fill="#8E3A2E"/>
+  <text x="378" y="125" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF">kg</text>
+</svg>

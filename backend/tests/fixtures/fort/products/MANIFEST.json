@@ -1,0 +1,145 @@
+[
+ {
+  "fixture": "products/7895191_nostore.html",
+  "expected": "products/7895191_nostore.expected.json",
+  "url": "https://www.fortatacadista.com.br/produtos/7895191/arroz-polido-tio-joao-tipo-1-com-1kg",
+  "store_cookie_id": null,
+  "rendered_store": "1585",
+  "nature": "fixed package; NO store context (site default store 1585)",
+  "captured": "2026-09-27",
+  "raw_bytes": 426265,
+  "fixture_bytes": 13004
+ },
+ {
+  "fixture": "products/7895191_1638.html",
+  "expected": "products/7895191_1638.expected.json",
+  "url": "https://www.fortatacadista.com.br/produtos/7895191/arroz-polido-tio-joao-tipo-1-com-1kg",
+  "store_cookie_id": "1638",
+  "rendered_store": "1638",
+  "nature": "fixed package",
+  "captured": "2026-09-27",
+  "raw_bytes": 425517,
+  "fixture_bytes": 12964
+ },
+ {
+  "fixture": "products/7895191_1633.html",
+  "expected": "products/7895191_1633.expected.json",
+  "url": "https://www.fortatacadista.com.br/produtos/7895191/arroz-polido-tio-joao-tipo-1-com-1kg",
+  "store_cookie_id": "1633",
+  "rendered_store": "1633",
+  "nature": "fixed package; cross-store price evidence",
+  "captured": "2026-09-27",
+  "raw_bytes": 424167,
+  "fixture_bytes": 12965
+ },
+ {
+  "fixture": "products/7904524_1638.html",
+  "expected": "products/7904524_1638.expected.json",
+  "url": "https://www.fortatacadista.com.br/produtos/7904524/feijao-preto-caldao-1kg",
+  "store_cookie_id": "1638",
+  "rendered_store": "1638",
+  "nature": "fixed package; MORE_FOR_LESS multi-buy promo",
+  "captured": "2026-09-27",
+  "raw_bytes": 342380,
+  "fixture_bytes": 9273
+ },
+ {
+  "fixture": "products/7898281_1638.html",
+  "expected": "products/7898281_1638.expected.json",
+  "url": "https://www.fortatacadista.com.br/produtos/7898281/lentilha-caldao-400g",
+  "store_cookie_id": "1638",
+  "rendered_store": "1638",
+  "nature": "fixed package; MORE_FOR_LESS multi-buy promo",
+  "captured": "2026-09-27",
+  "raw_bytes": 342594,
+  "fixture_bytes": 9422
+ },
+ {
+  "fixture": "products/7896332_1638.html",
+  "expected": "products/7896332_1638.expected.json",
+  "url": "https://www.fortatacadista.com.br/produtos/7896332/cafe-3-coracoes-gourmet-sul-de-minas-almofada-250g",
+  "store_cookie_id": "1638",
+  "rendered_store": "1638",
+  "nature": "fixed package; MORE_FOR_LESS",
+  "captured": "2026-09-27",
+  "raw_bytes": 426363,
+  "fixture_bytes": 14472
+ },
+ {
+  "fixture": "products/7894554_nostore.html",
+  "expected": "products/7894554_nostore.expected.json",
+  "url": "https://www.fortatacadista.com.br/produtos/7894554/acucar-demerara-caravelas-1kg",
+  "store_cookie_id": null,
+  "rendered_store": "1585",
+  "nature": "NO store context; Clube Mais (persona) price",
+  "captured": "2026-09-27",
+  "raw_bytes": 343483,
+  "fixture_bytes": 9843
+ },
+ {
+  "fixture": "products/7895917_1638.html",
+  "expected": "products/7895917_1638.expected.json",
+  "url": "https://www.fortatacadista.com.br/produtos/7895917/alcatra-bovina-a-vacuo-resfriado",
+  "store_cookie_id": "1638",
+  "rendered_store": "1638",
+  "nature": "variable weight per kg; promotionalPrice",
+  "captured": "2026-09-27",
+  "raw_bytes": 341231,
+  "fixture_bytes": 8661
+ },
+ {
+  "fixture": "products/7895915_1638.html",
+  "expected": "products/7895915_1638.expected.json",
+  "url": "https://www.fortatacadista.com.br/produtos/7895915/maminha-bovina-friboi-peca-a-vacuo",
+  "store_cookie_id": "1638",
+  "rendered_store": "1638",
+  "nature": "variable weight per kg",
+  "captured": "2026-09-27",
+  "raw_bytes": 342058,
+  "fixture_bytes": 9292
+ },
+ {
+  "fixture": "products/7903655_1638.html",
+  "expected": "products/7903655_1638.expected.json",
+  "url": "https://www.fortatacadista.com.br/produtos/7903655/maca-nacional-kg",
+  "store_cookie_id": "1638",
+  "rendered_store": "1638",
+  "nature": "variable weight, sellByWeightAndUnit; promo + VuonCard price",
+  "captured": "2026-09-27",
+  "raw_bytes": 342365,
+  "fixture_bytes": 9169
+ },
+ {
+  "fixture": "products/8064079_1638.html",
+  "expected": "products/8064079_1638.expected.json",
+  "url": "https://www.fortatacadista.com.br/produtos/8064079/mamao-papaya",
+  "store_cookie_id": "1638",
+  "rendered_store": "1638",
+  "nature": "sold per kg OR per unit (~0.7 kg); VuonCard price",
+  "captured": "2026-09-27",
+  "raw_bytes": 342183,
+  "fixture_bytes": 9054
+ },
+ {
+  "fixture": "products/8066786_1638.html",
+  "expected": "products/8066786_1638.expected.json",
+  "url": "https://www.fortatacadista.com.br/produtos/8066786/ovo-branco-mantiqueira-grande-com-30-unidades",
+  "store_cookie_id": "1638",
+  "rendered_store": "1638",
+  "nature": "unit/pack (30 un); max qty 10",
+  "captured": "2026-09-27",
+  "raw_bytes": 341535,
+  "fixture_bytes": 8862
+ },
+ {
+  "fixture": "products/7903336_1638.html",
+  "expected": "products/7903336_1638.expected.json",
+  "url": "https://www.fortatacadista.com.br/produtos/7903336/filtro-de-papel-3-coracoes-102-com-30-unidades",
+  "store_cookie_id": "1638",
+  "rendered_store": "1638",
+  "nature": "unit/pack (30 un)",
+  "captured": "2026-09-27",
+  "raw_bytes": 423617,
+  "fixture_bytes": 14556
+ }
+]

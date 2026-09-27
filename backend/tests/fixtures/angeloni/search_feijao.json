@@ -1,0 +1,635 @@
+{
+ "_fixture_meta": {
+  "source": "VTEX Intelligent Search product_search (public, robots-allowed)",
+  "request": "/api/io/_v/api/intelligent-search/product_search/trade-policy/1/region-id/v2.6470C9DD8410520F44B2C757ECBDE327?query=feij%C3%A3o&page=1&count=10&locale=pt-BR&hideUnavailableItems=false",
+  "fetched": "2026-09-27",
+  "store_context": {
+   "postal_code": "88010-000",
+   "region_id": "v2.6470C9DD8410520F44B2C757ECBDE327",
+   "white_label_seller": "superangeloni14 (Angeloni Beira Mar)",
+   "trade_policy": "1"
+  },
+  "trimmed": "5 of 10 products returned (recordsFiltered=35); properties/commertialOffer reduced to parsing-relevant fields; Installments cut to 1",
+  "note": "Fixed package. #0 ListPrice>Price; #2 'Quantidade da embalagem' has messy value '1,000kg'; #3 500 g pack (QE 0.500)."
+ },
+ "recordsFiltered": 35,
+ "correction": {
+  "misspelled": false
+ },
+ "fuzzy": "0",
+ "operator": "and",
+ "translated": false,
+ "redirect": null,
+ "pagination": {
+  "count": 4,
+  "perPage": 10,
+  "current": {
+   "index": 1,
+   "proxyUrl": "search/trade-policy/1?an=superangeloni&query=feijão&page=1&count=10&locale=pt-BR&hide-unavailable-items=false&operator=and&fuzzy=0"
+  },
+  "next": {
+   "index": 2
+  },
+  "last": {
+   "index": 0
+  }
+ },
+ "options": {
+  "sorts": [],
+  "counts": [],
+  "deliveryPromisesEnabled": false,
+  "dpStatus": "not_requested"
+ },
+ "products": [
+  {
+   "productId": "1259980",
+   "productName": "Feijão Preto CALDO BOM 1kg",
+   "brand": "CALDO BOM",
+   "brandId": 2000115,
+   "productReference": "1259980",
+   "linkText": "feijao-preto-caldo-bom-1kg-1259980",
+   "link": "/feijao-preto-caldo-bom-1kg-1259980/p",
+   "categoryId": "240",
+   "categories": [
+    "/Mercearia/Feijão/",
+    "/Mercearia/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 6.99,
+     "lowPrice": 6.99
+    },
+    "listPrice": {
+     "highPrice": 7.89,
+     "lowPrice": 7.89
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "1.000"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "1259980",
+     "name": "Feijão Preto CALDO BOM 1kg",
+     "nameComplete": "Feijão Preto CALDO BOM 1kg",
+     "ean": "7896273900306",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "1259980"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "225713",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/225713/1259980.jpg?v=638436900604000000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 6.99,
+        "ListPrice": 7.89,
+        "PriceWithoutDiscount": 6.99,
+        "spotPrice": 6.99,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:51:50Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 6.99,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 6.99,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "2876440",
+   "productName": "Feijão Preto URBANO Tipo 1 1kg",
+   "brand": "URBANO",
+   "brandId": 2000067,
+   "productReference": "2876440",
+   "linkText": "feijao-preto-urbano-tipo-1-1kg-2876440",
+   "link": "/feijao-preto-urbano-tipo-1-1kg-2876440/p",
+   "categoryId": "240",
+   "categories": [
+    "/Mercearia/Feijão/",
+    "/Mercearia/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 7.29,
+     "lowPrice": 7.29
+    },
+    "listPrice": {
+     "highPrice": 7.29,
+     "lowPrice": 7.29
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "1.000"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "2876440",
+     "name": "Feijão Preto URBANO Tipo 1 1kg",
+     "nameComplete": "Feijão Preto URBANO Tipo 1 1kg",
+     "ean": "7896038388059",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "2876440"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "228396",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/228396/2876440.jpg?v=638476621837600000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 7.29,
+        "ListPrice": 7.29,
+        "PriceWithoutDiscount": 7.29,
+        "spotPrice": 7.29,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:51:50Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 7.29,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 7.29,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "4571320",
+   "productName": "Feijão Vermelho CALDÃO Tipo 1 1Kg",
+   "brand": "CALDÃO",
+   "brandId": 2000154,
+   "productReference": "4571320",
+   "linkText": "feijao-vermelho-caldao-tipo-1-1kg-4571320",
+   "link": "/feijao-vermelho-caldao-tipo-1-1kg-4571320/p",
+   "categoryId": "240",
+   "categories": [
+    "/Mercearia/Feijão/",
+    "/Mercearia/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 11.99,
+     "lowPrice": 11.99
+    },
+    "listPrice": {
+     "highPrice": 11.99,
+     "lowPrice": 11.99
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "1,000kg"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "4571320",
+     "name": "Feijão Vermelho CALDÃO Tipo 1 1Kg",
+     "nameComplete": "Feijão Vermelho CALDÃO Tipo 1 1Kg",
+     "ean": "7897656600035",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "4571320"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "155872",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/155872/4571320_1_zoom.jpg?v=637980716925100000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 11.99,
+        "ListPrice": 11.99,
+        "PriceWithoutDiscount": 11.99,
+        "spotPrice": 11.99,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:51:50Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 11.99,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 11.99,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "2385578",
+   "productName": "Feijão CALDO BOM Vermelho 500g",
+   "brand": "CALDO BOM",
+   "brandId": 2000115,
+   "productReference": "2385578",
+   "linkText": "2385578-feijao-caldo-bom-vermelho-500g",
+   "link": "/2385578-feijao-caldo-bom-vermelho-500g/p",
+   "categoryId": "240",
+   "categories": [
+    "/Mercearia/Feijão/",
+    "/Mercearia/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 6.99,
+     "lowPrice": 6.99
+    },
+    "listPrice": {
+     "highPrice": 6.99,
+     "lowPrice": 6.99
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "0.500"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "2385578",
+     "name": "Feijão CALDO BOM Vermelho 500g",
+     "nameComplete": "Feijão CALDO BOM Vermelho 500g",
+     "ean": "7896273902928",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "2385578"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "272566",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/272566/2385578.jpg?v=638687686388030000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 6.99,
+        "ListPrice": 6.99,
+        "PriceWithoutDiscount": 6.99,
+        "spotPrice": 6.99,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:51:51Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 6.99,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 6.99,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "4331899",
+   "productName": "Feijão Carioca TRADIÇÃO DA MESA Tipo 1 1kg",
+   "brand": "TRADIÇÃO DA MESA",
+   "brandId": 2000157,
+   "productReference": "4331899",
+   "linkText": "feijao-carioca-tipo-1-tradicao-da-mesa-1kg-4331899",
+   "link": "/feijao-carioca-tipo-1-tradicao-da-mesa-1kg-4331899/p",
+   "categoryId": "240",
+   "categories": [
+    "/Mercearia/Feijão/",
+    "/Mercearia/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 8.99,
+     "lowPrice": 8.99
+    },
+    "listPrice": {
+     "highPrice": 8.99,
+     "lowPrice": 8.99
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "1.000"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "4331899",
+     "name": "Feijão Carioca TRADIÇÃO DA MESA Tipo 1 1kg",
+     "nameComplete": "Feijão Carioca TRADIÇÃO DA MESA Tipo 1 1kg",
+     "ean": "7896701002114",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "4331899"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "205137",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/205137/4331899_1.jpg?v=638213280898770000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 8.99,
+        "ListPrice": 8.99,
+        "PriceWithoutDiscount": 8.99,
+        "spotPrice": 8.99,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:51:50Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 8.99,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 8.99,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  }
+ ]
+}

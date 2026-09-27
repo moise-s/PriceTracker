@@ -1,0 +1,35 @@
+#Disallow all crawlers access to certain pages.
+
+User-agent: *
+
+User-agent: * 
+Disallow: /img/ 
+Disallow: /Site/Carrinho.aspx 
+Disallow: /Site/Servicos.aspx 
+Disallow: /Control/ 
+Disallow: /Site/TagsMaisPopulares.aspx 
+Disallow: /Site/QuickView.aspx 
+Disallow: /Site/Produto_Listas.aspx 
+Disallow: /Site/ProdutoFrete.aspx 
+Disallow: /Site/TagDetalhe.aspx 
+Disallow: /busca 
+Disallow: /quick-view 
+Disallow: /*ft=* 
+Disallow: /checkout 
+Disallow: /checkout/*
+Disallow: /buscapagina/*
+Disallow: /cart/
+Disallow: /account 
+Disallow: /login
+Disallow: *?fq=*
+Disallow: /*map=*
+Disallow: /no-cache
+Disallow: /search?_query=*
+Disallow: *O=OrderByNameASC
+Disallow: *O=OrderByNameDESC
+Disallow: *O=OrderByBestDiscount
+Disallow: *O=OrderByTopSaleDESC
+Disallow: *O=OrderByPriceASC
+Disallow: *O=OrderByPriceDESC
+
+ Sitemap: https://super.angeloni.com.br/sitemap.xml

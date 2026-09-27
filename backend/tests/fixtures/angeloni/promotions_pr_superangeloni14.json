@@ -1,0 +1,140 @@
+{
+ "_fixture_meta": {
+  "source": "VTEX Master Data v1 entity 'PR' (public read, used by the storefront app superangeloni.promotion-flags)",
+  "storefront_request": "/api/dataentities/PR/search?sku=<productReference>&whiteLabelAccount=<superangeloniN>&isActive=true&_fields=sku,quantityToAffect,promotionType,percentualDiscount,name,minimumQuantity,maximumUnitPrice,endDateUtc,beginDateUtc",
+  "batched_request_used": "/api/dataentities/PR/search?_fields=sku,quantityToAffect,promotionType,percentualDiscount,name,minimumQuantity,maximumUnitPrice,endDateUtc,beginDateUtc,whiteLabelAccount,skuPVGiveaway&_where=whiteLabelAccount=superangeloni14 AND isActive=true AND (sku=5331481 OR sku=5459094 OR ...)  (header REST-Range: resources=0-99)",
+  "important": "isActive=true rows include EXPIRED promotions: filter beginDateUtc <= now < endDateUtc (timestamps have no offset; the storefront parses them as browser-local time, i.e. America/Sao_Paulo). When _where is present, plain query-string filters are ignored, so put every condition inside _where.",
+  "promotionType_enum": {
+   "PM": "PatamarPrecoMaximo: buy >= quantityToAffect units, pay maximumUnitPrice each",
+   "PP": "PatamarPorcentagem: buy quantityToAffect units, get percentualDiscount % off",
+   "LP": "LevePague: take minimumQuantity, pay (minimumQuantity - quantityToAffect)",
+   "DU": "DescontoUnidade: percentualDiscount % off the minimumQuantity-th unit",
+   "PV": "PackVirtual: buy minimumQuantity + R$ maximumUnitPrice (giveaway skus in skuPVGiveaway)",
+   "FU": "Funcionario (employee-only, logged in)",
+   "SD": "SrDesconto (member-only, logged in)"
+  },
+  "fetched": "2026-09-27",
+  "sanitized": "record 'id' dropped; no personal data in this entity"
+ },
+ "batch_lookup_rows": [
+  {
+   "sku": "5459094",
+   "quantityToAffect": 2,
+   "promotionType": "PM",
+   "percentualDiscount": null,
+   "name": "2437208",
+   "minimumQuantity": null,
+   "maximumUnitPrice": 12.99,
+   "endDateUtc": "2026-10-01T00:00:00",
+   "beginDateUtc": "2026-09-24T00:00:00",
+   "whiteLabelAccount": "superangeloni14",
+   "skuPVGiveaway": null
+  },
+  {
+   "sku": "5331481",
+   "quantityToAffect": 1,
+   "promotionType": "LP",
+   "percentualDiscount": null,
+   "name": "2439104 - LVPG2439104",
+   "minimumQuantity": 3,
+   "maximumUnitPrice": null,
+   "endDateUtc": "2026-10-01T00:00:00",
+   "beginDateUtc": "2026-09-24T00:00:00",
+   "whiteLabelAccount": "superangeloni14",
+   "skuPVGiveaway": null
+  },
+  {
+   "sku": "3865165",
+   "quantityToAffect": null,
+   "promotionType": "DU",
+   "percentualDiscount": 50.0,
+   "name": "ULT2441240",
+   "minimumQuantity": 2,
+   "maximumUnitPrice": null,
+   "endDateUtc": "2026-09-28T00:00:00",
+   "beginDateUtc": "2026-09-26T00:00:00",
+   "whiteLabelAccount": "superangeloni14",
+   "skuPVGiveaway": null
+  },
+  {
+   "sku": "5331481",
+   "quantityToAffect": 1,
+   "promotionType": "LP",
+   "percentualDiscount": null,
+   "name": "2430570 - LVPG2430570",
+   "minimumQuantity": 3,
+   "maximumUnitPrice": null,
+   "endDateUtc": "2026-08-20T00:00:00",
+   "beginDateUtc": "2026-08-13T00:00:00",
+   "whiteLabelAccount": "superangeloni14",
+   "skuPVGiveaway": null
+  },
+  {
+   "sku": "5459094",
+   "quantityToAffect": 2,
+   "promotionType": "PM",
+   "percentualDiscount": null,
+   "name": "2433455",
+   "minimumQuantity": null,
+   "maximumUnitPrice": 12.99,
+   "endDateUtc": "2026-09-10T00:00:00",
+   "beginDateUtc": "2026-09-03T00:00:00",
+   "whiteLabelAccount": "superangeloni14",
+   "skuPVGiveaway": null
+  },
+  {
+   "sku": "5459094",
+   "quantityToAffect": 2,
+   "promotionType": "PM",
+   "percentualDiscount": null,
+   "name": "2435893",
+   "minimumQuantity": null,
+   "maximumUnitPrice": 12.99,
+   "endDateUtc": "2026-09-24T00:00:00",
+   "beginDateUtc": "2026-09-17T00:00:00",
+   "whiteLabelAccount": "superangeloni14",
+   "skuPVGiveaway": null
+  }
+ ],
+ "one_active_example_per_type": [
+  {
+   "sku": "5459094",
+   "quantityToAffect": 2,
+   "promotionType": "PM",
+   "percentualDiscount": null,
+   "name": "2437208",
+   "minimumQuantity": null,
+   "maximumUnitPrice": 12.99,
+   "endDateUtc": "2026-10-01T00:00:00",
+   "beginDateUtc": "2026-09-24T00:00:00",
+   "whiteLabelAccount": "superangeloni14",
+   "skuPVGiveaway": null
+  },
+  {
+   "sku": "5331481",
+   "quantityToAffect": 1,
+   "promotionType": "LP",
+   "percentualDiscount": null,
+   "name": "2439104 - LVPG2439104",
+   "minimumQuantity": 3,
+   "maximumUnitPrice": null,
+   "endDateUtc": "2026-10-01T00:00:00",
+   "beginDateUtc": "2026-09-24T00:00:00",
+   "whiteLabelAccount": "superangeloni14",
+   "skuPVGiveaway": null
+  },
+  {
+   "sku": "3865165",
+   "quantityToAffect": null,
+   "promotionType": "DU",
+   "percentualDiscount": 50.0,
+   "name": "ULT2441240",
+   "minimumQuantity": 2,
+   "maximumUnitPrice": null,
+   "endDateUtc": "2026-09-28T00:00:00",
+   "beginDateUtc": "2026-09-26T00:00:00",
+   "whiteLabelAccount": "superangeloni14",
+   "skuPVGiveaway": null
+  }
+ ]
+}

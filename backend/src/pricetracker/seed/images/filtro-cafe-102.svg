@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Filtros de papel para café">
+  <rect width="512" height="512" rx="96" fill="#F3EDE3"/>
+  <circle cx="256" cy="240" r="180" fill="#FBF8F2"/>
+  <ellipse cx="256" cy="420" rx="170" ry="24" fill="#E3D8C6"/>
+  <rect x="88" y="250" width="200" height="160" rx="20" fill="#C0392B"/>
+  <rect x="88" y="250" width="200" height="44" rx="20" fill="#A93226"/>
+  <text x="188" y="340" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="46" font-weight="800" fill="#FFFFFF">102</text>
+  <text x="188" y="378" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#FBE0DC" letter-spacing="1">30 FILTROS</text>
+  <g transform="translate(330 200)">
+    <path d="M-86 -60 L86 -60 L40 150 Q38 160 28 160 L-28 160 Q-38 160 -40 150 Z" fill="#FFFFFF" stroke="#E3D8C6" stroke-width="4"/>
+    <path d="M-72 -34 L72 -34" stroke="#EFE7DA" stroke-width="3"/>
+    <path d="M-62 6 L62 6" stroke="#EFE7DA" stroke-width="3"/>
+    <path d="M-52 46 L52 46" stroke="#EFE7DA" stroke-width="3"/>
+    <path d="M-44 86 L44 86" stroke="#EFE7DA" stroke-width="3"/>
+    <path d="M-86 -60 L-72 -76 L72 -76 L86 -60" fill="#F7F2E9" stroke="#E3D8C6" stroke-width="4"/>
+  </g>
+</svg>

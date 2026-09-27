@@ -1,0 +1,605 @@
+{
+ "_fixture_meta": {
+  "source": "VTEX Intelligent Search product_search (public, robots-allowed)",
+  "request": "/api/io/_v/api/intelligent-search/product_search/trade-policy/1/region-id/v2.6470C9DD8410520F44B2C757ECBDE327?query=ovos%2030&page=1&count=10&locale=pt-BR&hideUnavailableItems=false",
+  "fetched": "2026-09-27",
+  "store_context": {
+   "postal_code": "88010-000",
+   "region_id": "v2.6470C9DD8410520F44B2C757ECBDE327",
+   "white_label_seller": "superangeloni14 (Angeloni Beira Mar)",
+   "trade_policy": "1"
+  },
+  "trimmed": "5 of 10 products returned (recordsFiltered=14); properties/commertialOffer reduced to parsing-relevant fields; Installments cut to 1",
+  "note": "Unit/pack: 'Unidade de medida'=un, 'Quantidade da embalagem'=30 -> unit price per egg. #2..#4 unavailable at this store (Price=0, ListPrice=0, AvailableQuantity=0)."
+ },
+ "recordsFiltered": 14,
+ "correction": {
+  "misspelled": false
+ },
+ "fuzzy": "0",
+ "operator": "and",
+ "translated": false,
+ "redirect": null,
+ "pagination": {
+  "count": 2,
+  "perPage": 10,
+  "current": {
+   "index": 1,
+   "proxyUrl": "search/trade-policy/1?an=superangeloni&query=ovos 30&page=1&count=10&locale=pt-BR&hide-unavailable-items=false&operator=and&fuzzy=0"
+  },
+  "next": {
+   "index": 2
+  },
+  "last": {
+   "index": 0
+  }
+ },
+ "options": {
+  "sorts": [],
+  "counts": [],
+  "deliveryPromisesEnabled": false,
+  "dpStatus": "not_requested"
+ },
+ "products": [
+  {
+   "productId": "4780581",
+   "productName": "Ovo IANA Grande com 30 Unidades",
+   "brand": "IANA",
+   "brandId": 2002395,
+   "productReference": "4780581",
+   "linkText": "ovo-branco-iana-grande-com-30-unidades-4780581",
+   "link": "/ovo-branco-iana-grande-com-30-unidades-4780581/p",
+   "categoryId": "187",
+   "categories": [
+    "/Hortifruti/Ovos/",
+    "/Hortifruti/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 17.99,
+     "lowPrice": 17.99
+    },
+    "listPrice": {
+     "highPrice": 17.99,
+     "lowPrice": 17.99
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "un"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "30"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "4780581",
+     "name": "Ovo IANA Grande com 30 Unidades",
+     "nameComplete": "Ovo IANA Grande com 30 Unidades",
+     "ean": "7897542800037",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "4780581"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "195411",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/195411/4780581_1_zoom.jpg?v=638067143480770000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 17.99,
+        "ListPrice": 17.99,
+        "PriceWithoutDiscount": 17.99,
+        "spotPrice": 17.99,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:43:03Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 17.99,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 17.99,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "4777719",
+   "productName": "Ovo Codorna ASA com 30 Unidades",
+   "brand": "ASA",
+   "brandId": 2002393,
+   "productReference": "4777719",
+   "linkText": "ovo-codorna-asa-com-30-unidades-4777719",
+   "link": "/ovo-codorna-asa-com-30-unidades-4777719/p",
+   "categoryId": "187",
+   "categories": [
+    "/Hortifruti/Ovos/",
+    "/Hortifruti/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 8.99,
+     "lowPrice": 8.99
+    },
+    "listPrice": {
+     "highPrice": 8.99,
+     "lowPrice": 8.99
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "un"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "30"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "4777719",
+     "name": "Ovo Codorna ASA com 30 Unidades",
+     "nameComplete": "Ovo Codorna ASA com 30 Unidades",
+     "ean": "7898194609993",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "4777719"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "195392",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/195392/4777719_2_zoom.jpg?v=638067143150600000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 8.99,
+        "ListPrice": 8.99,
+        "PriceWithoutDiscount": 8.99,
+        "spotPrice": 8.99,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:52:58Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 8.99,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 8.99,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "4780634",
+   "productName": "Ovo IANA Grande com 30 Unidades",
+   "brand": "IANA",
+   "brandId": 2002395,
+   "productReference": "4780634",
+   "linkText": "ovo-vermelho-iana-grande-com-30-unidades-4780634",
+   "link": "/ovo-vermelho-iana-grande-com-30-unidades-4780634/p",
+   "categoryId": "187",
+   "categories": [
+    "/Hortifruti/Ovos/",
+    "/Hortifruti/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 0,
+     "lowPrice": null
+    },
+    "listPrice": {
+     "highPrice": 0,
+     "lowPrice": null
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "un"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "30"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "4780634",
+     "name": "Ovo IANA Grande com 30 Unidades",
+     "nameComplete": "Ovo IANA Grande com 30 Unidades",
+     "ean": "7897542800105",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "4780634"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "195413",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/195413/4780634_1_zoom.jpg?v=638067143491370000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": false,
+       "commertialOffer": {
+        "Price": 0,
+        "ListPrice": 0,
+        "PriceWithoutDiscount": 0,
+        "spotPrice": 0,
+        "AvailableQuantity": 0,
+        "PriceValidUntil": null,
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": null,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": []
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "4091522",
+   "productName": "MANTIQUEIRA Bandeja com 30 Unidades",
+   "brand": "COM 30 UNIDADES",
+   "brandId": 2010255,
+   "productReference": "4091522",
+   "linkText": "4091522-mantiqueira-bandeja-com-30-unidades-1",
+   "link": "/4091522-mantiqueira-bandeja-com-30-unidades-1/p",
+   "categoryId": "187",
+   "categories": [
+    "/Hortifruti/Ovos/",
+    "/Hortifruti/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 0,
+     "lowPrice": null
+    },
+    "listPrice": {
+     "highPrice": 0,
+     "lowPrice": null
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "un"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "30"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "4091522",
+     "name": "MANTIQUEIRA Bandeja com 30 Unidades",
+     "nameComplete": "MANTIQUEIRA Bandeja com 30 Unidades",
+     "ean": "7896982100059",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "4091522"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "293063",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/293063/4091522.jpg?v=638938834546030000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": false,
+       "commertialOffer": {
+        "Price": 0,
+        "ListPrice": 0,
+        "PriceWithoutDiscount": 0,
+        "spotPrice": 0,
+        "AvailableQuantity": 0,
+        "PriceValidUntil": null,
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": null,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": []
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "5195960",
+   "productName": "Ovo Branco Grande GRANJA FARIA 30 unidades",
+   "brand": "GRANJA FARIA",
+   "brandId": 2009246,
+   "productReference": "5195960",
+   "linkText": "5195960-ovo-branco-grande-granja-faria-30-unidades-1",
+   "link": "/5195960-ovo-branco-grande-granja-faria-30-unidades-1/p",
+   "categoryId": "187",
+   "categories": [
+    "/Hortifruti/Ovos/",
+    "/Hortifruti/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 0,
+     "lowPrice": null
+    },
+    "listPrice": {
+     "highPrice": 0,
+     "lowPrice": null
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "un"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "30"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "5195960",
+     "name": "Ovo  Grande GRANJA FARIA 30 unidades",
+     "nameComplete": "Ovo Branco Grande GRANJA FARIA 30 unidades Ovo  Grande GRANJA FARIA 30 unidades",
+     "ean": "7898019065898",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "5195960"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "221620",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/221620/5195960.jpg?v=638387546626870000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": false,
+       "commertialOffer": {
+        "Price": 0,
+        "ListPrice": 0,
+        "PriceWithoutDiscount": 0,
+        "spotPrice": 0,
+        "AvailableQuantity": 0,
+        "PriceValidUntil": null,
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": null,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": []
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  }
+ ]
+}

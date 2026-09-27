@@ -1,0 +1,44 @@
+{
+ "_fixture_meta": {
+  "source": "VTEX Intelligent Search product_search (public, robots-allowed)",
+  "request": "/api/io/_v/api/intelligent-search/product_search/trade-policy/1/region-id/v2.6470C9DD8410520F44B2C757ECBDE327?query=xptoinexistente%20qwzk&page=1&count=10&locale=pt-BR&hideUnavailableItems=false",
+  "fetched": "2026-09-27",
+  "store_context": {
+   "postal_code": "88010-000",
+   "region_id": "v2.6470C9DD8410520F44B2C757ECBDE327",
+   "white_label_seller": "superangeloni14 (Angeloni Beira Mar)",
+   "trade_policy": "1"
+  },
+  "trimmed": "0 of 0 products returned (recordsFiltered=0); properties/commertialOffer reduced to parsing-relevant fields; Installments cut to 1",
+  "note": "Not found: recordsFiltered=0, products=[]."
+ },
+ "recordsFiltered": 0,
+ "correction": {
+  "misspelled": true
+ },
+ "fuzzy": "auto",
+ "operator": "or",
+ "translated": false,
+ "redirect": null,
+ "pagination": {
+  "count": 0,
+  "perPage": 10,
+  "current": {
+   "index": 1,
+   "proxyUrl": "search/trade-policy/1?an=superangeloni&query=xptoinexistente qwzk&page=1&count=10&locale=pt-BR&hide-unavailable-items=false&operator=or&fuzzy=auto"
+  },
+  "next": {
+   "index": 0
+  },
+  "last": {
+   "index": 0
+  }
+ },
+ "options": {
+  "sorts": [],
+  "counts": [],
+  "deliveryPromisesEnabled": false,
+  "dpStatus": "not_requested"
+ },
+ "products": []
+}

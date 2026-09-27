@@ -1,0 +1,89 @@
+[project]
+name = "pricetracker"
+version = "1.0.0"
+description = "Household supermarket price comparison with honest coverage, freshness and travel cost"
+readme = "README.md"
+requires-python = ">=3.13"
+license = { text = "MIT" }
+dependencies = [
+    "alembic>=1.20",
+    "argon2-cffi>=25.1",
+    "cryptography>=46",
+    "defusedxml>=0.7",
+    "fastapi>=0.141",
+    "httpx>=0.28",
+    "pillow>=12.3",
+    "psycopg[binary]>=3.3",
+    "pydantic>=2.13",
+    "pydantic-settings>=2.15",
+    "python-multipart>=0.0.32",
+    "selectolax>=0.4",
+    "sqlalchemy>=2.1",
+    "typer>=0.27",
+    "uvicorn[standard]>=0.54",
+]
+
+[project.scripts]
+pricetracker = "pricetracker.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pricetracker"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "SIM", "RUF", "DTZ", "PT", "ASYNC"]
+ignore = ["S101", "S311", "RUF001", "RUF002", "RUF003", "B008", "SIM102", "SIM105", "SIM108"]
+
+[tool.ruff.lint.pycodestyle]
+max-line-length = 120
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S105", "S106", "S108", "DTZ001", "DTZ005", "PT018", "E501"]
+"migrations/**" = ["E501"]
+
+[tool.mypy]
+python_version = "3.13"
+packages = ["pricetracker"]
+mypy_path = "src"
+strict = true
+plugins = ["pydantic.mypy"]
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = ["selectolax.*", "argon2.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+markers = [
+  "live: hits real supermarket websites (opt-in with --live)",
+  "postgres: requires PostgreSQL (PRICETRACKER_TEST_DATABASE_URL)",
+]
+filterwarnings = ["error::DeprecationWarning:pricetracker.*"]
+
+[tool.coverage.run]
+source = ["pricetracker"]
+branch = true
+
+[dependency-groups]
+dev = [
+    "mypy>=2.3",
+    "pytest>=9.1",
+    "pytest-asyncio>=1.4",
+    "pytest-cov>=7",
+    "respx>=0.23",
+    "ruff>=0.16",
+    "time-machine>=2.19",
+    "types-defusedxml>=0.7.0.20260504",
+]

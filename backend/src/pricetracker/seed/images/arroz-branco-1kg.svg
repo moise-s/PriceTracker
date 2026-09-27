@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Pacote de arroz branco">
+  <rect width="512" height="512" rx="96" fill="#F6EEDF"/>
+  <circle cx="256" cy="236" r="178" fill="#FBF6EC"/>
+  <ellipse cx="256" cy="432" rx="138" ry="22" fill="#E7DCC6"/>
+  <path d="M150 150 Q148 120 176 112 L336 112 Q364 120 362 150 L378 404 Q380 430 352 432 L160 432 Q132 430 134 404 Z" fill="#FFFFFF"/>
+  <path d="M150 150 Q148 120 176 112 L336 112 Q364 120 362 150 L366 196 L146 196 Z" fill="#2F6B4F"/>
+  <path d="M160 112 L352 112 L346 92 Q342 80 330 80 L182 80 Q170 80 166 92 Z" fill="#245A42"/>
+  <rect x="176" y="232" width="160" height="118" rx="22" fill="#F3E7CC"/>
+  <g fill="#FFFFFF" stroke="#D9C7A0" stroke-width="3">
+    <ellipse cx="214" cy="272" rx="15" ry="8" transform="rotate(-25 214 272)"/>
+    <ellipse cx="252" cy="262" rx="15" ry="8" transform="rotate(15 252 262)"/>
+    <ellipse cx="292" cy="276" rx="15" ry="8" transform="rotate(-10 292 276)"/>
+    <ellipse cx="230" cy="306" rx="15" ry="8" transform="rotate(30 230 306)"/>
+    <ellipse cx="272" cy="312" rx="15" ry="8" transform="rotate(-30 272 312)"/>
+    <ellipse cx="308" cy="310" rx="15" ry="8" transform="rotate(20 308 310)"/>
+  </g>
+  <text x="256" y="168" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#FFFFFF" letter-spacing="3">ARROZ</text>
+  <rect x="204" y="372" width="104" height="36" rx="18" fill="#2F6B4F"/>
+  <text x="256" y="397" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF">1 kg</text>
+</svg>

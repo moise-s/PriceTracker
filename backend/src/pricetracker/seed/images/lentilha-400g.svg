@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Pacote de lentilha">
+  <rect width="512" height="512" rx="96" fill="#EEF0DE"/>
+  <circle cx="256" cy="236" r="178" fill="#F8F9EF"/>
+  <ellipse cx="256" cy="430" rx="126" ry="20" fill="#DCE0C6"/>
+  <path d="M166 138 Q166 116 188 116 L324 116 Q346 116 346 138 L360 400 Q362 426 336 428 L176 428 Q150 426 152 400 Z" fill="#FFFFFF"/>
+  <path d="M166 138 Q166 116 188 116 L324 116 Q346 116 346 138 L349 186 L163 186 Z" fill="#6F7F32"/>
+  <rect x="186" y="96" width="140" height="24" rx="8" fill="#5C6A28"/>
+  <circle cx="256" cy="286" r="72" fill="#EEF0DE"/>
+  <g>
+    <ellipse cx="226" cy="266" rx="14" ry="9" fill="#9C8A3E"/>
+    <ellipse cx="256" cy="254" rx="14" ry="9" fill="#B39B45"/>
+    <ellipse cx="286" cy="268" rx="14" ry="9" fill="#9C8A3E"/>
+    <ellipse cx="240" cy="292" rx="14" ry="9" fill="#B39B45"/>
+    <ellipse cx="272" cy="296" rx="14" ry="9" fill="#9C8A3E"/>
+    <ellipse cx="256" cy="322" rx="14" ry="9" fill="#B39B45"/>
+    <ellipse cx="222" cy="318" rx="12" ry="8" fill="#9C8A3E"/>
+    <ellipse cx="292" cy="320" rx="12" ry="8" fill="#B39B45"/>
+  </g>
+  <text x="256" y="162" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#FFFFFF" letter-spacing="2">LENTILHA</text>
+  <rect x="204" y="372" width="104" height="34" rx="17" fill="#6F7F32"/>
+  <text x="256" y="396" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700" fill="#FFFFFF">400 g</text>
+</svg>

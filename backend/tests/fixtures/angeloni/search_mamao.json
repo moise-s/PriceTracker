@@ -1,0 +1,497 @@
+{
+ "_fixture_meta": {
+  "source": "VTEX Intelligent Search product_search (public, robots-allowed)",
+  "request": "/api/io/_v/api/intelligent-search/product_search/trade-policy/1/region-id/v2.6470C9DD8410520F44B2C757ECBDE327?query=mam%C3%A3o%20papaia&page=1&count=10&locale=pt-BR&hideUnavailableItems=false",
+  "fetched": "2026-09-27",
+  "store_context": {
+   "postal_code": "88010-000",
+   "region_id": "v2.6470C9DD8410520F44B2C757ECBDE327",
+   "white_label_seller": "superangeloni14 (Angeloni Beira Mar)",
+   "trade_policy": "1"
+  },
+  "trimmed": "4 of 4 products returned (recordsFiltered=4); properties/commertialOffer reduced to parsing-relevant fields; Installments cut to 1",
+  "note": "correction.misspelled=true (catalog spells 'Papaya'); mixes a per-unit item (measurementUnit=un) and per-kg pieces (unavailable)."
+ },
+ "recordsFiltered": 4,
+ "correction": {
+  "misspelled": true
+ },
+ "fuzzy": "auto",
+ "operator": "and",
+ "translated": false,
+ "redirect": null,
+ "pagination": {
+  "count": 1,
+  "perPage": 10,
+  "current": {
+   "index": 1,
+   "proxyUrl": "search/trade-policy/1?an=superangeloni&query=mamão papaia&page=1&count=10&locale=pt-BR&hide-unavailable-items=false&operator=and&fuzzy=auto"
+  },
+  "next": {
+   "index": 0
+  },
+  "last": {
+   "index": 0
+  }
+ },
+ "options": {
+  "sorts": [],
+  "counts": [],
+  "deliveryPromisesEnabled": false,
+  "dpStatus": "not_requested"
+ },
+ "products": [
+  {
+   "productId": "293563",
+   "productName": "Mamão Papaya Unidade",
+   "brand": "HORTIFRUTI",
+   "brandId": 2000769,
+   "productReference": "293563",
+   "linkText": "mamao-papaya-unidade-293563",
+   "link": "/mamao-papaya-unidade-293563/p",
+   "categoryId": "183",
+   "categories": [
+    "/Hortifruti/Frutas/",
+    "/Hortifruti/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 3.79,
+     "lowPrice": 3.79
+    },
+    "listPrice": {
+     "highPrice": 3.99,
+     "lowPrice": 3.99
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "un"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "293563",
+     "name": "Mamão Papaya Unidade",
+     "nameComplete": "Mamão Papaya Unidade",
+     "ean": "2935638",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "293563"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "201662",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/201662/293563_1.jpg?v=638146665921630000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 3.79,
+        "ListPrice": 3.99,
+        "PriceWithoutDiscount": 3.79,
+        "spotPrice": 3.79,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:53:03Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 3.79,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 3.79,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "4891455",
+   "productName": "Mamão ANGELONI Papaya Pedaço Unidade",
+   "brand": "HORTIFRUTI",
+   "brandId": 2000769,
+   "productReference": "4891455",
+   "linkText": "mamao-papaya-cortes-especiais-kg-4891455",
+   "link": "/mamao-papaya-cortes-especiais-kg-4891455/p",
+   "categoryId": "183",
+   "categories": [
+    "/Hortifruti/Frutas/",
+    "/Hortifruti/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 8.89,
+     "lowPrice": 8.89
+    },
+    "listPrice": {
+     "highPrice": 8.89,
+     "lowPrice": 8.89
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1.000"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "un"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "1.000"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "4891455",
+     "name": "Mamão ANGELONI Papaya Pedaço Unidade",
+     "nameComplete": "Mamão ANGELONI Papaya Pedaço Unidade",
+     "ean": "7066",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "4891455"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "210223",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/210223/4891455-MAMAO-ANGELONI-PAPAYA-CORTES-ESPEC---KG.jpg?v=638285722237970000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 8.89,
+        "ListPrice": 8.89,
+        "PriceWithoutDiscount": 8.89,
+        "spotPrice": 8.89,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:53:03Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 8.89,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 8.89,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "2319492",
+   "productName": "Mamão Papaya Pedaço Kg",
+   "brand": "HORTIFRUTI",
+   "brandId": 2000769,
+   "productReference": "2319492",
+   "linkText": "mamao-papaya-kg-2319492",
+   "link": "/mamao-papaya-kg-2319492/p",
+   "categoryId": "183",
+   "categories": [
+    "/Hortifruti/Frutas/",
+    "/Hortifruti/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 0,
+     "lowPrice": null
+    },
+    "listPrice": {
+     "highPrice": 0,
+     "lowPrice": null
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1.000"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "1.000"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Sim"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "2319492",
+     "name": "Mamão Papaya Pedaço Kg",
+     "nameComplete": "Mamão Papaya Pedaço Kg",
+     "ean": "5602",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "2319492"
+      }
+     ],
+     "measurementUnit": "kg",
+     "unitMultiplier": 0.3,
+     "images": [
+      {
+       "imageId": "182273",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/182273/2319492_1_zoom.jpg?v=638039741678300000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": false,
+       "commertialOffer": {
+        "Price": 0,
+        "ListPrice": 0,
+        "PriceWithoutDiscount": 0,
+        "spotPrice": 0,
+        "AvailableQuantity": 0,
+        "PriceValidUntil": null,
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": null,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": []
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "4435641",
+   "productName": "Mamão Papaya Fatia Kg",
+   "brand": "HORTIFRUTI",
+   "brandId": 2000769,
+   "productReference": "4435641",
+   "linkText": "mamao-papaya-fatia-kg-4435641",
+   "link": "/mamao-papaya-fatia-kg-4435641/p",
+   "categoryId": "183",
+   "categories": [
+    "/Hortifruti/Frutas/",
+    "/Hortifruti/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 0,
+     "lowPrice": null
+    },
+    "listPrice": {
+     "highPrice": 0,
+     "lowPrice": null
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "0.500"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "1.000"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Sim"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "4435641",
+     "name": "Mamão Papaya Fatia Kg",
+     "nameComplete": "Mamão Papaya Fatia Kg",
+     "ean": "4435641",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "4435641"
+      }
+     ],
+     "measurementUnit": "kg",
+     "unitMultiplier": 0.3,
+     "images": [
+      {
+       "imageId": "182365",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/182365/4435641_1_zoom.jpg?v=638039847911100000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": false,
+       "commertialOffer": {
+        "Price": 0,
+        "ListPrice": 0,
+        "PriceWithoutDiscount": 0,
+        "spotPrice": 0,
+        "AvailableQuantity": 0,
+        "PriceValidUntil": null,
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": null,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": []
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  }
+ ]
+}

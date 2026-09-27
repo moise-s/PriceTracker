@@ -1,0 +1,635 @@
+{
+ "_fixture_meta": {
+  "source": "VTEX Intelligent Search product_search (public, robots-allowed)",
+  "request": "/api/io/_v/api/intelligent-search/product_search/trade-policy/1/region-id/v2.EF13DD0D15B905FE43EF419690AD7CFC?query=arroz%201kg&page=1&count=5&locale=pt-BR&hideUnavailableItems=false",
+  "fetched": "2026-09-27",
+  "store_context": {
+   "postal_code": "80010-000",
+   "region_id": "v2.EF13DD0D15B905FE43EF419690AD7CFC",
+   "white_label_seller": "superangeloni24 (Angeloni Bigorrilho)",
+   "trade_policy": "1"
+  },
+  "trimmed": "5 of 5 products returned (recordsFiltered=68); properties/commertialOffer reduced to parsing-relevant fields; Installments cut to 1",
+  "note": "Same query as search_arroz but region of Curitiba (80010-000 -> superangeloni24). Prices differ from Florianópolis for the same SKUs (e.g. 121460 KIARROZ 3.69 vs 3.49; 156191 TIO JOÃO 7.99 vs 7.89; 629111 ListPrice 4.39 vs 4.69). sellerId stays '1'."
+ },
+ "recordsFiltered": 68,
+ "correction": {
+  "misspelled": false
+ },
+ "fuzzy": "0",
+ "operator": "and",
+ "translated": false,
+ "redirect": null,
+ "pagination": {
+  "count": 14,
+  "perPage": 5,
+  "current": {
+   "index": 1,
+   "proxyUrl": "search/trade-policy/1?an=superangeloni&query=arroz 1kg&page=1&count=5&locale=pt-BR&hide-unavailable-items=false&operator=and&fuzzy=0"
+  },
+  "next": {
+   "index": 2
+  },
+  "last": {
+   "index": 14
+  }
+ },
+ "options": {
+  "sorts": [],
+  "counts": [],
+  "deliveryPromisesEnabled": false,
+  "dpStatus": "not_requested"
+ },
+ "products": [
+  {
+   "productId": "629111",
+   "productName": "Arroz Parboilizado URBANO 1kg",
+   "brand": "URBANO",
+   "brandId": 2000067,
+   "productReference": "629111",
+   "linkText": "arroz-parboilizado-urbano-1kg-629111",
+   "link": "/arroz-parboilizado-urbano-1kg-629111/p",
+   "categoryId": "43",
+   "categories": [
+    "/Mercearia/Arroz/",
+    "/Mercearia/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 3.79,
+     "lowPrice": 3.79
+    },
+    "listPrice": {
+     "highPrice": 4.69,
+     "lowPrice": 4.69
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "1.000"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "629111",
+     "name": "Arroz Parboilizado URBANO 1kg",
+     "nameComplete": "Arroz Parboilizado URBANO 1kg",
+     "ean": "7896038306053",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "629111"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "228386",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/228386/629111.jpg?v=638476618353770000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 3.79,
+        "ListPrice": 4.39,
+        "PriceWithoutDiscount": 3.79,
+        "spotPrice": 3.79,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:51:00Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 3.79,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 3.79,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "121460",
+   "productName": "Arroz Parboilizado KIARROZ Fumacense 1kg",
+   "brand": "KIARROZ",
+   "brandId": 2000106,
+   "productReference": "121460",
+   "linkText": "arroz-parboilizado-kiarroz-fumacense-1kg-121460",
+   "link": "/arroz-parboilizado-kiarroz-fumacense-1kg-121460/p",
+   "categoryId": "43",
+   "categories": [
+    "/Mercearia/Arroz/",
+    "/Mercearia/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 3.49,
+     "lowPrice": 3.49
+    },
+    "listPrice": {
+     "highPrice": 3.89,
+     "lowPrice": 3.89
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "1.000"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "121460",
+     "name": "Arroz Parboilizado KIARROZ Fumacense 1kg",
+     "nameComplete": "Arroz Parboilizado KIARROZ Fumacense 1kg",
+     "ean": "7896084700027",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "121460"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "296610",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/296610/121460.jpg?v=638968208970500000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 3.69,
+        "ListPrice": 3.89,
+        "PriceWithoutDiscount": 3.69,
+        "spotPrice": 3.69,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:51:00Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 3.69,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 3.69,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "731277",
+   "productName": "Arroz Branco TIO URBANO 1kg",
+   "brand": "TIO URBANO",
+   "brandId": 2000110,
+   "productReference": "731277",
+   "linkText": "arroz-branco-tio-urbano-1kg-731277",
+   "link": "/arroz-branco-tio-urbano-1kg-731277/p",
+   "categoryId": "43",
+   "categories": [
+    "/Mercearia/Arroz/",
+    "/Mercearia/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 5.39,
+     "lowPrice": 5.39
+    },
+    "listPrice": {
+     "highPrice": 5.39,
+     "lowPrice": 5.39
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "1.000"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "731277",
+     "name": "Arroz Branco TIO URBANO 1kg",
+     "nameComplete": "Arroz Branco TIO URBANO 1kg",
+     "ean": "7896038321056",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "731277"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "228387",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/228387/731277.jpg?v=638476618653770000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 5.39,
+        "ListPrice": 5.39,
+        "PriceWithoutDiscount": 5.39,
+        "spotPrice": 5.39,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:51:00Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 5.39,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 5.39,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "156191",
+   "productName": "Arroz Branco TIO JOÃO 1kg",
+   "brand": "TIO JOÃO",
+   "brandId": 2000107,
+   "productReference": "156191",
+   "linkText": "arroz-branco-tio-joao-1kg-156191",
+   "link": "/arroz-branco-tio-joao-1kg-156191/p",
+   "categoryId": "43",
+   "categories": [
+    "/Mercearia/Arroz/",
+    "/Mercearia/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 7.89,
+     "lowPrice": 7.89
+    },
+    "listPrice": {
+     "highPrice": 7.89,
+     "lowPrice": 7.89
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "1.000"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "156191",
+     "name": "Arroz Branco TIO JOÃO 1kg",
+     "nameComplete": "Arroz Branco TIO JOÃO 1kg",
+     "ean": "7893500020110",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "156191"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "156123",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/156123/156191_1_zoom.jpg?v=637982547106400000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 7.99,
+        "ListPrice": 7.99,
+        "PriceWithoutDiscount": 7.99,
+        "spotPrice": 7.99,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:51:00Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 7.99,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 7.99,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "2556871",
+   "productName": "Arroz Parboilizado TIO JOÃO 1kg",
+   "brand": "TIO JOÃO",
+   "brandId": 2000107,
+   "productReference": "2556871",
+   "linkText": "arroz-parboilizado-tio-joao-1kg-2556871",
+   "link": "/arroz-parboilizado-tio-joao-1kg-2556871/p",
+   "categoryId": "43",
+   "categories": [
+    "/Mercearia/Arroz/",
+    "/Mercearia/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 6.19,
+     "lowPrice": 6.19
+    },
+    "listPrice": {
+     "highPrice": 6.19,
+     "lowPrice": 6.19
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "1.000"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "2556871",
+     "name": "Arroz Parboilizado TIO JOÃO 1kg",
+     "nameComplete": "Arroz Parboilizado TIO JOÃO 1kg",
+     "ean": "7893500018469",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "2556871"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "156172",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/156172/2556871_1_zoom.jpg?v=637982547680730000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 6.19,
+        "ListPrice": 6.19,
+        "PriceWithoutDiscount": 6.19,
+        "spotPrice": 6.19,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:51:00Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 6.19,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 6.19,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  }
+ ]
+}

@@ -1,0 +1,507 @@
+{
+ "_fixture_meta": {
+  "source": "VTEX Intelligent Search product_search (public, robots-allowed)",
+  "request": "/api/io/_v/api/intelligent-search/product_search/trade-policy/1/region-id/v2.6470C9DD8410520F44B2C757ECBDE327?query=lentilha%20400g&page=1&count=10&locale=pt-BR&hideUnavailableItems=false",
+  "fetched": "2026-09-27",
+  "store_context": {
+   "postal_code": "88010-000",
+   "region_id": "v2.6470C9DD8410520F44B2C757ECBDE327",
+   "white_label_seller": "superangeloni14 (Angeloni Beira Mar)",
+   "trade_policy": "1"
+  },
+  "trimmed": "4 of 8 products returned (recordsFiltered=8); properties/commertialOffer reduced to parsing-relevant fields; Installments cut to 1",
+  "note": "#0 name says 400g but 'Quantidade da embalagem'=0.500 (catalog error) -> parse size from name and flag mismatch; #3 unavailable."
+ },
+ "recordsFiltered": 8,
+ "correction": {
+  "misspelled": false
+ },
+ "fuzzy": "0",
+ "operator": "and",
+ "translated": false,
+ "redirect": null,
+ "pagination": {
+  "count": 1,
+  "perPage": 10,
+  "current": {
+   "index": 1,
+   "proxyUrl": "search/trade-policy/1?an=superangeloni&query=lentilha 400g&page=1&count=10&locale=pt-BR&hide-unavailable-items=false&operator=and&fuzzy=0"
+  },
+  "next": {
+   "index": 0
+  },
+  "last": {
+   "index": 0
+  }
+ },
+ "options": {
+  "sorts": [],
+  "counts": [],
+  "deliveryPromisesEnabled": false,
+  "dpStatus": "not_requested"
+ },
+ "products": [
+  {
+   "productId": "1264531",
+   "productName": "Lentilha CALDO BOM 400g",
+   "brand": "CALDO BOM",
+   "brandId": 2000115,
+   "productReference": "1264531",
+   "linkText": "lentilha-caldo-bom-400g-1264531",
+   "link": "/lentilha-caldo-bom-400g-1264531/p",
+   "categoryId": "241",
+   "categories": [
+    "/Mercearia/Lentilha/",
+    "/Mercearia/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 8.29,
+     "lowPrice": 8.29
+    },
+    "listPrice": {
+     "highPrice": 8.29,
+     "lowPrice": 8.29
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "0.500"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "1264531",
+     "name": "Lentilha CALDO BOM 400g",
+     "nameComplete": "Lentilha CALDO BOM 400g",
+     "ean": "7896273900320",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "1264531"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "207888",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/207888/1264531_1.png?v=638266804486100000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 8.29,
+        "ListPrice": 8.29,
+        "PriceWithoutDiscount": 8.29,
+        "spotPrice": 8.29,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:53:07Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 8.29,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 8.29,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "5134393",
+   "productName": "Lentilha YOKI Tipo 2 400g",
+   "brand": "YOKI",
+   "brandId": 2000438,
+   "productReference": "5134393",
+   "linkText": "5134393-lentilha-yoki-tipo-2-400g",
+   "link": "/5134393-lentilha-yoki-tipo-2-400g/p",
+   "categoryId": "241",
+   "categories": [
+    "/Mercearia/Lentilha/",
+    "/Mercearia/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 9.79,
+     "lowPrice": 9.79
+    },
+    "listPrice": {
+     "highPrice": 9.79,
+     "lowPrice": 9.79
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "0.400"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "5134393",
+     "name": "Lentilha YOKI Tipo 2 400g",
+     "nameComplete": "Lentilha YOKI Tipo 2 400g",
+     "ean": "7891095911301",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "5134393"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "220044",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/220044/5134393.jpg?v=638373933760230000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 9.79,
+        "ListPrice": 9.79,
+        "PriceWithoutDiscount": 9.79,
+        "spotPrice": 9.79,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:53:07Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 9.79,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 9.79,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "4091326",
+   "productName": "Lentilha JURÉIA 400g",
+   "brand": "JURÉIA",
+   "brandId": 2000636,
+   "productReference": "4091326",
+   "linkText": "4091326-lentilha-jureia-400g",
+   "link": "/4091326-lentilha-jureia-400g/p",
+   "categoryId": "241",
+   "categories": [
+    "/Mercearia/Lentilha/",
+    "/Mercearia/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 6.99,
+     "lowPrice": 6.99
+    },
+    "listPrice": {
+     "highPrice": 6.99,
+     "lowPrice": 6.99
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "0.400"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "4091326",
+     "name": "Lentilha JURÉIA 400g",
+     "nameComplete": "Lentilha JURÉIA 400g",
+     "ean": "7896348207873",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "4091326"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "220695",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/220695/4091326.jpg?v=638380833548670000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 6.99,
+        "ListPrice": 6.99,
+        "PriceWithoutDiscount": 6.99,
+        "spotPrice": 6.99,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:53:07Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 6.99,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 6.99,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "4513855",
+   "productName": "Lentilha Amarela CERES BRASIL Low Carb Sem Glúten 400g",
+   "brand": "CERES BRASIL",
+   "brandId": 2000073,
+   "productReference": "4513855",
+   "linkText": "lentilha-amarela-ceres-brasil-low-carb-sem-gluten-400g-4513855",
+   "link": "/lentilha-amarela-ceres-brasil-low-carb-sem-gluten-400g-4513855/p",
+   "categoryId": "241",
+   "categories": [
+    "/Mercearia/Lentilha/",
+    "/Mercearia/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 0,
+     "lowPrice": null
+    },
+    "listPrice": {
+     "highPrice": 0,
+     "lowPrice": null
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "0.400"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "4513855",
+     "name": "Lentilha Amarela CERES BRASIL Low Carb Sem Glúten 400g",
+     "nameComplete": "Lentilha Amarela CERES BRASIL Low Carb Sem Glúten 400g",
+     "ean": "798190098555",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "4513855"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "156036",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/156036/4513855_1_zoom.jpg?v=637980813460600000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": false,
+       "commertialOffer": {
+        "Price": 0,
+        "ListPrice": 0,
+        "PriceWithoutDiscount": 0,
+        "spotPrice": 0,
+        "AvailableQuantity": 0,
+        "PriceValidUntil": null,
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": null,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": []
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  }
+ ]
+}
