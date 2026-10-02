@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Bandeja com ovos">
+  <rect width="512" height="512" rx="96" fill="#FBF0DA"/>
+  <circle cx="256" cy="240" r="180" fill="#FFF8EA"/>
+  <ellipse cx="256" cy="414" rx="190" ry="24" fill="#EEDFC0"/>
+  <path d="M70 300 L442 300 L418 400 Q414 412 400 412 L112 412 Q98 412 94 400 Z" fill="#C9B79A"/>
+  <path d="M70 300 L442 300 L434 332 L78 332 Z" fill="#B9A585"/>
+  <g>
+    <ellipse cx="128" cy="258" rx="40" ry="50" fill="#F4E4CF"/>
+    <ellipse cx="212" cy="252" rx="40" ry="50" fill="#FFFFFF"/>
+    <ellipse cx="296" cy="252" rx="40" ry="50" fill="#F4E4CF"/>
+    <ellipse cx="380" cy="258" rx="40" ry="50" fill="#FFFFFF"/>
+    <ellipse cx="170" cy="190" rx="38" ry="47" fill="#FFFFFF"/>
+    <ellipse cx="254" cy="184" rx="38" ry="47" fill="#F4E4CF"/>
+    <ellipse cx="338" cy="190" rx="38" ry="47" fill="#FFFFFF"/>
+  </g>
+  <g fill="#FFFFFF" opacity="0.7">
+    <ellipse cx="114" cy="238" rx="9" ry="14"/><ellipse cx="198" cy="232" rx="9" ry="14"/><ellipse cx="282" cy="232" rx="9" ry="14"/>
+    <ellipse cx="366" cy="238" rx="9" ry="14"/><ellipse cx="156" cy="170" rx="8" ry="13"/><ellipse cx="240" cy="164" rx="8" ry="13"/><ellipse cx="324" cy="170" rx="8" ry="13"/>
+  </g>
+  <rect x="196" y="346" width="120" height="40" rx="20" fill="#E08A2E"/>
+  <text x="256" y="374" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF">30 un</text>
+</svg>

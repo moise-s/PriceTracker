@@ -1,0 +1,188 @@
+@import "tailwindcss";
+@import "@fontsource-variable/figtree";
+@import "@fontsource-variable/bricolage-grotesque";
+
+/*
+ * PriceTracker design tokens.
+ * Warm paper surfaces, a trustworthy leaf green for decisions and savings, and a
+ * tangerine accent used sparingly for "best price" highlights. Status colours are
+ * always paired with text or an icon; colour is never the only signal.
+ */
+@theme {
+  --font-sans: "Figtree Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Bricolage Grotesque Variable", "Figtree Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --color-canvas: #f7f4ee;
+  --color-surface: #ffffff;
+  --color-surface-2: #fbf9f5;
+  --color-surface-3: #f2eee6;
+  --color-line: #e6dfd3;
+  --color-line-strong: #d4cbbb;
+  --color-ink: #1e2320;
+  --color-ink-2: #454c47;
+  --color-ink-3: #636a65;
+
+  --color-brand: #1f6b4a;
+  --color-brand-strong: #16553a;
+  --color-brand-soft: #e5f1ea;
+  --color-brand-ink: #134a33;
+  /* Text/icons placed on solid brand, accent or danger fills. */
+  --color-on-brand: #ffffff;
+  --color-on-accent: #ffffff;
+  --color-on-danger: #ffffff;
+
+  --color-accent: #e2662f;
+  --color-accent-soft: #fdebdd;
+  --color-accent-ink: #8f3a13;
+
+  --color-warn: #a15c07;
+  --color-warn-soft: #fdf1d6;
+  --color-danger: #b42318;
+  --color-danger-soft: #fce9e7;
+  --color-info: #2b5a8c;
+  --color-info-soft: #e7eff8;
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.375rem;
+  --radius-2xl: 1.75rem;
+
+  --shadow-card: 0 1px 2px rgb(30 35 32 / 0.05), 0 10px 28px -18px rgb(30 35 32 / 0.28);
+  --shadow-lift: 0 2px 4px rgb(30 35 32 / 0.06), 0 18px 40px -20px rgb(30 35 32 / 0.35);
+  --shadow-bar: 0 -8px 24px -16px rgb(30 35 32 / 0.35);
+
+  --animate-shimmer: shimmer 1.6s ease-in-out infinite;
+  --animate-rise: rise 0.28s ease-out both;
+
+  @keyframes shimmer {
+    0% { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+    -webkit-tap-highlight-color: transparent;
+    /* Market identity: validated categorical steps (adjacent pairs pass CVD in both modes).
+       Declared outside @theme so they are always emitted (no utility uses them). */
+    --color-market-angeloni: #1baf7a;
+    --color-market-bistek: #4a3aa7;
+    --color-market-fort: #eb6834;
+    --color-market-imperatriz: #2a78d6;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --color-market-angeloni: #199e70;
+      --color-market-bistek: #9085e9;
+      --color-market-fort: #d95926;
+      --color-market-imperatriz: #3987e5;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --color-canvas: #121714;
+      --color-surface: #1a211d;
+      --color-surface-2: #1f2722;
+      --color-surface-3: #26302a;
+      --color-line: #2f3a33;
+      --color-line-strong: #3d4a41;
+      --color-ink: #eef1ec;
+      --color-ink-2: #c3cac4;
+      --color-ink-3: #9aa39c;
+      --color-brand: #5cbb8a;
+      --color-brand-strong: #7fd0a5;
+      --color-brand-soft: #1f3a2c;
+      --color-brand-ink: #b8ebcd;
+      --color-on-brand: #0b2117;
+      --color-on-accent: #2a1206;
+      --color-on-danger: #2b0d0a;
+      --color-accent: #f28c5b;
+      --color-accent-soft: #3d2618;
+      --color-accent-ink: #ffcfb4;
+      --color-warn: #e9b04b;
+      --color-warn-soft: #3a2e14;
+      --color-danger: #f0877d;
+      --color-danger-soft: #3f1d1a;
+      --color-info: #8ab6e6;
+      --color-info-soft: #1b2b3d;
+      --shadow-card: 0 1px 2px rgb(0 0 0 / 0.35), 0 12px 30px -18px rgb(0 0 0 / 0.6);
+      --shadow-lift: 0 2px 6px rgb(0 0 0 / 0.4), 0 20px 44px -20px rgb(0 0 0 / 0.7);
+    }
+  }
+
+  html {
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    min-height: 100dvh;
+    background: var(--color-canvas);
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 3px solid color-mix(in oklab, var(--color-brand) 70%, white);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-brand) 25%, transparent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--color-surface-3) 0px,
+      color-mix(in oklab, var(--color-surface-3) 55%, var(--color-surface)) 160px,
+      var(--color-surface-3) 320px
+    );
+    background-size: 800px 100%;
+    animation: var(--animate-shimmer);
+    border-radius: var(--radius-md);
+  }
+
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  .safe-bottom {
+    padding-bottom: max(env(safe-area-inset-bottom), 0.5rem);
+  }
+}

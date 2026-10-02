@@ -1,0 +1,23 @@
+{
+  "_meta": {
+    "request": {
+      "method": "POST",
+      "url": "https://api.zoombox.com.br/admin/v1/varejista",
+      "headers": {
+        "aplicacao": "multitelas",
+        "Content-Type": "application/json",
+        "Origin": "https://clube.superimperatriz.com.br",
+        "Referer": "https://clube.superimperatriz.com.br/"
+      },
+      "body": {}
+    },
+    "note": "anonymous bootstrap performed by the public hotsite; token is a public per-retailer API key sent back as x-api-key; value redacted"
+  },
+  "response": {
+    "idvarejista": "dw-zbd-mundialmixcomerciode-palhoca-sc",
+    "token": "<public-token>",
+    "multitelas_domain": "https://clube.superimperatriz.com.br",
+    "platform": "web",
+    "aplicacao": "multitelas"
+  }
+}

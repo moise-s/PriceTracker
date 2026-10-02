@@ -1,360 +1,194 @@
-# 🛒 PriceTracker
-
-> **Smart price tracking across supermarket websites using AI-powered web scraping**
-
-PriceTracker is an intelligent price monitoring system that automatically tracks product prices across multiple supermarket websites. It combines browser automation with LLM-powered extraction to reliably find and compare prices, even when website structures change.
-
-[![Python 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io)
-
----
-
-## ✨ Features
-
-### 🤖 **Hybrid Extraction Strategy**
-- **Deterministic CSS Selectors**: Fast, reliable extraction when site structure is known
-- **LLM Fallback**: AI-powered extraction adapts to website changes automatically
-- **Smart Constraints**: Filter products by size, brand, and custom regex patterns
-
-### 📊 **Interactive Dashboard**
-- **Real-time Configuration**: Edit site configs and product lists on the fly
-- **One-Click Scraping**: Run scrapers for all sites or specific targets
-- **Visual Comparisons**: Compare prices across sites with interactive charts
-- **Product-Level Analysis**: See which site offers the best price for each item
-- **Historical Tracking**: SQLite database stores all price observations
-
-### 🎯 **Intelligent Product Matching**
-- **Constraint-Based Filtering**: Ensure you're comparing the same product sizes
-- **Regex Support**: Flexible pattern matching for product attributes
-- **Exclude Patterns**: Filter out unwanted product variations
-- **Multi-Site Comparison**: Only compare products available on multiple sites
-
-### 🚀 **Production Ready**
-- **Database Migrations**: Alembic for schema version control
-- **Async Support**: Playwright for efficient browser automation
-- **Error Handling**: Robust fallback mechanisms
-- **Extensible**: Easy to add new sites and products
-
----
-
-## 📸 Screenshots
-
-### Dashboard Overview
-
-<details>
-<summary><b>Configuration Editor</b></summary>
-
-![Configuration Tab](assets/configuration_tab.png)
-
-Edit your `config.yaml` directly in the browser with YAML validation.
-
-</details>
-
-<details>
-<summary><b>Scraper Runner</b></summary>
-
-![Runner Tab](assets/runner_tab.png)
-
-Run scrapers for all enabled sites or select specific targets.
-
-</details>
-
-<details>
-<summary><b>Total Cost Comparison</b></summary>
-
-![Total Cost Comparison](assets/total_cost_comparison.png)
-
-Compare total shopping basket costs across different supermarkets.
-
-</details>
-
-<details>
-<summary><b>Product Price Comparison Chart</b></summary>
-
-![Product Price Comparison](assets/product_price_comparison.png)
-
-Visual comparison of individual product prices across sites (only shows products available on multiple sites for fair comparison).
-
-</details>
-
-<details>
-<summary><b>Detailed Observations</b></summary>
-
-![Detailed Observations](assets/detailed_observations.png)
-
-Drill down into individual product observations with direct links to products.
-
-</details>
-
----
-
-## 🚀 Quick Start
-
-### Prerequisites
-
-- **Python 3.13+**
-- **[uv](https://github.com/astral-sh/uv)** (recommended) or pip
-- **LLM API Key** (Groq, OpenAI, or compatible provider)
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/PriceTracker.git
-   cd PriceTracker
-   ```
-
-2. **Install dependencies**
-   ```bash
-   uv sync
-   uv run playwright install
-   ```
-
-3. **Set up environment variables**
-   
-   Create a `.env` file in the project root:
-   ```bash
-   GROQ_API_KEY="gsk_your_api_key_here"
-   ```
-
-4. **Configure sites and products**
-   
-   Copy the sample configuration and customize it:
-   ```bash
-   cp config.sample.yaml config.yaml
-   ```
-   
-   Then edit `config.yaml` to add your target supermarkets and products (see [Configuration](#-configuration) below).
-
-5. **Run the dashboard**
-   ```bash
-   uv run streamlit run dashboard.py
-   ```
-
-   The dashboard will open at `http://localhost:8502`
-
----
-
-## ⚙️ Configuration
-
-### Adding a New Site
-
-Edit `config.yaml` and add a site entry:
-
-```yaml
-sites:
-  - name: "YourSupermarket"
-    enabled: true
-    skip_detail_extraction: true  # Use search results page only
-    base_url: "https://www.example.com"
-    search_url_pattern: "https://www.example.com/search?q={query}"
-    selectors:
-      product_container: ".product-card"  # CSS selector for product containers
-      title: ".product-title"              # CSS selector for product title
-      price: ".product-price"              # CSS selector for product price
-```
-
-**Note**: If you don't provide `selectors`, the system will fall back to LLM-based extraction (slower but more flexible).
-
-### Adding Products
-
-Define products you want to track:
-
-```yaml
-products:
-  - canonical_name: "Milk 2L"
-    constraints:
-      size: "2L"  # Exact match
-      
-  - canonical_name: "Rice"
-    constraints:
-      size: "regex:(?<!\\d,)(?:1\\s*kg|1,0+\\s*kg|kg)\\b"  # Regex pattern
-      exclude: "regex:(organic|brown)"  # Exclude unwanted variants
-```
-
-### LLM Configuration
-
-Configure your LLM provider in `config.yaml`:
-
-```yaml
-agent:
-  provider: "groq"
-  model: "llama-3.3-70b-versatile"
-  api_key_env: "GROQ_API_KEY"
-  base_url: "https://api.groq.com/openai/v1"
-```
-
-Supported providers: Groq, OpenAI, or any OpenAI-compatible API.
-
----
-
-## 💻 Usage
-
-### Command Line Interface
-
-**Run all enabled sites:**
-```bash
-uv run python -m pricetracker.cli run
-```
-
-**Run specific site:**
-```bash
-uv run python -m pricetracker.cli run --site "Angeloni"
-```
-
-**Run specific product:**
-```bash
-uv run python -m pricetracker.cli run --product "Milk 2L"
-```
-
-**Combine filters:**
-```bash
-uv run python -m pricetracker.cli run --site "Angeloni" --product "Rice"
-```
-
-### Dashboard Interface
-
-1. **Configuration Tab**: Edit `config.yaml` with live YAML validation
-2. **Runner Tab**: Select sites and trigger scraping jobs
-3. **Results Tab**: 
-   - View total cost comparisons across sites
-   - Compare individual product prices with interactive charts
-   - Filter and explore detailed observations
-   - Export data for further analysis
-
----
-
-## 🗄️ Database
-
-PriceTracker uses SQLite by default (`pricetracker.db`). The schema includes:
-
-- **`runs`**: Scraping job metadata (start time, status, duration)
-- **`observations`**: Individual product price observations with timestamps
-- **`alembic_version`**: Schema version for migrations
-
-### Database Migrations
-
-Create a new migration:
-```bash
-uv run alembic revision --autogenerate -m "description"
-```
-
-Apply migrations:
-```bash
-uv run alembic upgrade head
-```
-
----
-
-## 🏗️ Architecture
-
-```
-PriceTracker/
-├── pricetracker/
-│   ├── agent/          # LLM-powered extraction logic
-│   ├── browser/        # Playwright automation
-│   ├── config/         # Configuration management
-│   ├── database/       # SQLAlchemy models and migrations
-│   ├── extractor/      # Hybrid extraction (CSS + LLM)
-│   └── cli.py          # Command-line interface
-├── alembic/            # Database migrations
-├── assets/             # README screenshots
-├── dashboard.py        # Streamlit dashboard
-├── config.yaml         # Site and product configuration
-└── pyproject.toml      # Project dependencies
-```
-
-### Key Components
-
-- **`extractor/`**: Implements hybrid extraction strategy (deterministic CSS → LLM fallback)
-- **`agent/`**: LLM prompts and response parsing
-- **`browser/`**: Playwright-based web automation
-- **`database/`**: SQLAlchemy models for runs and observations
-- **`dashboard.py`**: Streamlit UI for configuration, execution, and analysis
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Here's how you can help:
-
-### Reporting Issues
-
-- **Bug Reports**: Include steps to reproduce, expected vs actual behavior, and screenshots if applicable
-- **Feature Requests**: Describe the use case and proposed solution
-- **Site Support**: Request support for new supermarket websites
-
-### Development Setup
-
-1. **Fork the repository**
-2. **Create a feature branch**
-   ```bash
-   git checkout -b feature/amazing-feature
-   ```
-3. **Install dev dependencies**
-   ```bash
-   uv sync --group dev
-   ```
-4. **Make your changes**
-5. **Run tests**
-   ```bash
-   uv run pytest
-   ```
-6. **Commit your changes**
-   ```bash
-   git commit -m "Add amazing feature"
-   ```
-7. **Push to your fork**
-   ```bash
-   git push origin feature/amazing-feature
-   ```
-8. **Open a Pull Request**
-
-### Code Style
-
-- Follow PEP 8 guidelines
-- Use type hints where applicable
-- Add docstrings to public functions and classes
-- Keep functions focused and testable
-
-### Adding New Sites
-
-When adding support for a new supermarket:
-
-1. Test the CSS selectors thoroughly
-2. Add example products to verify extraction
-3. Document any site-specific quirks
-4. Update `config.yaml` with the new site
-
----
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- **[Playwright](https://playwright.dev/)** - Browser automation
-- **[Streamlit](https://streamlit.io/)** - Dashboard framework
-- **[Groq](https://groq.com/)** - Fast LLM inference
-- **[SQLAlchemy](https://www.sqlalchemy.org/)** - Database ORM
-- **[Alembic](https://alembic.sqlalchemy.org/)** - Database migrations
-
----
-
-## 📧 Contact
-
-Have questions or suggestions? Open an issue or reach out!
-
----
-
 <div align="center">
-
-**⭐ Star this repo if you find it useful!**
-
-Made with ❤️ and 🤖
-
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/wordmark-dark.svg">
+    <img src="docs/assets/wordmark-light.svg" alt="PriceTracker" width="460">
+  </picture>
+  <h3>Make your grocery budget go further.</h3>
+  <p>Your shopping list. Your local stores. Prices you can check.</p>
+  <p>
+    <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-1F6B4A?style=flat-square" alt="License: MIT"></a>
+    <img src="https://img.shields.io/badge/interface-English%20%2F%20Portugu%C3%AAs-1F6B4A?style=flat-square" alt="Interface: English and Portuguese">
+    <img src="https://img.shields.io/badge/install-Docker-2463A6?style=flat-square" alt="Install with Docker">
+  </p>
+  <p>
+    <a href="#quick-start-with-docker-local">Get started</a> ·
+    <a href="docs/user-guide.en.md">User guide</a> ·
+    <a href="docs/markets.en.md">Add a market</a> ·
+    <a href="CONTRIBUTING.md">Contribute</a> ·
+    <a href="README.pt-BR.md">Português</a>
+  </p>
 </div>
+
+PriceTracker compares the groceries you need across the stores you choose. See which shop has
+better coverage, how recent its prices are, and whether the saving is worth the trip. Run it on
+your own computer, with independent local accounts and an optional AI extraction fallback.
+
+<p align="center">
+  <img src="docs/screenshots/readme/compare-desktop.en.jpg" alt="PriceTracker comparison showing store coverage, basket prices and travel costs" width="100%">
+  <br><sub>Compare the basket, check missing items and see the cost of the trip. Screenshots use demo data and the English interface.</sub>
+</p>
+
+## From a list to a decision
+
+| 1. Build your list | 2. Choose your stores | 3. Check the result |
+| --- | --- | --- |
+| Add illustrated catalog items or your own products. Set how much you need. | Select local stores on Home. Review the list and confirm the markets before starting. | Compare products, missing items and travel costs. Open any price's source and timestamp. |
+
+## What you can do
+
+- Build a list from the illustrated catalog or create your own products. Every catalog product can
+  be customized privately. List quantity is separate from package size.
+- Choose stores on **Home**, then **Update prices → review list → confirm markets → check prices**.
+  New administrator-added markets appear in this selection automatically.
+- Compare double-ply toilet paper **per metre**, using the default catalog item or product template. Different roll counts
+  and lengths are accepted; the basket buys whole packs to cover the metres requested.
+- Compare the common basket, coverage by store and a budget plan across up to three stops.
+  Missing products are always visible; incomplete baskets are never silently compared as complete.
+- Track prices with a chart or a table **sortable by every column**. Set price alerts, see in-app
+  notifications and schedule future checks.
+- Manage markets and branches, accounts, price sources and optional AI providers in Administration.
+
+## A look inside
+
+| Build your list | Choose the stores |
+| --- | --- |
+| ![Illustrated catalog and editable shopping list](docs/screenshots/readme/list-desktop.en.jpg) | ![Market selection and regional filters](docs/screenshots/readme/markets-desktop.en.jpg) |
+
+| Home on your phone | Search progress | Price history |
+| --- | --- | --- |
+| <img src="docs/screenshots/readme/home-phone.en.jpg" alt="Phone home screen with market selection" width="250"> | <img src="docs/screenshots/readme/search-phone.en.jpg" alt="Search status for each product and store" width="250"> | <img src="docs/screenshots/readme/history-phone.en.jpg" alt="Price history chart on a phone" width="250"> |
+
+<details>
+<summary>See dark mode</summary>
+
+![Best value comparison in dark mode](docs/screenshots/dark/onde-compensa-1280.jpg)
+
+</details>
+
+Screenshots are generated from the current UI with deterministic demo sources and test accounts,
+without personal shopping data. README previews use English; the full gallery uses Portuguese.
+They illustrate the interface, not current supermarket prices.
+[Full screenshot gallery](docs/screenshots/README.md).
+
+## Regional coverage and new markets
+
+Built-in integrations cover **Angeloni, Bistek, Fort Atacadista and Imperatriz**. Administrators can
+add branches in other Brazilian cities and states, with the price context each integration supports.
+Bistek uses a shared Florianópolis/SC online reference; Imperatriz publishes Super Clube promotions
+only. Adding a physical branch does not prove its shelf prices or delivery coverage.
+
+For an unrelated chain such as Pradão, use **Administration → Markets → Add new market**. Supply the
+website, a product page with a public price and, if needed, its product sitemap. The wizard validates
+an actual JSON-LD Product/Offer in BRL and product discovery before registering the chain and its
+first store. **Onboarding does not use an LLM or generate scraper code**: compatible sites share the
+existing `public_jsonld` adapter. Websites with login, postal-code pricing or custom formats may
+need a dedicated adapter. See the [source pipeline and limitations](docs/markets.en.md).
+
+English changes interface text, number formatting and dates. It does **not** change currency (BRL),
+Brazilian address fields or market coverage. Store names, listing titles and your search terms keep
+their source language. Use search terms that match your stores' language.
+
+## Quick start with Docker (local)
+
+**This is the v1 rebuild on `feat/rebuild-v1`.** Clone that branch with the command below.
+The older prototype is preserved in `legacy/`; its installation instructions are separate.
+
+Requirements: Git, running Docker with Compose v2, Python 3 to generate secrets and a POSIX shell.
+On Windows, use WSL2 with Docker integration. Docker users do not need Python 3.13, Node or an AI key.
+
+```bash
+git clone --branch feat/rebuild-v1 https://github.com/moise-s/PriceTracker.git
+cd PriceTracker
+./scripts/init-secrets.sh
+docker compose up -d --build
+docker compose ps
+# Wait for persistent services to become healthy, then:
+docker compose exec api pricetracker setup-code
+```
+
+Open **http://localhost:8090**, select your language and use the one-time setup code to create the
+administrator. Save your recovery codes. Configure markets, build your list and check prices.
+Create other accounts in **Administration → Users**. Each account has private lists and history.
+
+Stop with `docker compose down`; restart with `docker compose up -d`. Do not use `down -v` to stop:
+it deletes the data volumes. Existing v1 installations must run the included migrations; the Compose
+migration service does this at startup, including support for quantities in metres.
+
+<details>
+<summary>Optional AI extraction</summary>
+
+AI is optional. To enable Groq fallback, populate `secrets/groq_api_key` (or import it with
+`./scripts/init-secrets.sh --import-groq .env`) and restart with `docker compose up -d`. Configure
+providers in Administration. Normal source extraction and new-market onboarding work without AI.
+
+</details>
+
+Backup: `make backup`. Test restoration: `make restore-drill BACKUP=backups/pricetracker-<date>`.
+See [local operations](docs/operations.md) for details. The default setup is local to the host
+computer; accessing it from another device requires separate configuration.
+
+## Questions before you start
+
+**Can I use this outside Santa Catarina?** Yes, when your stores have a supported source. Add a
+branch of an integrated chain or test an unrelated chain with the administrator wizard. The wizard
+checks actual public product data; registering a store name alone cannot create price coverage.
+
+**Do I need an AI subscription?** No. Deterministic extraction and compatible-market onboarding
+work without an AI key. Optional API providers are configured separately by the administrator.
+
+**Can I use the app in English?** Yes. Choose English on sign-in or in the language selector.
+Currency remains BRL and address fields remain Brazilian; listing titles keep their source language.
+
+**Can several people use it?** Yes, with separate local accounts and private lists/history. Start
+with the host computer; access from phones or other computers needs separate network/HTTPS setup.
+
+**What happens if a price is missing?** The result shows the gap. Older or questionable prices
+are marked, and an incomplete basket is not presented as a complete comparison.
+
+## Development
+
+Requirements: Python 3.13+, uv, Node 22.12+ (or a supported later version), npm and Docker.
+
+```bash
+make bootstrap       # Install dependencies
+make dev-db          # Disposable PostgreSQL at 127.0.0.1:55433
+make dev-init        # Apply migrations and seed the development catalog
+make dev-setup-code  # Generate a setup code for localhost:5173
+make api             # API on :8000; run make worker in another terminal
+make web             # UI at localhost:5173
+make check           # Lint, types, tests and secret scan
+make e2e             # Playwright with deterministic sources
+```
+
+Stack: Python, FastAPI, SQLAlchemy 2, Alembic, PostgreSQL 17, httpx; React 19, TypeScript,
+Vite, Tailwind CSS 4, TanStack Query, Recharts; Playwright and Vitest; Docker Compose and Caddy.
+Identifiers and new domain code use English. Translation message IDs and Brazilian matching terms
+use Portuguese; changing them to English would change what local stores are searched for.
+Historical code is preserved in `legacy/`.
+
+## Documentation
+
+| Document | Contents |
+| --- | --- |
+| [Getting started — English](docs/getting-started.en.md) / [Português](docs/getting-started.md) | Installation, accounts and first comparison |
+| [User guide — English](docs/user-guide.en.md) / [Português](docs/user-guide.md) | Daily workflow, language, toilet paper and history |
+| [Market sources — English](docs/markets.en.md) / [Português](docs/markets.md) | Onboarding, practical configuration, LLM role and coverage |
+| [Contributing](CONTRIBUTING.md) | Developer workflow and adding a dedicated integration |
+| [Architecture](docs/architecture.md) | Search, matching, comparison and security |
+| [Decisions](docs/decisions.md) | ADRs and tradeoffs |
+| [Readiness matrix](docs/sources/readiness-matrix.md) | Evidence for built-in source readiness |
+| [Operations](docs/operations.md) / [Migrations](docs/migrations.md) | Local operation, backup and schema changes |
+| [Testing](docs/testing.md) / [Backlog](docs/backlog.md) | Validation and known limitations |
+
+Primary contributor and technical documentation is in English, with linked Portuguese companions.
+Installation, daily use and market-source guides are available in both languages. See
+[language conventions](CONTRIBUTING.md#language-conventions) when contributing. Server deployment
+and currencies other than BRL are outside this version's scope.
+
+
+## Contributing and license
+
+PriceTracker is open source under the [MIT License](LICENSE). Contributions to usability,
+accessibility, documentation and regional integrations are welcome. Start with
+[CONTRIBUTING.md](CONTRIBUTING.md), which includes the contract and tests for a new market adapter.
+The basket icon, catalog illustrations and README wordmarks are original project assets.

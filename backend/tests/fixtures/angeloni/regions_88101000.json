@@ -1,0 +1,18 @@
+{
+ "_fixture_meta": {
+  "request": "/api/checkout/pub/regions?country=BRA&postalCode=88101000&sc=1",
+  "fetched": "2026-09-27"
+ },
+ "response": [
+  {
+   "id": "v2.6EA065AD64AA626F42DFCA6CBE33D035",
+   "sellers": [
+    {
+     "id": "superangeloni13",
+     "name": "Angeloni Capoeiras",
+     "logo": ""
+    }
+   ]
+  }
+ ]
+}

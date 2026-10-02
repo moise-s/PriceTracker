@@ -1,0 +1,163 @@
+{
+ "_fixture_meta": {
+  "source": "VTEX Intelligent Search product_search (public, robots-allowed)",
+  "request": "/api/io/_v/api/intelligent-search/product_search/trade-policy/1/region-id/v2.6470C9DD8410520F44B2C757ECBDE327?query=5331481&page=1&count=5&locale=pt-BR&hideUnavailableItems=false",
+  "fetched": "2026-09-27",
+  "store_context": {
+   "postal_code": "88010-000",
+   "region_id": "v2.6470C9DD8410520F44B2C757ECBDE327",
+   "white_label_seller": "superangeloni14 (Angeloni Beira Mar)",
+   "trade_policy": "1"
+  },
+  "trimmed": "1 of 1 products returned (recordsFiltered=1); properties/commertialOffer reduced to parsing-relevant fields; Installments cut to 1",
+  "note": "Query by product id works. This SKU has an active 'LP' (Leve 3 Pague 2) promotion in Master Data entity PR for superangeloni14 (see promotions_pr_superangeloni14.json). The promotion is NOT visible in IS (teasers=[])."
+ },
+ "recordsFiltered": 1,
+ "correction": {
+  "misspelled": true
+ },
+ "fuzzy": "0",
+ "operator": "and",
+ "translated": false,
+ "redirect": null,
+ "pagination": {
+  "count": 1,
+  "perPage": 5,
+  "current": {
+   "index": 1,
+   "proxyUrl": "search/trade-policy/1?an=superangeloni&query=5331481&page=1&count=5&locale=pt-BR&hide-unavailable-items=false&operator=and&fuzzy=0"
+  },
+  "next": {
+   "index": 0
+  },
+  "last": {
+   "index": 0
+  }
+ },
+ "options": {
+  "sorts": [],
+  "counts": [],
+  "deliveryPromisesEnabled": false,
+  "dpStatus": "not_requested"
+ },
+ "products": [
+  {
+   "productId": "5331481",
+   "productName": "Nuggets Frango AURORA Kids Auroggets com Queijo 275g",
+   "brand": "AURORA",
+   "brandId": 2000838,
+   "productReference": "5331481",
+   "linkText": "5331481-nuggets-frango-aurora-kids-auroggets-com-queijo-275g",
+   "link": "/5331481-nuggets-frango-aurora-kids-auroggets-com-queijo-275g/p",
+   "categoryId": "96",
+   "categories": [
+    "/Congelados/Empanados/",
+    "/Congelados/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 8.99,
+     "lowPrice": 8.99
+    },
+    "listPrice": {
+     "highPrice": 9.59,
+     "lowPrice": 9.59
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "0.275"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "5331481",
+     "name": "Nuggets Frango AURORA Kids Auroggets com Queijo 275g",
+     "nameComplete": "Nuggets Frango AURORA Kids Auroggets com Queijo 275g",
+     "ean": "7891164110758",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "5331481"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "269135",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/269135/5331481.jpg?v=638653996025370000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 8.99,
+        "ListPrice": 9.59,
+        "PriceWithoutDiscount": 8.99,
+        "spotPrice": 8.99,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:54:43Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 8.99,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 8.99,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  }
+ ]
+}

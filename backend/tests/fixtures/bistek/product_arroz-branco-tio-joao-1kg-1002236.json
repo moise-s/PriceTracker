@@ -1,0 +1,63 @@
+{
+ "url": "https://www.bistek.com.br/arroz-branco-tio-joao-1kg-1002236/p",
+ "slug": "arroz-branco-tio-joao-1kg-1002236",
+ "http_status": 200,
+ "source": "__STATE__ (Apollo SSR cache)",
+ "status": "ok",
+ "name": "Arroz Branco Tio Joao 1kg",
+ "brand": "Tio Joao",
+ "brand_id": 3032,
+ "product_id": "1002236",
+ "sku": "1002236",
+ "ref_id": "1002236",
+ "ean": "7893500020127",
+ "categories": [
+  "/Mercearia/Alimentos Básicos/Arroz/",
+  "/Mercearia/Alimentos Básicos/",
+  "/Mercearia/"
+ ],
+ "list_price": "8.29",
+ "selling_price": "8.29",
+ "price_without_discount": "8.29",
+ "spot_price": "8.29",
+ "is_promo": false,
+ "discount_pct": null,
+ "club_price": null,
+ "club_price_note": "Not in SSR. The site computes 'R$ X no Clube' client-side via POST /api/checkout/pub/orderForms/simulation?RnbBehavior=0&sc=2 (robots-disallowed).",
+ "quantity_offer_hints": [],
+ "teasers": [],
+ "discount_highlights": [],
+ "unit_price": {
+  "value": "8.29",
+  "per": "kg",
+  "rule": "Price / properties['Peso Produto']"
+ },
+ "measurement_unit": "un",
+ "unit_multiplier": 1,
+ "package_size": {
+  "value": "1.0",
+  "unit": "kg",
+  "source": "properties"
+ },
+ "package_size_in_name": "1kg",
+ "slug_vs_name_size_note": null,
+ "available": true,
+ "available_quantity": 99999,
+ "price_valid_until": "2027-09-27T00:00:00Z",
+ "image_url": "https://bistek.vtexassets.com/arquivos/ids/192716/arroz-branco-tio-joao-1kg.jpg?v=638537986881730000",
+ "jsonld_offer": {
+  "price": "8.29",
+  "availability": "http://schema.org/InStock",
+  "priceValidUntil": "2027-09-27T00:00:00Z"
+ },
+ "store_context": {
+  "seller_id": "1",
+  "seller_name": "Bistek Supermercados",
+  "sales_channel": "1",
+  "region_id": null,
+  "price_tables": null,
+  "note": "Default SSR context (no CEP/region). Site disclaimer: prices reference the Florianópolis/SC store and may vary by location."
+ },
+ "_fixture_note": "parsed by prototype.parse_offer_html from fixtures/product_arroz-branco-tio-joao-1kg-1002236.html",
+ "_fetched_at": "2026-09-27T16:42:26-0300"
+}

@@ -1,0 +1,26 @@
+# Secret scanning: default gitleaks rules plus an allowlist for the *fake*
+# credentials used by the automated tests. Real secrets must never be committed:
+# they live in environment variables / Docker secrets (see deploy/.env.example).
+title = "PriceTracker gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Fake values that only exist in the test suites"
+regexTarget = "secret"
+regexes = [
+  '''^senha-forte-123$''',
+  '''^uma-senha-bem-forte$''',
+  '''^outra-senha-forte$''',
+  '''^nova-senha-segura$''',
+  '''^temporaria-123$''',
+  '''^definitiva-456$''',
+  '''^errada-errada$''',
+  '''^qualquer-coisa$''',
+  '''^test-secret-key-that-is-long-enough-123456$''',
+  '''^gsk_test_key_not_real_123456$''',
+  '''^public-segment-token$''',
+  '''^<public-token>$''',
+  '''^e2e-[a-z0-9-]+$''',
+]

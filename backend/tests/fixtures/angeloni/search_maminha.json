@@ -1,0 +1,379 @@
+{
+ "_fixture_meta": {
+  "source": "VTEX Intelligent Search product_search (public, robots-allowed)",
+  "request": "/api/io/_v/api/intelligent-search/product_search/trade-policy/1/region-id/v2.6470C9DD8410520F44B2C757ECBDE327?query=maminha&page=1&count=10&locale=pt-BR&hideUnavailableItems=false",
+  "fetched": "2026-09-27",
+  "store_context": {
+   "postal_code": "88010-000",
+   "region_id": "v2.6470C9DD8410520F44B2C757ECBDE327",
+   "white_label_seller": "superangeloni14 (Angeloni Beira Mar)",
+   "trade_policy": "1"
+  },
+  "trimmed": "3 of 6 products returned (recordsFiltered=6); properties/commertialOffer reduced to parsing-relevant fields; Installments cut to 1",
+  "note": "Variable weight. #0 available (unitMultiplier 0.1); #1 unavailable (Price=0, AvailableQuantity=0); #2 property 'Produto pesado'='Não' although measurementUnit=kg (inconsistent catalog data)."
+ },
+ "recordsFiltered": 6,
+ "correction": {
+  "misspelled": false
+ },
+ "fuzzy": "0",
+ "operator": "and",
+ "translated": false,
+ "redirect": null,
+ "pagination": {
+  "count": 1,
+  "perPage": 10,
+  "current": {
+   "index": 1,
+   "proxyUrl": "search/trade-policy/1?an=superangeloni&query=maminha&page=1&count=10&locale=pt-BR&hide-unavailable-items=false&operator=and&fuzzy=0"
+  },
+  "next": {
+   "index": 0
+  },
+  "last": {
+   "index": 0
+  }
+ },
+ "options": {
+  "sorts": [],
+  "counts": [],
+  "deliveryPromisesEnabled": false,
+  "dpStatus": "not_requested"
+ },
+ "products": [
+  {
+   "productId": "2322157",
+   "productName": "Maminha Bovina TOP QUALITY Resfriada Kg",
+   "brand": "TOP QUALITY",
+   "brandId": 2002563,
+   "productReference": "2322157",
+   "linkText": "maminha-bovina-top-quality-resfriada-kg-2322157",
+   "link": "/maminha-bovina-top-quality-resfriada-kg-2322157/p",
+   "categoryId": "84",
+   "categories": [
+    "/Carnes, Aves e Peixes/Carnes Bovinas/",
+    "/Carnes, Aves e Peixes/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 82.9,
+     "lowPrice": 82.9
+    },
+    "listPrice": {
+     "highPrice": 82.9,
+     "lowPrice": 82.9
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "0.800"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "1.000"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Sim"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "2322157",
+     "name": "Maminha Bovina TOP QUALITY Peça Resfriada Kg",
+     "nameComplete": "Maminha Bovina TOP QUALITY Resfriada Kg Maminha Bovina TOP QUALITY Peça Resfriada Kg",
+     "ean": "6937",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "2322157"
+      }
+     ],
+     "measurementUnit": "kg",
+     "unitMultiplier": 0.1,
+     "images": [
+      {
+       "imageId": "168081",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/168081/2322157_1_zoom.jpg?v=638039457978200000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 82.9,
+        "ListPrice": 82.9,
+        "PriceWithoutDiscount": 82.9,
+        "spotPrice": 8.29,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:53:11Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 8.29,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 8.29,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "5519110",
+   "productName": "Maminha Bovina MONTANA PERDIGÃO kg",
+   "brand": "MONTANA PERDIGÃO",
+   "brandId": 2009955,
+   "productReference": "5519110",
+   "linkText": "maminha-bovina-montana-perdigao-kg-5519110",
+   "link": "/maminha-bovina-montana-perdigao-kg-5519110/p",
+   "categoryId": "84",
+   "categories": [
+    "/Carnes, Aves e Peixes/Carnes Bovinas/",
+    "/Carnes, Aves e Peixes/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 0,
+     "lowPrice": null
+    },
+    "listPrice": {
+     "highPrice": 0,
+     "lowPrice": null
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "0.500"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Sim"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "5519110",
+     "name": "Maminha Bovina MONTANA PERDIGÃO kg",
+     "nameComplete": "Maminha Bovina MONTANA PERDIGÃO kg",
+     "ean": "9901",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "5519110"
+      }
+     ],
+     "measurementUnit": "kg",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "302680",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/302680/5519110.jpg?v=639102210687730000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": false,
+       "commertialOffer": {
+        "Price": 0,
+        "ListPrice": 0,
+        "PriceWithoutDiscount": 0,
+        "spotPrice": 0,
+        "AvailableQuantity": 0,
+        "PriceValidUntil": null,
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": null,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": []
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "4284046",
+   "productName": "Alcatra c/ Maminha Bovina ARGUS PEÇA Kg",
+   "brand": "ARGUS",
+   "brandId": 2002577,
+   "productReference": "4284046",
+   "linkText": "alcatra-c-maminha-bovina-argus-peca-kg-4284046",
+   "link": "/alcatra-c-maminha-bovina-argus-peca-kg-4284046/p",
+   "categoryId": "84",
+   "categories": [
+    "/Carnes, Aves e Peixes/Carnes Bovinas/",
+    "/Carnes, Aves e Peixes/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 0,
+     "lowPrice": null
+    },
+    "listPrice": {
+     "highPrice": 0,
+     "lowPrice": null
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "0,500"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "1,000"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "4284046",
+     "name": "Alcatra c/ Maminha Bovina ARGUS PEÇA Kg",
+     "nameComplete": "Alcatra c/ Maminha Bovina ARGUS PEÇA Kg",
+     "ean": "5917",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "4284046"
+      }
+     ],
+     "measurementUnit": "kg",
+     "unitMultiplier": 0.1,
+     "images": [
+      {
+       "imageId": "168744",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/168744/4284046_1_zoom.jpg?v=638039465494800000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": false,
+       "commertialOffer": {
+        "Price": 0,
+        "ListPrice": 0,
+        "PriceWithoutDiscount": 0,
+        "spotPrice": 0,
+        "AvailableQuantity": 0,
+        "PriceValidUntil": null,
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": null,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": []
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  }
+ ]
+}

@@ -1,0 +1,12 @@
+{
+ "_fixture_meta": {
+  "request": "/api/checkout/pub/regions?country=BRA&postalCode=88130000&sc=1",
+  "fetched": "2026-09-27"
+ },
+ "response": [
+  {
+   "id": "v2.1BB18CE648B5111D0933734ED83EC783",
+   "sellers": []
+  }
+ ]
+}

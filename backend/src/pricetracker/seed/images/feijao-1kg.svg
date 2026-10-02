@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Pacote de feijão">
+  <rect width="512" height="512" rx="96" fill="#F4E6DC"/>
+  <circle cx="256" cy="236" r="178" fill="#FBF3EC"/>
+  <ellipse cx="256" cy="432" rx="138" ry="22" fill="#E6D3C5"/>
+  <path d="M150 150 Q148 120 176 112 L336 112 Q364 120 362 150 L378 404 Q380 430 352 432 L160 432 Q132 430 134 404 Z" fill="#FFFDF9"/>
+  <path d="M150 150 Q148 120 176 112 L336 112 Q364 120 362 150 L366 196 L146 196 Z" fill="#8C3B2A"/>
+  <path d="M160 112 L352 112 L346 92 Q342 80 330 80 L182 80 Q170 80 166 92 Z" fill="#74301F"/>
+  <rect x="176" y="232" width="160" height="118" rx="22" fill="#F1E1D2"/>
+  <g>
+    <ellipse cx="212" cy="274" rx="20" ry="13" fill="#3B2320" transform="rotate(-20 212 274)"/>
+    <ellipse cx="256" cy="264" rx="20" ry="13" fill="#9B5B3C" transform="rotate(12 256 264)"/>
+    <ellipse cx="298" cy="280" rx="20" ry="13" fill="#3B2320" transform="rotate(-8 298 280)"/>
+    <ellipse cx="228" cy="312" rx="20" ry="13" fill="#9B5B3C" transform="rotate(28 228 312)"/>
+    <ellipse cx="272" cy="314" rx="20" ry="13" fill="#3B2320" transform="rotate(-26 272 314)"/>
+    <ellipse cx="312" cy="318" rx="16" ry="11" fill="#9B5B3C" transform="rotate(18 312 318)"/>
+  </g>
+  <g fill="#FFFFFF" opacity="0.35">
+    <ellipse cx="206" cy="270" rx="6" ry="3"/><ellipse cx="292" cy="276" rx="6" ry="3"/><ellipse cx="266" cy="310" rx="6" ry="3"/>
+  </g>
+  <text x="256" y="168" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="700" fill="#FFFFFF" letter-spacing="3">FEIJÃO</text>
+  <rect x="204" y="372" width="104" height="36" rx="18" fill="#8C3B2A"/>
+  <text x="256" y="397" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF">1 kg</text>
+</svg>

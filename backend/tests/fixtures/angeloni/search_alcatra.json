@@ -1,0 +1,635 @@
+{
+ "_fixture_meta": {
+  "source": "VTEX Intelligent Search product_search (public, robots-allowed)",
+  "request": "/api/io/_v/api/intelligent-search/product_search/trade-policy/1/region-id/v2.6470C9DD8410520F44B2C757ECBDE327?query=alcatra&page=1&count=10&locale=pt-BR&hideUnavailableItems=false",
+  "fetched": "2026-09-27",
+  "store_context": {
+   "postal_code": "88010-000",
+   "region_id": "v2.6470C9DD8410520F44B2C757ECBDE327",
+   "white_label_seller": "superangeloni14 (Angeloni Beira Mar)",
+   "trade_policy": "1"
+  },
+  "trimmed": "5 of 10 products returned (recordsFiltered=27); properties/commertialOffer reduced to parsing-relevant fields; Installments cut to 1",
+  "note": "Variable weight: measurementUnit=kg, Price/ListPrice/priceRange are PER KG; unitMultiplier = sale step in kg (0.1/0.2/0.5); spotPrice = Price*unitMultiplier (price of one step)."
+ },
+ "recordsFiltered": 27,
+ "correction": {
+  "misspelled": false
+ },
+ "fuzzy": "0",
+ "operator": "and",
+ "translated": false,
+ "redirect": null,
+ "pagination": {
+  "count": 3,
+  "perPage": 10,
+  "current": {
+   "index": 1,
+   "proxyUrl": "search/trade-policy/1?an=superangeloni&query=alcatra&page=1&count=10&locale=pt-BR&hide-unavailable-items=false&operator=and&fuzzy=0"
+  },
+  "next": {
+   "index": 2
+  },
+  "last": {
+   "index": 0
+  }
+ },
+ "options": {
+  "sorts": [],
+  "counts": [],
+  "deliveryPromisesEnabled": false,
+  "dpStatus": "not_requested"
+ },
+ "products": [
+  {
+   "productId": "5377560",
+   "productName": "Alcatra MONTANA PERDIGÃO Bovino Peça kg",
+   "brand": "MONTANA PERDIGÃO",
+   "brandId": 2009955,
+   "productReference": "5377560",
+   "linkText": "alcatra-montana-perdigao-bovino-peca-kg-5377560",
+   "link": "/alcatra-montana-perdigao-bovino-peca-kg-5377560/p",
+   "categoryId": "84",
+   "categories": [
+    "/Carnes, Aves e Peixes/Carnes Bovinas/",
+    "/Carnes, Aves e Peixes/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 67.9,
+     "lowPrice": 67.9
+    },
+    "listPrice": {
+     "highPrice": 67.9,
+     "lowPrice": 67.9
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1.000"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "1.000"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Sim"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "5377560",
+     "name": "Alcatra MONTANA PERDIGÃO Bovino Peça kg",
+     "nameComplete": "Alcatra MONTANA PERDIGÃO Bovino Peça kg",
+     "ean": "3619",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "5377560"
+      }
+     ],
+     "measurementUnit": "kg",
+     "unitMultiplier": 0.1,
+     "images": [
+      {
+       "imageId": "306615",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/306615/3819369_2 ALCATRA PEDACO.jpg?v=639144425362400000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 67.9,
+        "ListPrice": 67.9,
+        "PriceWithoutDiscount": 67.9,
+        "spotPrice": 6.79,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:52:56Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 6.79,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 6.79,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "4861723",
+   "productName": "Alcatra Miolo Bovina TOP QUALITY Angus Resfriada kg",
+   "brand": "TOP QUALITY",
+   "brandId": 2002563,
+   "productReference": "4861723",
+   "linkText": "alcatra-miolo-bovina-top-quality-angus-resfriada-kg-4861723",
+   "link": "/alcatra-miolo-bovina-top-quality-angus-resfriada-kg-4861723/p",
+   "categoryId": "84",
+   "categories": [
+    "/Carnes, Aves e Peixes/Carnes Bovinas/",
+    "/Carnes, Aves e Peixes/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 90.9,
+     "lowPrice": 90.9
+    },
+    "listPrice": {
+     "highPrice": 90.9,
+     "lowPrice": 90.9
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "0.200"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "1.000"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Sim"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "4861723",
+     "name": "Alcatra Miolo Bovina TOP QUALITY Angus Resfriada kg",
+     "nameComplete": "Alcatra Miolo Bovina TOP QUALITY Angus Resfriada kg",
+     "ean": "1094",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "4861723"
+      }
+     ],
+     "measurementUnit": "kg",
+     "unitMultiplier": 0.2,
+     "images": [
+      {
+       "imageId": "207990",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/207990/4861723.jpg?v=638270055579030000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 90.9,
+        "ListPrice": 90.9,
+        "PriceWithoutDiscount": 90.9,
+        "spotPrice": 18.18,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:52:56Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 18.18,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 18.18,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "4757091",
+   "productName": "Alcatra BEST BEEF Kg",
+   "brand": "BEST BEEF",
+   "brandId": 2002069,
+   "productReference": "4757091",
+   "linkText": "alcatra-best-beef-kg-4757091",
+   "link": "/alcatra-best-beef-kg-4757091/p",
+   "categoryId": "84",
+   "categories": [
+    "/Carnes, Aves e Peixes/Carnes Bovinas/",
+    "/Carnes, Aves e Peixes/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 88.9,
+     "lowPrice": 88.9
+    },
+    "listPrice": {
+     "highPrice": 88.9,
+     "lowPrice": 88.9
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "0,500"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "1.000"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Sim"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "4757091",
+     "name": "Alcatra BEST BEEF Kg",
+     "nameComplete": "Alcatra BEST BEEF Kg",
+     "ean": "7992",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "4757091"
+      }
+     ],
+     "measurementUnit": "kg",
+     "unitMultiplier": 0.5,
+     "images": [
+      {
+       "imageId": "300819",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/300819/01-alcatra.jpg?v=639058317111000000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 88.9,
+        "ListPrice": 88.9,
+        "PriceWithoutDiscount": 88.9,
+        "spotPrice": 44.45,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:52:56Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 44.45,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 44.45,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "4071762",
+   "productName": "Alcatra Bovina SÃO JOAQUIM Frescal Kg",
+   "brand": "SÃO JOAQUIM",
+   "brandId": 2002574,
+   "productReference": "4071762",
+   "linkText": "alcatra-bovina-sao-joaquim-frescal-kg-4071762",
+   "link": "/alcatra-bovina-sao-joaquim-frescal-kg-4071762/p",
+   "categoryId": "84",
+   "categories": [
+    "/Carnes, Aves e Peixes/Carnes Bovinas/",
+    "/Carnes, Aves e Peixes/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 101.9,
+     "lowPrice": 101.9
+    },
+    "listPrice": {
+     "highPrice": 101.9,
+     "lowPrice": 101.9
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "0.200"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "1.000"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Sim"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "4071762",
+     "name": "Alcatra Bovina SÃO JOAQUIM Frescal Kg",
+     "nameComplete": "Alcatra Bovina SÃO JOAQUIM Frescal Kg",
+     "ean": "2399",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "4071762"
+      }
+     ],
+     "measurementUnit": "kg",
+     "unitMultiplier": 0.1,
+     "images": [
+      {
+       "imageId": "269248",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/269248/4071762.jpg?v=638657189943670000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 101.9,
+        "ListPrice": 101.9,
+        "PriceWithoutDiscount": 101.9,
+        "spotPrice": 10.19,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:52:56Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 10.19,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 10.19,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  },
+  {
+   "productId": "3898854",
+   "productName": "Alcatra Bovina BEST BEEF Angus Resfriada Kg",
+   "brand": "BEST BEEF",
+   "brandId": 2002069,
+   "productReference": "3898854",
+   "linkText": "alcatra-bovina-best-beef-angus-resfriada-kg-3898854",
+   "link": "/alcatra-bovina-best-beef-angus-resfriada-kg-3898854/p",
+   "categoryId": "84",
+   "categories": [
+    "/Carnes, Aves e Peixes/Carnes Bovinas/",
+    "/Carnes, Aves e Peixes/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 83.9,
+     "lowPrice": 83.9
+    },
+    "listPrice": {
+     "highPrice": 83.9,
+     "lowPrice": 83.9
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "0.200"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "1.000"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Sim"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "3898854",
+     "name": "Alcatra Bovina BEST BEEF Angus Tiras Resfriada Kg",
+     "nameComplete": "Alcatra Bovina BEST BEEF Angus Resfriada Kg Alcatra Bovina BEST BEEF Angus Tiras Resfriada Kg",
+     "ean": "1114",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "3898854"
+      }
+     ],
+     "measurementUnit": "kg",
+     "unitMultiplier": 0.1,
+     "images": [
+      {
+       "imageId": "192783",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/192783/3898854_1_zoom.jpg?v=638067105304100000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 83.9,
+        "ListPrice": 83.9,
+        "PriceWithoutDiscount": 83.9,
+        "spotPrice": 8.39,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:52:56Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 8.39,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 8.39,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  }
+ ]
+}

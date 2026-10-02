@@ -1,0 +1,18 @@
+{
+ "_fixture_meta": {
+  "request": "/api/checkout/pub/regions?country=BRA&postalCode=86010000&sc=1",
+  "fetched": "2026-09-27"
+ },
+ "response": [
+  {
+   "id": "v2.C69A10FD1B88FBD1C1A2F2C90ECB7F7C",
+   "sellers": [
+    {
+     "id": "superangeloni27",
+     "name": "Angeloni Londrina",
+     "logo": ""
+    }
+   ]
+  }
+ ]
+}

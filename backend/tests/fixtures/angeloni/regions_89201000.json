@@ -1,0 +1,18 @@
+{
+ "_fixture_meta": {
+  "request": "/api/checkout/pub/regions?country=BRA&postalCode=89201000&sc=1",
+  "fetched": "2026-09-27"
+ },
+ "response": [
+  {
+   "id": "v2.5073EDB63C77304686C41A15A435DF75",
+   "sellers": [
+    {
+     "id": "superangeloni21",
+     "name": "Angeloni João Colin",
+     "logo": ""
+    }
+   ]
+  }
+ ]
+}

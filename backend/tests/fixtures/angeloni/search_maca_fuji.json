@@ -1,0 +1,163 @@
+{
+ "_fixture_meta": {
+  "source": "VTEX Intelligent Search product_search (public, robots-allowed)",
+  "request": "/api/io/_v/api/intelligent-search/product_search/trade-policy/1/region-id/v2.6470C9DD8410520F44B2C757ECBDE327?query=ma%C3%A7%C3%A3%20fuji&page=1&count=10&locale=pt-BR&hideUnavailableItems=false",
+  "fetched": "2026-09-27",
+  "store_context": {
+   "postal_code": "88010-000",
+   "region_id": "v2.6470C9DD8410520F44B2C757ECBDE327",
+   "white_label_seller": "superangeloni14 (Angeloni Beira Mar)",
+   "trade_policy": "1"
+  },
+  "trimmed": "1 of 1 products returned (recordsFiltered=1); properties/commertialOffer reduced to parsing-relevant fields; Installments cut to 1",
+  "note": "Variable weight produce: measurementUnit=kg, unitMultiplier=0.2 (≈ one apple), Price per kg, spotPrice=2.13 (=10.69*0.2 truncated)."
+ },
+ "recordsFiltered": 1,
+ "correction": {
+  "misspelled": false
+ },
+ "fuzzy": "0",
+ "operator": "and",
+ "translated": false,
+ "redirect": null,
+ "pagination": {
+  "count": 1,
+  "perPage": 10,
+  "current": {
+   "index": 1,
+   "proxyUrl": "search/trade-policy/1?an=superangeloni&query=maçã fuji&page=1&count=10&locale=pt-BR&hide-unavailable-items=false&operator=and&fuzzy=0"
+  },
+  "next": {
+   "index": 0
+  },
+  "last": {
+   "index": 0
+  }
+ },
+ "options": {
+  "sorts": [],
+  "counts": [],
+  "deliveryPromisesEnabled": false,
+  "dpStatus": "not_requested"
+ },
+ "products": [
+  {
+   "productId": "158070",
+   "productName": "Maçã Fuji kg",
+   "brand": "HORTIFRUTI",
+   "brandId": 2000769,
+   "productReference": "158070",
+   "linkText": "maca-fuji-kg-158070",
+   "link": "/maca-fuji-kg-158070/p",
+   "categoryId": "183",
+   "categories": [
+    "/Hortifruti/Frutas/",
+    "/Hortifruti/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 10.69,
+     "lowPrice": 10.69
+    },
+    "listPrice": {
+     "highPrice": 10.69,
+     "lowPrice": 10.69
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "0.2"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "1.000"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Sim"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "158070",
+     "name": "Maçã Fuji kg",
+     "nameComplete": "Maçã Fuji kg",
+     "ean": "61",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "158070"
+      }
+     ],
+     "measurementUnit": "kg",
+     "unitMultiplier": 0.2,
+     "images": [
+      {
+       "imageId": "182199",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/182199/158070_1_zoom.jpg?v=638039741032670000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": true,
+       "commertialOffer": {
+        "Price": 10.69,
+        "ListPrice": 10.69,
+        "PriceWithoutDiscount": 10.69,
+        "spotPrice": 2.13,
+        "AvailableQuantity": 10000,
+        "PriceValidUntil": "2027-09-27T19:53:05Z",
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": 0,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": [
+         {
+          "Value": 2.13,
+          "InterestRate": 0,
+          "TotalValuePlusInterestRate": 2.13,
+          "NumberOfInstallments": 1,
+          "PaymentSystemName": "American Express",
+          "PaymentSystemGroupName": "creditCardPaymentGroup",
+          "Name": "American Express à vista"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  }
+ ]
+}

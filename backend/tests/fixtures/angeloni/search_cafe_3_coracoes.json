@@ -1,0 +1,154 @@
+{
+ "_fixture_meta": {
+  "source": "VTEX Intelligent Search product_search (public, robots-allowed)",
+  "request": "/api/io/_v/api/intelligent-search/product_search/trade-policy/1/region-id/v2.6470C9DD8410520F44B2C757ECBDE327?query=caf%C3%A9%203%20cora%C3%A7%C3%B5es%20gourmet%20sul%20de%20minas%20250g&page=1&count=10&locale=pt-BR&hideUnavailableItems=false",
+  "fetched": "2026-09-27",
+  "store_context": {
+   "postal_code": "88010-000",
+   "region_id": "v2.6470C9DD8410520F44B2C757ECBDE327",
+   "white_label_seller": "superangeloni14 (Angeloni Beira Mar)",
+   "trade_policy": "1"
+  },
+  "trimmed": "1 of 1 products returned (recordsFiltered=1); properties/commertialOffer reduced to parsing-relevant fields; Installments cut to 1",
+  "note": "Same product found after normalising 'três'->'3'; it is unavailable at this store (Price=0)."
+ },
+ "recordsFiltered": 1,
+ "correction": {
+  "misspelled": false
+ },
+ "fuzzy": "0",
+ "operator": "and",
+ "translated": false,
+ "redirect": null,
+ "pagination": {
+  "count": 1,
+  "perPage": 10,
+  "current": {
+   "index": 1,
+   "proxyUrl": "search/trade-policy/1?an=superangeloni&query=café 3 corações gourmet sul de minas 250g&page=1&count=10&locale=pt-BR&hide-unavailable-items=false&operator=and&fuzzy=0"
+  },
+  "next": {
+   "index": 0
+  },
+  "last": {
+   "index": 0
+  }
+ },
+ "options": {
+  "sorts": [],
+  "counts": [],
+  "deliveryPromisesEnabled": false,
+  "dpStatus": "not_requested"
+ },
+ "products": [
+  {
+   "productId": "4507535",
+   "productName": "Café 3 CORAÇÕES Gourmet Sul de Minas 250g",
+   "brand": "3 CORAÇÕES",
+   "brandId": 2000014,
+   "productReference": "4507535",
+   "linkText": "cafe-3-coracoes-gourmet-sul-de-minas-250g-4507535",
+   "link": "/cafe-3-coracoes-gourmet-sul-de-minas-250g-4507535/p",
+   "categoryId": "274",
+   "categories": [
+    "/Mercearia/Cafés e Chás/Cafés/",
+    "/Mercearia/Cafés e Chás/",
+    "/Mercearia/"
+   ],
+   "priceRange": {
+    "sellingPrice": {
+     "highPrice": 0,
+     "lowPrice": null
+    },
+    "listPrice": {
+     "highPrice": 0,
+     "lowPrice": null
+    }
+   },
+   "properties": [
+    {
+     "name": "Quantidade Mínima",
+     "originalName": "Quantidade Mínima",
+     "values": [
+      "1"
+     ]
+    },
+    {
+     "name": "Quantidade Máxima",
+     "originalName": "Quantidade Máxima",
+     "values": [
+      "120"
+     ]
+    },
+    {
+     "name": "Unidade de medida",
+     "originalName": "Unidade de medida",
+     "values": [
+      "kg"
+     ]
+    },
+    {
+     "name": "Quantidade da embalagem",
+     "originalName": "Quantidade da embalagem",
+     "values": [
+      "0.250"
+     ]
+    },
+    {
+     "name": "Produto pesado",
+     "originalName": "Produto pesado",
+     "values": [
+      "Não"
+     ]
+    }
+   ],
+   "clusterHighlights": [],
+   "items": [
+    {
+     "itemId": "4507535",
+     "name": "Café 3 CORAÇÕES Gourmet Sul de Minas 250g",
+     "nameComplete": "Café 3 CORAÇÕES Gourmet Sul de Minas 250g",
+     "ean": "7896045101665",
+     "referenceId": [
+      {
+       "Key": "RefId",
+       "Value": "4507535"
+      }
+     ],
+     "measurementUnit": "un",
+     "unitMultiplier": 1,
+     "images": [
+      {
+       "imageId": "277739",
+       "imageUrl": "https://superangeloni.vtexassets.com/arquivos/ids/277739/7896045101665_1.png.png?v=638749814306230000"
+      }
+     ],
+     "sellers": [
+      {
+       "sellerId": "1",
+       "sellerName": "A. ANGELONI & CIA. LTDA,",
+       "sellerDefault": false,
+       "commertialOffer": {
+        "Price": 0,
+        "ListPrice": 0,
+        "PriceWithoutDiscount": 0,
+        "spotPrice": 0,
+        "AvailableQuantity": 0,
+        "PriceValidUntil": null,
+        "teasers": [],
+        "discountHighlights": [],
+        "Tax": 0,
+        "taxPercentage": null,
+        "RewardValue": 0,
+        "GiftSkuIds": [],
+        "BuyTogether": [],
+        "Installments": []
+       }
+      }
+     ]
+    }
+   ],
+   "origin": "intelligent-search"
+  }
+ ]
+}

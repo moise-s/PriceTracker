@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Maçãs Fuji">
+  <rect width="512" height="512" rx="96" fill="#FCE5E2"/>
+  <circle cx="256" cy="244" r="180" fill="#FFF3F1"/>
+  <ellipse cx="256" cy="410" rx="170" ry="24" fill="#F0CFCA"/>
+  <g transform="translate(186 280)">
+    <path d="M0 -92 C -62 -120, -128 -76, -120 4 C -112 84, -52 128, 0 110 C 52 128, 112 84, 120 4 C 128 -76, 62 -120, 0 -92 Z" fill="#D9453B"/>
+    <path d="M0 -92 C -40 -104, -96 -80, -100 -20 C -60 -64, -30 -70, 0 -92 Z" fill="#F0735F" opacity="0.8"/>
+    <path d="M-20 60 C 20 86, 70 64, 96 20" stroke="#F4C35A" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.55"/>
+    <path d="M0 -92 C 4 -118, 14 -134, 28 -144" stroke="#6B4A2B" stroke-width="10" fill="none" stroke-linecap="round"/>
+    <path d="M18 -120 C 50 -150, 96 -144, 108 -124 C 80 -104, 44 -104, 18 -120 Z" fill="#5E9E48"/>
+  </g>
+  <g transform="translate(346 318) scale(0.72)">
+    <path d="M0 -92 C -62 -120, -128 -76, -120 4 C -112 84, -52 128, 0 110 C 52 128, 112 84, 120 4 C 128 -76, 62 -120, 0 -92 Z" fill="#E86A4C"/>
+    <path d="M-40 40 C 0 70, 60 60, 90 10" stroke="#F4C35A" stroke-width="12" fill="none" stroke-linecap="round" opacity="0.6"/>
+    <path d="M0 -92 C 4 -118, 12 -130, 24 -140" stroke="#6B4A2B" stroke-width="12" fill="none" stroke-linecap="round"/>
+  </g>
+  <rect x="338" y="92" width="96" height="42" rx="21" fill="#B23A30"/>
+  <text x="386" y="121" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF">kg</text>
+</svg>
