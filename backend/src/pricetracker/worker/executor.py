@@ -41,6 +41,7 @@ from pricetracker.adapters.http import (
     PoliteClient,
     UpstreamError,
 )
+from pricetracker.adapters.public_http import PublicHttpsTransport
 from pricetracker.adapters.registry import get_adapter
 from pricetracker.db.base import utcnow
 from pricetracker.domain.listing import Listing, listing_to_dict
@@ -277,7 +278,9 @@ class RunExecutor:
                     clients[mid] = PoliteClient(
                         allowed_domains=domains,
                         settings=self.settings,
-                        transport=self.transport,
+                        transport=PublicHttpsTransport(self.transport)
+                        if market.adapter_key == "public_jsonld"
+                        else self.transport,
                         robots_loader=robots_loader(self.factory),
                         robots_saver=robots_saver(self.factory, self.settings),
                         sleep=self.sleep,

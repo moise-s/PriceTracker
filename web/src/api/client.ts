@@ -1,3 +1,4 @@
+import { translate } from "@/lib/i18n";
 import createClient, { type Middleware } from "openapi-fetch";
 import type { components, paths } from "./schema";
 
@@ -76,7 +77,7 @@ function friendlyStatus(status: number): string {
 }
 
 export function errorMessage(error: unknown): string {
-  if (error instanceof ApiError) return error.message;
+  if (error instanceof ApiError) return translate(error.message);
   if (error instanceof TypeError) return "Sem conexão com o servidor. Verifique a rede e tente novamente.";
   return "Algo deu errado. Tente novamente.";
 }

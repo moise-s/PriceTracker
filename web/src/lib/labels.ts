@@ -1,3 +1,4 @@
+import { translate } from "./i18n";
 import type { LucideIcon } from "lucide-react";
 import {
   AlertTriangle,
@@ -19,55 +20,55 @@ import {
 export type Tone = "neutral" | "brand" | "accent" | "warn" | "danger" | "info";
 
 export const TARGET_STATUS: Record<string, { label: string; tone: Tone; icon: LucideIcon; help: string }> = {
-  pending: { label: "Na fila", tone: "neutral", icon: CircleDashed, help: "Aguardando a vez." },
-  running: { label: "Buscando", tone: "info", icon: Loader2, help: "Consultando o mercado agora." },
-  found: { label: "Encontrado", tone: "brand", icon: CheckCircle2, help: "Produto equivalente com preço." },
-  not_found: { label: "Não encontrado", tone: "neutral", icon: SearchX, help: "A busca funcionou, mas nada equivalente apareceu." },
-  unavailable: { label: "Indisponível", tone: "warn", icon: PackageX, help: "O produto existe, mas está sem estoque." },
-  no_price: { label: "Sem preço", tone: "warn", icon: CircleSlash, help: "O produto existe, mas não mostra preço." },
-  blocked: { label: "Bloqueado", tone: "danger", icon: ShieldAlert, help: "O site recusou o acesso automatizado (robots.txt, 403/429 ou proteção)." },
-  timeout: { label: "Tempo esgotado", tone: "danger", icon: TimerOff, help: "O site demorou demais para responder." },
-  adapter_error: { label: "Falha na fonte", tone: "danger", icon: Wrench, help: "Erro ao ler o site (mudança de layout ou indisponibilidade)." },
-  needs_llm: { label: "Precisa de IA", tone: "warn", icon: Bot, help: "A leitura determinística falhou e não há IA configurada." },
-  cancelled: { label: "Cancelado", tone: "neutral", icon: Ban, help: "Busca cancelada antes deste item." },
+  pending: { get label() { return translate("Na fila"); }, tone: "neutral", icon: CircleDashed, get help() { return translate("Aguardando a vez."); } },
+  running: { get label() { return translate("Buscando"); }, tone: "info", icon: Loader2, get help() { return translate("Consultando o mercado agora."); } },
+  found: { get label() { return translate("Encontrado"); }, tone: "brand", icon: CheckCircle2, get help() { return translate("Produto equivalente com preço."); } },
+  not_found: { get label() { return translate("Não encontrado"); }, tone: "neutral", icon: SearchX, get help() { return translate("A busca funcionou, mas nada equivalente apareceu."); } },
+  unavailable: { get label() { return translate("Indisponível"); }, tone: "warn", icon: PackageX, get help() { return translate("O produto existe, mas está sem estoque."); } },
+  no_price: { get label() { return translate("Sem preço"); }, tone: "warn", icon: CircleSlash, get help() { return translate("O produto existe, mas não mostra preço."); } },
+  blocked: { get label() { return translate("Bloqueado"); }, tone: "danger", icon: ShieldAlert, get help() { return translate("O site recusou o acesso automatizado (robots.txt, 403/429 ou proteção)."); } },
+  timeout: { get label() { return translate("Tempo esgotado"); }, tone: "danger", icon: TimerOff, get help() { return translate("O site demorou demais para responder."); } },
+  adapter_error: { get label() { return translate("Falha na fonte"); }, tone: "danger", icon: Wrench, get help() { return translate("Erro ao ler o site (mudança de layout ou indisponibilidade)."); } },
+  needs_llm: { get label() { return translate("Precisa de IA"); }, tone: "warn", icon: Bot, get help() { return translate("A leitura determinística falhou e não há IA configurada."); } },
+  cancelled: { get label() { return translate("Cancelado"); }, tone: "neutral", icon: Ban, get help() { return translate("Busca cancelada antes deste item."); } },
 };
 
 export const RUN_STATUS: Record<string, { label: string; tone: Tone; icon: LucideIcon }> = {
-  queued: { label: "Na fila", tone: "neutral", icon: Clock3 },
-  running: { label: "Em andamento", tone: "info", icon: Loader2 },
-  success: { label: "Concluída", tone: "brand", icon: CheckCircle2 },
-  partial: { label: "Concluída com falhas", tone: "warn", icon: AlertTriangle },
-  failed: { label: "Falhou", tone: "danger", icon: XCircle },
-  cancelled: { label: "Cancelada", tone: "neutral", icon: Ban },
+  queued: { get label() { return translate("Na fila"); }, tone: "neutral", icon: Clock3 },
+  running: { get label() { return translate("Em andamento"); }, tone: "info", icon: Loader2 },
+  success: { get label() { return translate("Concluída"); }, tone: "brand", icon: CheckCircle2 },
+  partial: { get label() { return translate("Concluída com falhas"); }, tone: "warn", icon: AlertTriangle },
+  failed: { get label() { return translate("Falhou"); }, tone: "danger", icon: XCircle },
+  cancelled: { get label() { return translate("Cancelada"); }, tone: "neutral", icon: Ban },
 };
 
 export const CELL_STATUS: Record<string, { label: string; tone: Tone }> = {
-  ok: { label: "Atual", tone: "brand" },
-  stale: { label: "Desatualizado", tone: "warn" },
-  flagged: { label: "Em revisão", tone: "danger" },
-  unavailable: { label: "Indisponível", tone: "warn" },
-  missing: { label: "Sem preço", tone: "neutral" },
-  incompatible: { label: "Unidade incompatível", tone: "neutral" },
+  ok: { get label() { return translate("Atual"); }, tone: "brand" },
+  stale: { get label() { return translate("Desatualizado"); }, tone: "warn" },
+  flagged: { get label() { return translate("Em revisão"); }, tone: "danger" },
+  unavailable: { get label() { return translate("Indisponível"); }, tone: "warn" },
+  missing: { get label() { return translate("Sem preço"); }, tone: "neutral" },
+  incompatible: { get label() { return translate("Unidade incompatível"); }, tone: "neutral" },
 };
 
 export const PRICE_KIND: Record<string, { label: string; tone: Tone }> = {
-  regular: { label: "Preço normal", tone: "neutral" },
-  promo: { label: "Promoção", tone: "accent" },
-  club: { label: "Preço de clube", tone: "info" },
-  quantity: { label: "Por quantidade", tone: "accent" },
+  regular: { get label() { return translate("Preço normal"); }, tone: "neutral" },
+  promo: { get label() { return translate("Promoção"); }, tone: "accent" },
+  club: { get label() { return translate("Preço de clube"); }, tone: "info" },
+  quantity: { get label() { return translate("Por quantidade"); }, tone: "accent" },
 };
 
 export const CONFIDENCE: Record<string, { label: string; tone: Tone }> = {
-  alta: { label: "Confiança alta", tone: "brand" },
-  media: { label: "Confiança média", tone: "warn" },
-  baixa: { label: "Confiança baixa", tone: "danger" },
+  alta: { get label() { return translate("Confiança alta"); }, tone: "brand" },
+  media: { get label() { return translate("Confiança média"); }, tone: "warn" },
+  baixa: { get label() { return translate("Confiança baixa"); }, tone: "danger" },
 };
 
 export const HEALTH: Record<string, { label: string; tone: Tone }> = {
-  saudavel: { label: "Funcionando", tone: "brand" },
-  instavel: { label: "Instável", tone: "warn" },
-  falhando: { label: "Com falhas", tone: "danger" },
-  sem_dados: { label: "Sem dados ainda", tone: "neutral" },
+  saudavel: { get label() { return translate("Funcionando"); }, tone: "brand" },
+  instavel: { get label() { return translate("Instável"); }, tone: "warn" },
+  falhando: { get label() { return translate("Com falhas"); }, tone: "danger" },
+  sem_dados: { get label() { return translate("Sem dados ainda"); }, tone: "neutral" },
 };
 
 export const METHOD: Record<string, string> = {
@@ -85,6 +86,7 @@ export const UNIT_OPTIONS: Record<string, string> = {
   g: "g",
   l: "L",
   ml: "ml",
+  m: "m (metros)",
 };
 
 export const SOLD_BY: Record<string, string> = {
@@ -96,6 +98,8 @@ export const SOLD_BY: Record<string, string> = {
 export const WEEKDAYS = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"];
 
 export const REASON_TEXT: Record<string, string> = {
+  compared_per_metre: "comparado pelo preço por metro, aceitando tamanhos diferentes",
+  length_unknown: "comprimento total da embalagem não identificado",
   pin_rejected: "você marcou como produto errado",
   pin_accepted: "confirmado por você",
   gtin_match: "mesmo código de barras",
@@ -118,29 +122,29 @@ export const REASON_TEXT: Record<string, string> = {
 };
 
 export function explainReason(reason: string): string {
-  if (REASON_TEXT[reason]) return REASON_TEXT[reason];
+  if (REASON_TEXT[reason]) return translate(REASON_TEXT[reason]);
   const [key, value] = reason.split(":", 2);
   switch (key) {
     case "missing_required":
-      return `não menciona “${value}”`;
+      return translate(`não menciona “${value}”`);
     case "excluded":
-      return `contém “${value}” (excluído)`;
+      return translate(`contém “${value}” (excluído)`);
     case "not_main_product":
-      return `“${value}” não é o produto principal do título`;
+      return translate(`“${value}” não é o produto principal do título`);
     case "size_ok":
-      return `tamanho confere (${value})`;
+      return translate(`tamanho confere (${value})`);
     case "size_within_tolerance":
-      return `tamanho dentro da tolerância (${value})`;
+      return translate(`tamanho dentro da tolerância (${value})`);
     case "size_mismatch":
-      return `tamanho diferente (${value})`;
+      return translate(`tamanho diferente (${value})`);
     case "unit_mismatch":
-      return `unidade diferente (${value})`;
+      return translate(`unidade diferente (${value})`);
     case "piece_too_large":
-      return `peça grande demais (${value})`;
+      return translate(`peça grande demais (${value})`);
     case "multi_unit_pack":
-      return `pacote com ${value} unidades`;
+      return translate(`pacote com ${value} unidades`);
     case "unexpected_package":
-      return `embalagem inesperada (${value})`;
+      return translate(`embalagem inesperada (${value})`);
     default:
       return reason;
   }

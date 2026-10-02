@@ -7,7 +7,8 @@ protótipo (`pricetracker.db`, mantido intacto na raiz só como referência hist
 
 | Revisão | Arquivo | Conteúdo |
 | --- | --- | --- |
-| `0001` (head) | `backend/migrations/versions/20260927_0001_initial_v1_schema.py` | Schema inicial completo: 31 tabelas, 23 check constraints, uniques e índices |
+| `0001` | `backend/migrations/versions/20260927_0001_initial_v1_schema.py` | Schema inicial completo: 31 tabelas, 23 check constraints, uniques e índices |
+| `0002` (head) | `backend/migrations/versions/20261002_0002_length_units.py` | Permite `m` nos checks de unidade do catálogo e da lista; preserva dados existentes |
 
 A migration é autocontida (não importa tipos da aplicação: o tipo `UTCDateTime` vira
 `sa.DateTime(timezone=True)` via `render_item`) e usa `render_as_batch` no SQLite, para que ALTERs
@@ -71,3 +72,17 @@ uv run alembic upgrade head && uv run alembic check
    índices), teste `upgrade` e `downgrade` em PostgreSQL e SQLite e rode `alembic check`.
 4. Faça um backup antes de aplicar em dados reais (`make backup`). Na stack, o job `migrate` aplica
    as migrations pendentes antes de a API subir.
+
+
+## Comprimento — revisão 0002 (02/10/2026)
+
+Instalações v1 existentes precisam aplicar `upgrade head` antes de usar quantidades em metros.
+O job `migrate` do Compose faz isso ao iniciar a versão atualizada. O modo de comparação por metro
+fica nas regras JSON do produto; não precisa de outra coluna. Preços observados continuam com
+quatro casas no preço unitário.
+
+A verificação em SQLite descartável partiu da `0001` com dados: upgrade preservou a linha do
+catálogo e permitiu `m`, unidades inválidas foram recusadas, e downgrade com dados em metros foi
+bloqueado. Depois de remover/converter esses dados, downgrade e novo upgrade passaram.
+Essa revisão ainda não foi aplicada a um banco real nem verificada em PostgreSQL nesta rodada.
+Não faça downgrade enquanto houver dados em metros; ele falha explicitamente para preservar os dados.

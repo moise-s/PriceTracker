@@ -9,7 +9,15 @@ from pricetracker.api import schemas
 from pricetracker.api.deps import AdminUser, CsrfProtected, CurrentUser, DbSession
 from pricetracker.api.serializers import schedule_out, user_out
 from pricetracker.models.enums import Role
-from pricetracker.services import accounts, admin, app_settings, llm_admin, schedules
+from pricetracker.services import (
+    accounts,
+    admin,
+    app_settings,
+    llm_admin,
+    markets,
+    profile,
+    schedules,
+)
 
 router = APIRouter()
 
@@ -61,6 +69,93 @@ def delete_schedule(schedule_id: uuid.UUID, user: CurrentUser, db: DbSession) ->
 
 
 # --- admin ----------------------------------------------------------------------------------------
+
+
+@router.get("/admin/markets", response_model=list[schemas.MarketAdminOut], tags=["admin"])
+def list_markets(admin_user: AdminUser, db: DbSession) -> list[dict[str, Any]]:
+    return [markets.market_view(m) for m in profile.list_markets(db, include_disabled=True)]
+
+
+@router.post(
+    "/admin/markets/probe",
+    response_model=schemas.MarketProbeOut,
+    tags=["admin"],
+    dependencies=[CsrfProtected],
+)
+async def probe_market(body: schemas.MarketProbeIn, admin_user: AdminUser) -> dict[str, Any]:
+    return await markets.probe_market(body.model_dump())
+
+
+@router.post(
+    "/admin/markets",
+    response_model=schemas.MarketAdminOut,
+    status_code=201,
+    tags=["admin"],
+    dependencies=[CsrfProtected],
+)
+async def create_market(
+    body: schemas.MarketCreateIn, admin_user: AdminUser, db: DbSession
+) -> dict[str, Any]:
+    return markets.market_view(await markets.create_market(db, body.model_dump()))
+
+
+@router.put(
+    "/admin/markets/{market_id}/source",
+    response_model=schemas.MarketAdminOut,
+    tags=["admin"],
+    dependencies=[CsrfProtected],
+)
+async def update_public_source(
+    market_id: uuid.UUID, body: schemas.MarketSourceIn, admin_user: AdminUser, db: DbSession
+) -> dict[str, Any]:
+    return markets.market_view(await markets.update_public_source(db, market_id, body.model_dump()))
+
+
+@router.patch(
+    "/admin/markets/{market_id}",
+    response_model=schemas.MarketAdminOut,
+    tags=["admin"],
+    dependencies=[CsrfProtected],
+)
+def update_market(
+    market_id: uuid.UUID, body: schemas.MarketPatch, admin_user: AdminUser, db: DbSession
+) -> dict[str, Any]:
+    return markets.market_view(
+        markets.update_market(db, market_id, body.model_dump(exclude_unset=True))
+    )
+
+
+@router.post(
+    "/admin/markets/{market_id}/stores",
+    response_model=schemas.MarketAdminOut,
+    status_code=201,
+    tags=["admin"],
+    dependencies=[CsrfProtected],
+)
+def create_store(
+    market_id: uuid.UUID, body: schemas.StoreAdminIn, admin_user: AdminUser, db: DbSession
+) -> dict[str, Any]:
+    markets.save_store(db, market_id, None, body.model_dump())
+    db.expire_all()
+    return markets.market_view(markets.get_market(db, market_id))
+
+
+@router.put(
+    "/admin/markets/{market_id}/stores/{store_id}",
+    response_model=schemas.MarketAdminOut,
+    tags=["admin"],
+    dependencies=[CsrfProtected],
+)
+def update_store(
+    market_id: uuid.UUID,
+    store_id: uuid.UUID,
+    body: schemas.StoreAdminIn,
+    admin_user: AdminUser,
+    db: DbSession,
+) -> dict[str, Any]:
+    markets.save_store(db, market_id, store_id, body.model_dump())
+    db.expire_all()
+    return markets.market_view(markets.get_market(db, market_id))
 
 
 def _settings_out(db: DbSession) -> schemas.AdminSettingsOut:

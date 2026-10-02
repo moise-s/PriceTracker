@@ -115,6 +115,8 @@ def create_run(
         pairs = [(p.id, s.id) for p in products for s in stores]
         store_by_id = {s.id: s for s in stores}
     else:
+        # A retry must respect availability just like a new collection.
+        _resolve_stores(db, user, list({s for _, s in pairs}))
         store_by_id = {
             s.id: s for s in db.scalars(select(Store).where(Store.id.in_({s for _, s in pairs})))
         }

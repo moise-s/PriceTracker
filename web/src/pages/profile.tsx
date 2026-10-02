@@ -1,3 +1,4 @@
+import { translate, useLocale } from "@/lib/i18n";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Calculator, Car, KeyRound, LocateFixed, LogOut, MapPin, MonitorSmartphone, Save, ShieldCheck, SlidersHorizontal } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -10,6 +11,7 @@ import { Badge, Button, Card, Dialog, Field, InlineAlert, Input, LoadingBlock, S
 import { ago, formatDateTime, money } from "@/lib/format";
 
 function SectionCard({ id, icon: Icon, title, description, children }: { id: string; icon: typeof Car; title: string; description?: string; children: React.ReactNode }) {
+  useLocale();
   return (
     <Card id={id} className="scroll-mt-20 space-y-4 p-5 sm:p-6">
       <div className="flex items-start gap-3">
@@ -17,16 +19,17 @@ function SectionCard({ id, icon: Icon, title, description, children }: { id: str
           <Icon aria-hidden className="size-5" />
         </span>
         <div>
-          <h2 className="text-lg font-semibold">{title}</h2>
-          {description ? <p className="text-sm text-ink-3">{description}</p> : null}
+          <h2 className="text-lg font-semibold">{translate(title)}</h2>
+          {description ? <p className="text-sm text-ink-3">{translate(description)}</p> : null}
         </div>
       </div>
-      {children}
+      {translate(children)}
     </Card>
   );
 }
 
 function Preferences() {
+  useLocale();
   const profile = useProfile();
   const markets = useMarkets();
   const update = useUpdateProfile();
@@ -36,37 +39,34 @@ function Preferences() {
   const p = profile.data;
   const clubs = new Set(p.use_club_prices);
   return (
-    <SectionCard id="preferencias" icon={SlidersHorizontal} title="Preferências da comparação">
+    <SectionCard id="preferencias" icon={SlidersHorizontal} title={translate("Preferências da comparação")}>
       <div className="flex gap-2">
-        <Field label="Seu nome" htmlFor="display_name" className="flex-1">
+        <Field label={translate("Seu nome")} htmlFor="display_name" className="flex-1">
           <Input id="display_name" value={name} onChange={(e) => setName(e.target.value)} />
         </Field>
-        <Button variant="secondary" className="mt-7" disabled={!name || name === p.display_name} onClick={() => update.mutate({ display_name: name }, { onSuccess: () => setName(null) })}>
-          Salvar
-        </Button>
+        <Button variant="secondary" className="mt-7" disabled={!name || name === p.display_name} onClick={() => update.mutate({ display_name: name }, { onSuccess: () => setName(null) })}>{translate("Salvar")}</Button>
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
-        <Field label="Preço vale por (dias)" htmlFor="freshness" hint="Preços mais antigos ficam no histórico, fora da recomendação.">
+        <Field label={translate("Preço vale por (dias)")} htmlFor="freshness" hint={translate("Preços mais antigos ficam no histórico, fora da recomendação.")}>
           <Select id="freshness" value={p.freshness_days} onChange={(e) => update.mutate({ freshness_days: Number(e.target.value) })}>
             {[3, 5, 7, 10, 14, 21, 30].map((d) => (
               <option key={d} value={d}>
-                {d} dias
-              </option>
+                {translate(d)}{translate(" dias")}</option>
             ))}
           </Select>
         </Field>
-        <Field label="Máximo de lojas por compra" htmlFor="max_stops" hint="Usado no plano econômico.">
+        <Field label={translate("Máximo de lojas por compra")} htmlFor="max_stops" hint={translate("Usado no plano econômico.")}>
           <Select id="max_stops" value={p.max_stops} onChange={(e) => update.mutate({ max_stops: Number(e.target.value) })}>
-            <option value={1}>1 loja</option>
-            <option value={2}>até 2 lojas</option>
-            <option value={3}>até 3 lojas</option>
+            <option value={1}>{translate("1 loja")}</option>
+            <option value={2}>{translate("até 2 lojas")}</option>
+            <option value={3}>{translate("até 3 lojas")}</option>
           </Select>
         </Field>
       </div>
-      <SwitchRow id="include_travel" label="Incluir custo de deslocamento" description="Soma combustível e pedágios de ida e volta ao total de cada loja." checked={p.include_travel_cost} onCheckedChange={(v) => update.mutate({ include_travel_cost: v })} />
+      <SwitchRow id="include_travel" label={translate("Incluir custo de deslocamento")} description={translate("Soma combustível e pedágios de ida e volta ao total de cada loja.")} checked={p.include_travel_cost} onCheckedChange={(v) => update.mutate({ include_travel_cost: v })} />
       <div>
-        <p className="text-[15px] font-semibold">Uso preço de clube/app em:</p>
-        <p className="mb-2 text-sm text-ink-3">Marque só onde você tem cadastro no clube. Nos demais, o preço de clube aparece, mas não entra no total.</p>
+        <p className="text-[15px] font-semibold">{translate("Uso preço de clube/app em:")}</p>
+        <p className="mb-2 text-sm text-ink-3">{translate("Marque só onde você tem cadastro no clube. Nos demais, o preço de clube aparece, mas não entra no total.")}</p>
         <div className="flex flex-wrap gap-2">
           {(markets.data ?? []).map((m) => (
             <label key={m.slug} className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-surface-2 px-3 py-1.5 text-sm font-semibold ring-1 ring-line has-checked:bg-brand-soft has-checked:ring-brand/40">
@@ -93,6 +93,7 @@ function Preferences() {
 const emptyAddress: Schemas["AddressIn"] = { label: "Casa", postal_code: "", street: "", number: "", complement: "", district: "", city: "", state: "SC", latitude: null, longitude: null, is_primary: true };
 
 function AddressSection() {
+  useLocale();
   const addresses = useAddresses();
   const meta = useMeta();
   const save = useSaveAddress();
@@ -108,7 +109,7 @@ function AddressSection() {
 
   function useBrowserLocation() {
     if (!navigator.geolocation) {
-      toast.error("Seu navegador não permite obter a localização.");
+      toast.error(translate("Seu navegador não permite obter a localização."));
       return;
     }
     setLocating(true);
@@ -116,11 +117,11 @@ function AddressSection() {
       (position) => {
         setForm((f) => ({ ...f, latitude: position.coords.latitude.toFixed(6), longitude: position.coords.longitude.toFixed(6) }));
         setLocating(false);
-        toast.success("Localização obtida. Salve para usar.");
+        toast.success(translate("Localização obtida. Salve para usar."));
       },
       () => {
         setLocating(false);
-        toast.error("Não foi possível obter a localização.");
+        toast.error(translate("Não foi possível obter a localização."));
       },
       { enableHighAccuracy: false, timeout: 15000 },
     );
@@ -131,68 +132,66 @@ function AddressSection() {
     try {
       await unwrap(api.POST("/api/v1/me/addresses/{address_id}/geocode", { params: { path: { address_id: current.id } } }));
       await client.invalidateQueries({ queryKey: keys.addresses });
-      toast.success("Endereço localizado");
+      toast.success(translate("Endereço localizado"));
     } catch (error) {
-      toast.error(errorMessage(error));
+      toast.error(translate(errorMessage(error)));
     }
   }
 
   const located = form.latitude !== null && form.latitude !== undefined && form.latitude !== "";
   return (
-    <SectionCard id="endereco" icon={MapPin} title="Endereço de casa" description="Usado só para calcular a distância até as lojas. Fica privado na sua conta e nunca aparece em logs.">
+    <SectionCard id="endereco" icon={MapPin} title={translate("Endereço de casa")} description={translate("Usado só para calcular a distância até as lojas. Fica privado na sua conta e nunca aparece em logs.")}>
       <div className="grid gap-3 sm:grid-cols-[8rem_1fr_6rem]">
-        <Field label="CEP" htmlFor="postal_code">
+        <Field label={translate("CEP")} htmlFor="postal_code">
           <Input id="postal_code" inputMode="numeric" autoComplete="postal-code" value={form.postal_code ?? ""} onChange={set("postal_code")} />
         </Field>
-        <Field label="Rua" htmlFor="street">
+        <Field label={translate("Rua")} htmlFor="street">
           <Input id="street" autoComplete="address-line1" value={form.street ?? ""} onChange={set("street")} />
         </Field>
-        <Field label="Número" htmlFor="number">
+        <Field label={translate("Número")} htmlFor="number">
           <Input id="number" value={form.number ?? ""} onChange={set("number")} />
         </Field>
       </div>
       <div className="grid gap-3 sm:grid-cols-[1fr_1fr_5rem]">
-        <Field label="Bairro" htmlFor="district">
+        <Field label={translate("Bairro")} htmlFor="district">
           <Input id="district" value={form.district ?? ""} onChange={set("district")} />
         </Field>
-        <Field label="Cidade" htmlFor="city">
+        <Field label={translate("Cidade")} htmlFor="city">
           <Input id="city" autoComplete="address-level2" value={form.city ?? ""} onChange={set("city")} />
         </Field>
-        <Field label="UF" htmlFor="state">
+        <Field label={translate("UF")} htmlFor="state">
           <Input id="state" maxLength={2} value={form.state ?? ""} onChange={set("state")} />
         </Field>
       </div>
       <div className="rounded-xl bg-surface-2 p-4 ring-1 ring-line">
-        <p className="text-sm font-semibold">Localização {located ? <Badge tone="brand">definida</Badge> : <Badge tone="warn">pendente</Badge>}</p>
-        <p className="mb-3 text-sm text-ink-3">A distância usa estas coordenadas. Nenhum mapa externo é carregado.</p>
+        <p className="text-sm font-semibold">{translate("Localização ")}{located ? <Badge tone="brand">{translate("definida")}</Badge> : <Badge tone="warn">{translate("pendente")}</Badge>}</p>
+        <p className="mb-3 text-sm text-ink-3">{translate("A distância usa estas coordenadas. Nenhum mapa externo é carregado.")}</p>
         <div className="flex flex-wrap items-end gap-2">
           <Button variant="secondary" size="sm" onClick={useBrowserLocation} loading={locating}>
-            <LocateFixed aria-hidden className="size-4" /> Usar minha localização atual
-          </Button>
+            <LocateFixed aria-hidden className="size-4" />{translate(" Usar minha localização atual")}</Button>
           {meta.data?.geocoder === "nominatim" && current ? (
             <Button variant="secondary" size="sm" onClick={() => void geocode()}>
-              <MapPin aria-hidden className="size-4" /> Localizar pelo endereço
-            </Button>
+              <MapPin aria-hidden className="size-4" />{translate(" Localizar pelo endereço")}</Button>
           ) : null}
         </div>
         <div className="mt-3 grid grid-cols-2 gap-3">
-          <Field label="Latitude" htmlFor="latitude">
-            <Input id="latitude" inputMode="decimal" value={form.latitude ?? ""} onChange={(e) => setForm((f) => ({ ...f, latitude: e.target.value || null }))} placeholder="-27.595" />
+          <Field label={translate("Latitude")} htmlFor="latitude">
+            <Input id="latitude" inputMode="decimal" value={form.latitude ?? ""} onChange={(e) => setForm((f) => ({ ...f, latitude: e.target.value || null }))} placeholder={translate("-27.595")} />
           </Field>
-          <Field label="Longitude" htmlFor="longitude">
-            <Input id="longitude" inputMode="decimal" value={form.longitude ?? ""} onChange={(e) => setForm((f) => ({ ...f, longitude: e.target.value || null }))} placeholder="-48.548" />
+          <Field label={translate("Longitude")} htmlFor="longitude">
+            <Input id="longitude" inputMode="decimal" value={form.longitude ?? ""} onChange={(e) => setForm((f) => ({ ...f, longitude: e.target.value || null }))} placeholder={translate("-48.548")} />
           </Field>
         </div>
-        {current?.geocode_source ? <p className="mt-2 text-xs text-ink-3">Origem: {current.geocode_source === "manual" ? "informada por você" : current.geocode_source} · {formatDateTime(current.geocoded_at)}</p> : null}
+        {current?.geocode_source ? <p className="mt-2 text-xs text-ink-3">{translate("Origem: ")}{translate(current.geocode_source === "manual" ? "informada por você" : current.geocode_source)}{translate(" · ")}{translate(formatDateTime(current.geocoded_at))}</p> : null}
       </div>
-      <Button onClick={() => save.mutate({ id: current?.id, body: { ...form, latitude: form.latitude || null, longitude: form.longitude || null } }, { onSuccess: () => { setDraft(null); toast.success("Endereço salvo"); } })} loading={save.isPending}>
-        <Save aria-hidden className="size-4" /> Salvar endereço
-      </Button>
+      <Button onClick={() => save.mutate({ id: current?.id, body: { ...form, latitude: form.latitude || null, longitude: form.longitude || null } }, { onSuccess: () => { setDraft(null); toast.success(translate("Endereço salvo")); } })} loading={save.isPending}>
+        <Save aria-hidden className="size-4" />{translate(" Salvar endereço")}</Button>
     </SectionCard>
   );
 }
 
 function VehicleSection() {
+  useLocale();
   const vehicles = useVehicles();
   const save = useSaveVehicle();
   const current = vehicles.data?.[0];
@@ -206,39 +205,37 @@ function VehicleSection() {
   const price = Number(String(form.fuel_price_per_liter).replace(",", "."));
   const example = kmpl > 0 && price >= 0 ? (20 / kmpl) * price : null;
   return (
-    <SectionCard id="veiculo" icon={Car} title="Veículo" description="Consumo e preço do combustível entram no custo de ida e volta.">
+    <SectionCard id="veiculo" icon={Car} title={translate("Veículo")} description={translate("Consumo e preço do combustível entram no custo de ida e volta.")}>
       <div className="grid gap-3 sm:grid-cols-2">
-        <Field label="Nome" htmlFor="vehicle_name">
+        <Field label={translate("Nome")} htmlFor="vehicle_name">
           <Input id="vehicle_name" value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} />
         </Field>
-        <Field label="Combustível" htmlFor="fuel_type">
+        <Field label={translate("Combustível")} htmlFor="fuel_type">
           <Select id="fuel_type" value={form.fuel_type} onChange={(e) => setForm((f) => ({ ...f, fuel_type: e.target.value as Schemas["VehicleIn"]["fuel_type"] }))}>
-            <option value="gasolina">Gasolina</option>
-            <option value="etanol">Etanol</option>
-            <option value="diesel">Diesel</option>
-            <option value="gnv">GNV</option>
-            <option value="flex">Flex</option>
+            <option value="gasolina">{translate("Gasolina")}</option>
+            <option value="etanol">{translate("Etanol")}</option>
+            <option value="diesel">{translate("Diesel")}</option>
+            <option value="gnv">{translate("GNV")}</option>
+            <option value="flex">{translate("Flex")}</option>
           </Select>
         </Field>
-        <Field label="Consumo (km/l)" htmlFor="km_per_liter">
+        <Field label={translate("Consumo (km/l)")} htmlFor="km_per_liter">
           <Input id="km_per_liter" inputMode="decimal" value={String(form.km_per_liter)} onChange={(e) => setForm((f) => ({ ...f, km_per_liter: e.target.value }))} />
         </Field>
-        <Field label="Preço do combustível (R$/l)" htmlFor="fuel_price">
+        <Field label={translate("Preço do combustível (R$/l)")} htmlFor="fuel_price">
           <Input id="fuel_price" inputMode="decimal" value={String(form.fuel_price_per_liter)} onChange={(e) => setForm((f) => ({ ...f, fuel_price_per_liter: e.target.value }))} />
         </Field>
       </div>
-      <InlineAlert tone="info" title={<span className="inline-flex items-center gap-2"><Calculator aria-hidden className="size-4" /> Como calculamos</span>}>
-        custo = distância de ida e volta ÷ consumo × preço do combustível + pedágios.
-        {example !== null ? ` Exemplo: 20 km ÷ ${kmpl.toLocaleString("pt-BR")} km/l × ${money(price)}/l = ${money(example)}.` : ""}
+      <InlineAlert tone="info" title={translate(<span className="inline-flex items-center gap-2"><Calculator aria-hidden className="size-4" />{translate(" Como calculamos")}</span>)}>{translate("custo = distância de ida e volta ÷ consumo × preço do combustível + pedágios.")}{translate(example !== null ? ` Exemplo: 20 km ÷ ${kmpl.toLocaleString("pt-BR")} km/l × ${money(price)}/l = ${money(example)}.` : "")}
       </InlineAlert>
-      <Button onClick={() => save.mutate({ id: current?.id, body: { ...form, km_per_liter: String(kmpl), fuel_price_per_liter: String(price) } }, { onSuccess: () => { setDraft(null); toast.success("Veículo salvo"); } })} loading={save.isPending} disabled={!(kmpl > 0)}>
-        <Save aria-hidden className="size-4" /> Salvar veículo
-      </Button>
+      <Button onClick={() => save.mutate({ id: current?.id, body: { ...form, km_per_liter: String(kmpl), fuel_price_per_liter: String(price) } }, { onSuccess: () => { setDraft(null); toast.success(translate("Veículo salvo")); } })} loading={save.isPending} disabled={!(kmpl > 0)}>
+        <Save aria-hidden className="size-4" />{translate(" Salvar veículo")}</Button>
     </SectionCard>
   );
 }
 
 function SecuritySection() {
+  useLocale();
   const me = useMe();
   const client = useQueryClient();
   const sessions = useQuery({ queryKey: keys.sessions, queryFn: () => unwrap(api.GET("/api/v1/auth/sessions")) });
@@ -253,7 +250,7 @@ function SecuritySection() {
   async function revokeOthers() {
     await unwrap(api.POST("/api/v1/auth/sessions/revoke-others"));
     void client.invalidateQueries({ queryKey: keys.sessions });
-    toast.success("Outras sessões encerradas");
+    toast.success(translate("Outras sessões encerradas"));
   }
   async function regenerate() {
     try {
@@ -262,22 +259,21 @@ function SecuritySection() {
       setPassword("");
       void client.invalidateQueries({ queryKey: keys.me });
     } catch (error) {
-      toast.error(errorMessage(error));
+      toast.error(translate(errorMessage(error)));
     }
   }
 
   return (
-    <SectionCard id="seguranca" icon={ShieldCheck} title="Segurança">
+    <SectionCard id="seguranca" icon={ShieldCheck} title={translate("Segurança")}>
       <div>
-        <h3 className="mb-2 font-semibold">Alterar senha</h3>
+        <h3 className="mb-2 font-semibold">{translate("Alterar senha")}</h3>
         <ChangePasswordForm onDone={() => void client.invalidateQueries({ queryKey: keys.sessions })} />
       </div>
       <div className="border-t border-line pt-4">
         <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-          <h3 className="font-semibold">Sessões ativas</h3>
+          <h3 className="font-semibold">{translate("Sessões ativas")}</h3>
           <Button variant="ghost" size="sm" onClick={() => void revokeOthers()}>
-            <LogOut aria-hidden className="size-4" /> Encerrar as outras
-          </Button>
+            <LogOut aria-hidden className="size-4" />{translate(" Encerrar as outras")}</Button>
         </div>
         <ul className="space-y-2">
           {(sessions.data ?? []).map((s) => (
@@ -285,37 +281,32 @@ function SecuritySection() {
               <span className="flex items-center gap-2">
                 <MonitorSmartphone aria-hidden className="size-4 text-ink-3" />
                 <span>
-                  <span className="font-semibold">{s.client_label ?? "Navegador"}</span> {s.current ? <Badge tone="brand">esta sessão</Badge> : null}
-                  <span className="block text-xs text-ink-3">ativa {ago(s.last_seen_at)} · expira {formatDateTime(s.expires_at)}</span>
+                  <span className="font-semibold">{translate(s.client_label ?? "Navegador")}</span> {s.current ? <Badge tone="brand">{translate("esta sessão")}</Badge> : null}
+                  <span className="block text-xs text-ink-3">{translate("ativa ")}{translate(ago(s.last_seen_at))}{translate(" · expira ")}{translate(formatDateTime(s.expires_at))}</span>
                 </span>
               </span>
               {!s.current ? (
-                <Button variant="ghost" size="sm" onClick={() => void revoke(s.id)}>
-                  Encerrar
-                </Button>
+                <Button variant="ghost" size="sm" onClick={() => void revoke(s.id)}>{translate("Encerrar")}</Button>
               ) : null}
             </li>
           ))}
         </ul>
       </div>
       <div className="border-t border-line pt-4">
-        <h3 className="font-semibold">Códigos de recuperação</h3>
-        <p className="mb-2 text-sm text-ink-3">Restam {me.data?.recovery_codes_remaining ?? "—"} códigos. Gerar novos invalida os anteriores.</p>
+        <h3 className="font-semibold">{translate("Códigos de recuperação")}</h3>
+        <p className="mb-2 text-sm text-ink-3">{translate("Restam ")}{translate(me.data?.recovery_codes_remaining ?? "—")}{translate(" códigos. Gerar novos invalida os anteriores.")}</p>
         <Button variant="secondary" size="sm" onClick={() => setCodesOpen(true)}>
-          <KeyRound aria-hidden className="size-4" /> Gerar novos códigos
-        </Button>
+          <KeyRound aria-hidden className="size-4" />{translate(" Gerar novos códigos")}</Button>
       </div>
-      <Dialog open={codesOpen} onOpenChange={(open) => { setCodesOpen(open); if (!open) setCodes(null); }} title="Novos códigos de recuperação" description={codes ? undefined : "Confirme sua senha para gerar novos códigos."}>
+      <Dialog open={codesOpen} onOpenChange={(open) => { setCodesOpen(open); if (!open) setCodes(null); }} title={translate("Novos códigos de recuperação")} description={translate(codes ? undefined : "Confirme sua senha para gerar novos códigos.")}>
         {codes ? (
           <RecoveryCodes codes={codes} onDone={() => { setCodesOpen(false); setCodes(null); }} />
         ) : (
           <div className="space-y-3">
-            <Field label="Senha" htmlFor="confirm_password">
+            <Field label={translate("Senha")} htmlFor="confirm_password">
               <Input id="confirm_password" type="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} />
             </Field>
-            <Button onClick={() => void regenerate()} disabled={!password}>
-              Gerar
-            </Button>
+            <Button onClick={() => void regenerate()} disabled={!password}>{translate("Gerar")}</Button>
           </div>
         )}
       </Dialog>
@@ -324,12 +315,13 @@ function SecuritySection() {
 }
 
 export function ProfilePage() {
+  useLocale();
   useEffect(() => {
     if (window.location.hash) document.querySelector(window.location.hash)?.scrollIntoView({ block: "start" });
   }, []);
   return (
     <div className="mx-auto max-w-3xl space-y-5">
-      <PageHeader title="Perfil" description="Preferências, endereço, veículo e segurança da sua conta." />
+      <PageHeader title={translate("Perfil")} description={translate("Preferências, endereço, veículo e segurança da sua conta.")} />
       <Preferences />
       <AddressSection />
       <VehicleSection />

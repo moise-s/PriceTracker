@@ -1,4 +1,7 @@
-.PHONY: help bootstrap dev-db api worker scheduler web test test-pg test-live lint typecheck check openapi build up down logs backup restore-drill smoke e2e secrets-scan
+.PHONY: help bootstrap dev-db dev-init dev-setup-code api worker scheduler web test test-pg test-live lint typecheck check openapi build up down logs backup restore-drill smoke e2e secrets-scan
+
+DEV_DATABASE_URL = postgresql+psycopg://pricetracker:pricetracker_local@127.0.0.1:55433/pricetracker
+DEV_ENV = PRICETRACKER_ENVIRONMENT=development PRICETRACKER_PUBLIC_ORIGIN=http://localhost:5173 PRICETRACKER_DATABASE_URL=$(DEV_DATABASE_URL) PRICETRACKER_COOKIE_SECURE=false
 
 help: ## List targets
 	@grep -E '^[a-z-]+:.*##' Makefile | sed 's/:.*## / — /'
@@ -12,14 +15,20 @@ dev-db: ## Start a throwaway PostgreSQL for development on 127.0.0.1:55433 (+ pr
 	until docker exec pricetracker-dev-pg pg_isready -U pricetracker >/dev/null 2>&1; do sleep 1; done
 	docker exec pricetracker-dev-pg createdb -U pricetracker pricetracker_test
 
+dev-init: ## Initialize the dev schema and seed before starting the API
+	cd backend && $(DEV_ENV) uv run pricetracker db-init
+
+dev-setup-code: ## Generate the first-access code for the dev database
+	cd backend && $(DEV_ENV) uv run pricetracker setup-code
+
 api: ## Run the API against the dev database
-	cd backend && PRICETRACKER_DATABASE_URL=postgresql+psycopg://pricetracker:pricetracker_local@127.0.0.1:55433/pricetracker PRICETRACKER_COOKIE_SECURE=false uv run pricetracker serve
+	cd backend && $(DEV_ENV) uv run pricetracker serve
 
 worker: ## Run the worker against the dev database
-	cd backend && PRICETRACKER_DATABASE_URL=postgresql+psycopg://pricetracker:pricetracker_local@127.0.0.1:55433/pricetracker uv run pricetracker worker
+	cd backend && $(DEV_ENV) uv run pricetracker worker
 
 scheduler: ## Run the scheduler against the dev database
-	cd backend && PRICETRACKER_DATABASE_URL=postgresql+psycopg://pricetracker:pricetracker_local@127.0.0.1:55433/pricetracker uv run pricetracker scheduler
+	cd backend && $(DEV_ENV) uv run pricetracker scheduler
 
 web: ## Run the Vite dev server (proxies /api to :8000)
 	cd web && npm run dev

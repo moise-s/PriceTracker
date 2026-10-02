@@ -104,6 +104,25 @@ export async function expectNoHorizontalOverflow(page: Page) {
   expect(overflow, "horizontal overflow in px").toBeLessThanOrEqual(0);
 }
 
+export async function expectNoClippedContent(page: Page) {
+  const offenders = await page.evaluate(() => {
+    const width = document.documentElement.clientWidth;
+    return Array.from(document.querySelectorAll("main *, [role=dialog] *")).flatMap((el) => {
+      const rect = el.getBoundingClientRect();
+      const style = getComputedStyle(el);
+      if (rect.width < 2 || rect.height < 2 || (rect.right <= width + 1 && rect.left >= -1)) return [];
+      if (style.opacity === "0" || style.visibility === "hidden" || el.closest("[aria-hidden=true]")) return [];
+      for (let node = el.parentElement; node && node.tagName !== "MAIN"; node = node.parentElement) {
+        const overflow = getComputedStyle(node).overflowX;
+        if (overflow === "auto" || overflow === "scroll") return [];
+        if ((overflow === "hidden" || overflow === "clip") && node.getBoundingClientRect().right <= width + 1 && node.tagName !== "MAIN") return [];
+      }
+      return [`${el.tagName}#${el.id}: ${(el.textContent ?? "").slice(0, 50)}`];
+    });
+  });
+  expect(offenders, "visible content clipped at the viewport edge").toEqual([]);
+}
+
 /** Saves a screenshot next to the test results and attaches it to the HTML report. */
 export async function snap(page: Page, testInfo: TestInfo, name: string) {
   await page.evaluate(() => document.fonts.ready);

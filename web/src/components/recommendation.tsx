@@ -1,3 +1,4 @@
+import { translate, useLocale } from "@/lib/i18n";
 import { AlertTriangle, Car, ChevronDown, Info, MapPin, PiggyBank, ShoppingBag, Sparkles } from "lucide-react";
 import { useState } from "react";
 import type { Schemas } from "@/api/client";
@@ -9,6 +10,7 @@ import { money } from "@/lib/format";
 type Comparison = Schemas["ComparisonOut"];
 
 export function RecommendationCard({ comparison, colors, compact = false }: { comparison: Comparison; colors: Record<string, string | null | undefined>; compact?: boolean }) {
+  useLocale();
   const rec = comparison.recommendation;
   const [open, setOpen] = useState(false);
   if (rec.kind === "none") return null;
@@ -23,18 +25,18 @@ export function RecommendationCard({ comparison, colors, compact = false }: { co
         <div className="min-w-0 space-y-4">
           <div className="flex flex-wrap items-center gap-2">
             <Badge tone="brand" icon={Sparkles}>
-              {rec.kind === "split" ? "Plano dividido" : "Recomendação da semana"}
+              {translate(rec.kind === "split" ? "Plano dividido" : "Recomendação da semana")}
             </Badge>
             <ConfidenceBadge level={rec.confidence} />
           </div>
           <div>
-            <h2 className="text-[26px] leading-tight font-bold sm:text-[32px]">{rec.headline}</h2>
+            <h2 className="text-[26px] leading-tight font-bold sm:text-[32px]">{translate(rec.headline)}</h2>
             <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
               {stores.map((store) => (
                 <li key={store.store_id} className="inline-flex items-center gap-2 text-[15px] text-ink-2">
                   <MarketDot color={colors[store.market_slug]} />
                   <span>
-                    <span className="font-semibold text-ink">{store.market_name}</span> · {store.store_name}
+                    <span className="font-semibold text-ink">{translate(store.market_name)}</span>{translate(" · ")}{translate(store.store_name)}
                   </span>
                 </li>
               ))}
@@ -42,15 +44,15 @@ export function RecommendationCard({ comparison, colors, compact = false }: { co
           </div>
           <div className="flex flex-wrap items-end gap-x-6 gap-y-3">
             <div>
-              <p className="text-sm font-medium text-ink-3">{rec.travel_total ? "Total com deslocamento" : "Total dos produtos"}</p>
-              <BigMoney value={rec.effective_total} className="text-5xl text-ink sm:text-[56px]" label="Total" />
+              <p className="text-sm font-medium text-ink-3">{translate(rec.travel_total ? "Total com deslocamento" : "Total dos produtos")}</p>
+              <BigMoney value={rec.effective_total} className="text-5xl text-ink sm:text-[56px]" label={translate("Total")} />
             </div>
             {rec.savings && Number(rec.savings) > 0 ? (
               <div className="mb-2 flex items-center gap-2 rounded-2xl bg-accent-soft px-3.5 py-2 text-accent-ink">
                 <PiggyBank aria-hidden className="size-5" />
                 <span className="text-sm leading-tight">
-                  <span className="block font-bold">Economia de {money(rec.savings)}</span>
-                  {reference ? <span className="block opacity-90">vs. {reference.market_name} {reference.store_name}</span> : null}
+                  <span className="block font-bold">{translate("Economia de ")}{translate(money(rec.savings))}</span>
+                  {reference ? <span className="block opacity-90">{translate("vs. ")}{translate(reference.market_name)} {translate(reference.store_name)}</span> : null}
                 </span>
               </div>
             ) : null}
@@ -58,15 +60,13 @@ export function RecommendationCard({ comparison, colors, compact = false }: { co
           <dl className="grid grid-cols-2 gap-3 sm:max-w-md">
             <div className="rounded-xl bg-surface-2 px-3.5 py-3 ring-1 ring-line">
               <dt className="flex items-center gap-1.5 text-xs font-semibold text-ink-3">
-                <ShoppingBag aria-hidden className="size-3.5" /> Produtos
-              </dt>
-              <dd className="mt-0.5 text-lg font-bold tabular">{money(rec.products_total)}</dd>
+                <ShoppingBag aria-hidden className="size-3.5" />{translate(" Produtos")}</dt>
+              <dd className="mt-0.5 text-lg font-bold tabular">{translate(money(rec.products_total))}</dd>
             </div>
             <div className="rounded-xl bg-surface-2 px-3.5 py-3 ring-1 ring-line">
               <dt className="flex items-center gap-1.5 text-xs font-semibold text-ink-3">
-                <Car aria-hidden className="size-3.5" /> Deslocamento
-              </dt>
-              <dd className="mt-0.5 text-lg font-bold tabular">{rec.travel_total ? money(rec.travel_total) : comparison.include_travel ? "—" : "não incluído"}</dd>
+                <Car aria-hidden className="size-3.5" />{translate(" Deslocamento")}</dt>
+              <dd className="mt-0.5 text-lg font-bold tabular">{translate(rec.travel_total ? money(rec.travel_total) : comparison.include_travel ? "—" : "não incluído")}</dd>
             </div>
           </dl>
         </div>
@@ -76,15 +76,13 @@ export function RecommendationCard({ comparison, colors, compact = false }: { co
             <FreshnessBadge observedAt={rec.oldest_observed_at} freshnessDays={comparison.freshness_days} />
             {plan?.travel ? (
               <Badge tone="neutral" icon={MapPin}>
-                {plan.travel.method === "osrm" ? "Rota rodoviária" : "Distância estimada"}
+                {translate(plan.travel.method === "osrm" ? "Rota rodoviária" : "Distância estimada")}
               </Badge>
             ) : null}
           </div>
-          {plan?.travel ? <p className="text-xs leading-relaxed text-ink-3">{plan.travel.formula}</p> : null}
+          {plan?.travel ? <p className="text-xs leading-relaxed text-ink-3">{translate(plan.travel.formula)}</p> : null}
           {!compact ? (
-            <button type="button" className="flex w-full items-center justify-between rounded-lg px-1 py-1 text-sm font-semibold text-brand hover:underline" onClick={() => setOpen((v) => !v)} aria-expanded={open}>
-              Por que esta recomendação?
-              <ChevronDown aria-hidden className={cn("size-4 transition-transform", open && "rotate-180")} />
+            <button type="button" className="flex w-full items-center justify-between rounded-lg px-1 py-1 text-sm font-semibold text-brand hover:underline" onClick={() => setOpen((v) => !v)} aria-expanded={open}>{translate("Por que esta recomendação?")}<ChevronDown aria-hidden className={cn("size-4 transition-transform", open && "rotate-180")} />
             </button>
           ) : null}
         </div>
@@ -95,19 +93,19 @@ export function RecommendationCard({ comparison, colors, compact = false }: { co
             {rec.explanation.map((line) => (
               <li key={line} className="flex gap-2">
                 <Info aria-hidden className="mt-0.5 size-4 shrink-0 text-brand" />
-                {line}
+                {translate(line)}
               </li>
             ))}
             {rec.confidence_reasons.map((line) => (
               <li key={line} className="flex gap-2">
                 <Info aria-hidden className="mt-0.5 size-4 shrink-0 text-ink-3" />
-                {line}
+                {translate(line)}
               </li>
             ))}
           </ul>
           <ul className="space-y-1 text-xs text-ink-3">
             {comparison.plan.assumptions.map((line) => (
-              <li key={line}>• {line}</li>
+              <li key={line}>{translate("• ")}{translate(line)}</li>
             ))}
           </ul>
         </div>
@@ -117,7 +115,7 @@ export function RecommendationCard({ comparison, colors, compact = false }: { co
           {rec.warnings.map((w) => (
             <p key={w} className="flex gap-2">
               <AlertTriangle aria-hidden className="mt-0.5 size-4 shrink-0" />
-              {w}
+              {translate(w)}
             </p>
           ))}
         </div>

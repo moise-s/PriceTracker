@@ -18,6 +18,7 @@ import {
 
 // Committed evidence for the docs: every main screen at 360/390/1280/1440 px, light + dark.
 const OUT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../docs/screenshots");
+const README_OUT = path.join(OUT, "readme");
 const WIDTHS = [360, 390, 1280, 1440] as const;
 const ALL_ITEMS = [
   "Arroz branco",
@@ -126,6 +127,13 @@ test("telas principais em 360/390/1280/1440, sem rolagem horizontal nem viola√ß√
       if (overflow > 0) problems.push(`${name}@${width}: ${overflow}px de rolagem horizontal`);
       for (const offender of await clippedAtEdge(page)) problems.push(`${name}@${width}: cortado na borda: ${offender}`);
       await page.screenshot({ path: path.join(OUT, String(width), `${name}.jpg`), fullPage: true, type: "jpeg", quality: 72, animations: "disabled" });
+      const previewName = width === 1280
+        ? ({ "onde-compensa": "compare-desktop", lista: "list-desktop", mercados: "markets-desktop" } as Record<string, string>)[name]
+        : width === 390 ? ({ inicio: "home-phone", busca: "search-phone", historico: "history-phone" } as Record<string, string>)[name] : undefined;
+      if (previewName) {
+        mkdirSync(README_OUT, { recursive: true });
+        await page.screenshot({ path: path.join(README_OUT, `${previewName}.pt-BR.jpg`), fullPage: false, type: "jpeg", quality: 85, animations: "disabled" });
+      }
       if (width === 390 || width === 1280) {
         for (const violation of await seriousViolations(page)) problems.push(`${name}@${width}: ${violation}`);
       }
@@ -142,6 +150,26 @@ test("telas principais em 360/390/1280/1440, sem rolagem horizontal nem viola√ß√
       await page.screenshot({ path: path.join(OUT, "dark", `${name}-${width}.jpg`), fullPage: true, type: "jpeg", quality: 72, animations: "disabled" });
       for (const violation of await seriousViolations(page)) problems.push(`dark ${name}@${width}: ${violation}`);
     }
+  }
+  // Bounded viewport previews keep the README concise; the full gallery remains above.
+  await page.emulateMedia({ colorScheme: "light" });
+  await page.getByRole("combobox", { name: "Idioma", exact: true }).selectOption("en");
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  const englishPreviews: Array<[string, string, number]> = [
+    ["compare-desktop", "/comparar", 1280],
+    ["list-desktop", "/lista", 1280],
+    ["markets-desktop", "/mercados", 1280],
+    ["home-phone", "/", 390],
+    ["search-phone", `/buscas/${runId}`, 390],
+    ["history-phone", "/historico", 390],
+  ];
+  mkdirSync(README_OUT, { recursive: true });
+  for (const [name, url, width] of englishPreviews) {
+    await page.setViewportSize({ width, height: width < 768 ? 800 : 900 });
+    await page.goto(url);
+    await settle(page);
+    await page.screenshot({ path: path.join(README_OUT, `${name}.en.jpg`), fullPage: false, type: "jpeg", quality: 85, animations: "disabled" });
+    if (await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)) problems.push(`${name}@en: horizontal overflow`);
   }
   expect(problems, problems.join("\n")).toEqual([]);
 });

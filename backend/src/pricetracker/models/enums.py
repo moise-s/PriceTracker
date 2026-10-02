@@ -19,6 +19,7 @@ class Unit(StrEnum):
     KG = "kg"
     ML = "ml"
     L = "l"
+    M = "m"  # length in metres
     UN = "un"  # unit / piece
     PCT = "pct"  # package (list quantity only)
 

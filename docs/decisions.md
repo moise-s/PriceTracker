@@ -97,3 +97,61 @@ Registro curto no formato ADR (contexto → decisão → consequências). Datas:
   build de produção (`vite preview`).
 - **Consequências:** os oito cenários rodam em ~1 min, sem rede externa e sem flakiness de sites
   reais; a validação contra os sites reais fica nos smoke tests ao vivo e nas execuções da stack.
+
+## ADR-11 — Gestão regional com integrações explícitas
+
+- **Contexto:** usuários de outras cidades precisavam editar o cadastro inicial e não tinham
+  gestão de filiais pela interface. Endereço físico e região de preço online são conceitos distintos.
+- **Decisão:** administradores gerenciam disponibilidade, apresentação e filiais das redes
+  integradas; usuários filtram por região e mantêm sua própria seleção. Contextos são validados
+  por adaptador (CEP/vendedor, ID oficial ou preço compartilhado); domínio, site e código de
+  coleta das integrações iniciais continuam em código. Fontes novas passam pelo teste da ADR-12.
+- **Persistência:** seed preserva campos administráveis das redes e filiais com origem `admin`.
+  Desativação preserva histórico e filtra novas seleções/comparações; IDs explícitos indisponíveis
+  são recusados, inclusive nas repetições e novos agendamentos. Buscas já criadas podem concluir.
+- **Histórico:** depois de registrar uma busca, alterar a região de preço exige outro cadastro;
+  não se reinterpretam observações antigas como preços de uma nova região.
+- **Limites:** UI pt-BR/en, BRL e endereços brasileiros. Fontes fora do contrato público da ADR-12
+  exigem adaptadores com fixtures e contexto verificável. Entrada manual/importação, outras moedas e
+  formatos internacionais de endereço ficam no backlog.
+
+## ADR-12 — Assistente de redes novas com fonte pública verificada
+
+- **Contexto:** administrar filiais de quatro redes não permite usar a aplicação em regiões
+  onde nenhuma delas existe. Cadastrar só um nome/site também não garante coleta utilizável.
+- **Decisão:** administrador testa site HTTPS, produto público e sitemap; uma fonte com JSON-LD
+  `Product` e uma `Offer` explícita em BRL pode ser cadastrada com a primeira loja na mesma
+  transação. A fonte é testada novamente no cadastro; prévias enviadas pelo cliente não são prova.
+  O índice pode ser revalidado/atualizado pela UI no mesmo domínio, para todas as lojas, sem
+  mudar sua disponibilidade. Trocar o domínio exige outra rede para preservar a origem do histórico.
+  As quatro integrações específicas mantêm seus contratos de região e promoções.
+- **Cobertura:** referência online anônima, compartilhada entre filiais, com aviso e confirmação
+  explícitos. Cidade/endereço não configuram região no site. Faixas de preço, múltiplas ofertas,
+  condições por quantidade/cliente, validade expirada e outras moedas são recusadas.
+- **Coleta:** sitemap de até 6 documentos/5.000 páginas, cache de 24 h e até 6 candidatos
+  descobertos por produto. Cada anúncio ainda passa pelas regras de equivalência existentes.
+  Sem JavaScript, login, configuração de CEP ou fallback de IA nesse adaptador.
+- **Rede:** HTTPS, mesma origem configurada, robots e ritmo de acesso; cada conexão resolve
+  todos os endereços DNS públicos e fixa o IP validado com Host/SNI originais. Endereços privados,
+  credenciais e portas alternativas são recusados; documentos até 4 MB, teste até 35 s.
+- **UX:** qualquer produto do catálogo pode virar cópia privada editável. Mercados mostra o
+  resumo de produtos/lojas e uma ação que salva a seleção e cria a busca diretamente; opções
+  avançadas e histórico continuam acessíveis separadamente.
+
+
+## ADR-13 — Idioma local e comparação por metro — 02/10/2026
+
+- **Contexto:** salvar um produto deixava dúvida sobre o estado do formulário; embalagens de
+  papel higiênico com quantidades distintas precisavam de uma comparação equivalente.
+- **Decisão:** salvar a criação retorna à lista, onde o usuário adiciona o produto. A UI permite
+  pt-BR/en por navegador, sem traduzir nomes/dados do usuário ou termos de busca. README e guias
+  de entrada, uso e fontes têm versões em inglês; moeda BRL e fuso da instalação permanecem.
+- **Comprimento:** a unidade `m` representa metros totais. O modelo de folha dupla exige essa
+  característica e permite tamanhos distintos; sem comprimento verificável, a oferta é recusada.
+  A escolha usa preço por metro com quatro casas decimais. A cesta compra embalagens inteiras
+  suficientes para os metros desejados e explica a sobra; alertas continuam por embalagem.
+- **Fluxo:** o início mostra mercados selecionáveis. Atualizar preços salva a seleção e abre
+  revisão da lista → confirmação dos mercados → início da busca. Histórico permite ordenar cada
+  coluna nos dois sentidos, mantendo valores ausentes por último.
+- **Persistência:** migração `0002` amplia as unidades permitidas; downgrade recusa dados em metros
+  para evitar perda silenciosa. UI em inglês não amplia automaticamente a cobertura das fontes.

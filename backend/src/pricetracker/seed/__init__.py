@@ -84,14 +84,8 @@ def seed_markets(db: Session) -> dict[str, Market]:
             market = Market(**data)
             db.add(market)
         else:
-            for key in (
-                "name",
-                "website",
-                "adapter_key",
-                "allowed_domains",
-                "notes",
-                "brand_color",
-            ):
+            # Integration metadata stays code-owned; administrator edits survive restarts.
+            for key in ("website", "adapter_key", "allowed_domains"):
                 setattr(market, key, data[key])
         markets[data["slug"]] = market
     db.flush()

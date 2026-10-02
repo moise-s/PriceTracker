@@ -67,15 +67,23 @@ def add_item(
             "Informe um produto ou um item do catálogo.", code="product_required"
         )
     product_id = body.product_id
+    quantity = body.quantity
     if product_id is None:
         assert body.catalog_item_id is not None
+        catalog_item = catalog.get_catalog_item(db, body.catalog_item_id)
+        # A catalog card omits quantity; use its starting amount in the same unit.
+        # An explicitly chosen different unit keeps the request's default of one.
+        if "quantity" not in body.model_fields_set and (
+            body.unit is None or body.unit.value == catalog_item.default_unit
+        ):
+            quantity = catalog_item.default_quantity
         product_id = catalog.product_from_catalog(db, user, body.catalog_item_id).id
     item = catalog.upsert_list_item(
         db,
         user,
         list_id,
         product_id=product_id,
-        quantity=body.quantity,
+        quantity=quantity,
         unit=body.unit.value if body.unit else None,
         notes=body.notes,
     )

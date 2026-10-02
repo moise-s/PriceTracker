@@ -17,6 +17,9 @@
 ## Backlog priorizado
 
 ### P1 — próximos
+0. **Regiões sem rede integrada:** entrada manual de preços com data, filial e procedência, seguida
+   de importação/exportação CSV. Permitir comparar a compra mesmo onde não há coletor pronto.
+   Preços manuais precisam das mesmas regras de frescor, unidade, isolamento e equivalência.
 1. **Decisão sobre o Imperatriz** e ajuste correspondente (manter/desativar/nova fonte autorizada).
 2. **Backup agendado** com retenção (ex.: diário, 7 cópias) e alerta de falha.
 3. **Canário semanal** agendado pelo scheduler (1 produto por mercado) alimentando o painel de saúde.
@@ -26,6 +29,11 @@
 6. **Modo "na loja"**: marcar itens comprados no celular (a API já tem `checked` por item).
 
 ### P2 — depois
+- **Pacotes regionais de filiais:** importar um cadastro validado sem editar código, com prévia,
+   deduplicação, verificação de contexto e preservação das edições locais.
+- **Expansão internacional:** moeda e formatos de endereço por instalação; fuso por usuário. A UI já oferece português/inglês; as fontes atuais usam BRL e contexto brasileiro
+   e agendamento. Não basta traduzir textos: geocodificação, matching e comparação monetária
+   também precisam ser revistos. Atualmente pt-BR/BRL/Brasil.
 7. **Residência compartilhada** (household) com permissões claras entre moradores.
 8. **Exportação CSV/JSON** da lista, comparação e histórico; link de compra por mercado.
 9. **Custo do tempo** como parâmetro opcional do plano (R$/hora), sempre visível.
@@ -39,3 +47,11 @@ Agendamentos, cesta comum × cobertura × plano econômico, alertas de preço co
 painel de saúde/admin, repetição só das falhas, teste seguro do provedor de IA, PWA, divisão ótima
 entre até 3 lojas com rota exata, mediana e mínimo histórico por loja, sinalização de preço atípico,
 pedágios por loja.
+
+Gestão administrativa de redes integradas e filiais, seleção com filtros UF/cidade/nome,
+preservação das edições no seed, ajuda no app e guias de instalação/uso/contribuição (02/10/2026).
+
+Assistente para novas redes com fonte pública JSON-LD/BRL e sitemap verificados, cadastro da
+primeira loja, edição privada de qualquer produto do catálogo e início direto de verificação
+em Mercados (02/10/2026). Fontes com login, região/CEP ou contratos diferentes ainda precisam
+de adaptadores próprios; entrada manual e internacionalização continuam pendentes.

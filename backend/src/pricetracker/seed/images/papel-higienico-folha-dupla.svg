@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Papel higiênico folha dupla">
+  <rect width="512" height="512" rx="96" fill="#EAF5EF"/>
+  <circle cx="256" cy="240" r="180" fill="#F7FCF9"/>
+  <ellipse cx="256" cy="420" rx="170" ry="24" fill="#CDE4D7"/>
+  <path d="M134 154h226v207c0 40-226 40-226 0Z" fill="#FFFFFF" stroke="#D4E5DB" stroke-width="4"/>
+  <ellipse cx="247" cy="154" rx="113" ry="62" fill="#F8FAF8" stroke="#D4E5DB" stroke-width="4"/>
+  <ellipse cx="247" cy="154" rx="73" ry="40" fill="none" stroke="#E3EDE7" stroke-width="4"/>
+  <ellipse cx="247" cy="154" rx="35" ry="20" fill="#BD9570"/>
+  <ellipse cx="247" cy="154" rx="25" ry="13" fill="#8D694C"/>
+  <path d="M304 197c25-8 44-20 56-35v180c0 27 28 45 54 50l-41 25c-33-10-69-27-69-55Z" fill="#FDFEFD" stroke="#D4E5DB" stroke-width="4"/>
+  <path d="M310 268h49M310 324h49M321 380l53 19" stroke="#C9DCD0" stroke-width="3" stroke-dasharray="7 7"/>
+  <path d="M150 258c29 18 84 23 132 15M150 315c29 18 84 23 132 15" fill="none" stroke="#EAF1EC" stroke-width="3"/>
+</svg>

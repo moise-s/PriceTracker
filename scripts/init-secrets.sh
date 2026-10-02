@@ -3,6 +3,10 @@
 #   ./scripts/init-secrets.sh                      # generate DB password and app key
 #   ./scripts/init-secrets.sh --import-groq .env   # also copy GROQ_API_KEY from an env file, silently
 set -eu
+if ! command -v python3 >/dev/null 2>&1; then
+  echo "Python 3 é necessário para gerar os segredos. Instale-o e execute este script novamente." >&2
+  exit 1
+fi
 cd "$(dirname "$0")/.."
 umask 077
 mkdir -p secrets

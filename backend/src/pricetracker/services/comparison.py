@@ -60,7 +60,7 @@ def _sale_unit(obs: Observation) -> SaleUnit:
 def offer_from_observation(obs: Observation) -> OfferInput:
     measure = None
     count = None
-    if obs.package_unit in ("kg", "l") and obs.package_quantity:
+    if obs.package_unit in ("kg", "l", "m") and obs.package_quantity:
         measure = Measure(obs.package_quantity, Unit(obs.package_unit))
     elif obs.package_unit == "un" and obs.package_quantity:
         count = int(obs.package_quantity)
@@ -165,7 +165,16 @@ def build_comparison(
     ]
     if not store_ids:
         store_ids = list(profile.selections(db, user.id).keys())
-    stores = {s.id: s for s in db.scalars(select(Store).where(Store.id.in_(store_ids or [])))}
+    stores = {
+        s.id: s
+        for s in db.scalars(
+            select(Store)
+            .join(Market)
+            .where(
+                Store.id.in_(store_ids or []), Store.is_active.is_(True), Market.enabled.is_(True)
+            )
+        )
+    }
     if store_ids and len(stores) != len(set(store_ids)):
         raise ValidationFailed("Loja inválida na comparação.", code="invalid_store")
     markets = {m.id: m for m in db.scalars(select(Market))}

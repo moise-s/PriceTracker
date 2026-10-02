@@ -124,6 +124,109 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/admin/markets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Markets */
+        get: operations["list_markets_api_v1_admin_markets_get"];
+        put?: never;
+        /** Create Market */
+        post: operations["create_market_api_v1_admin_markets_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/markets/probe": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Probe Market */
+        post: operations["probe_market_api_v1_admin_markets_probe_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/markets/{market_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Update Market */
+        patch: operations["update_market_api_v1_admin_markets__market_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/admin/markets/{market_id}/source": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update Public Source */
+        put: operations["update_public_source_api_v1_admin_markets__market_id__source_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/markets/{market_id}/stores": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Store */
+        post: operations["create_store_api_v1_admin_markets__market_id__stores_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/markets/{market_id}/stores/{store_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update Store */
+        put: operations["update_store_api_v1_admin_markets__market_id__stores__store_id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/admin/settings": {
         parameters: {
             query?: never;
@@ -1864,6 +1967,61 @@ export interface components {
             /** Marked */
             marked: number;
         };
+        /** MarketAdminOut */
+        MarketAdminOut: {
+            /** Adapter Key */
+            adapter_key: string;
+            /** Brand Color */
+            brand_color?: string | null;
+            /** Context Help */
+            context_help: string;
+            /**
+             * Context Kind
+             * @enum {string}
+             */
+            context_kind: "postal_code" | "store_id" | "shared" | "unsupported";
+            /** Enabled */
+            enabled: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Notes */
+            notes?: string | null;
+            /** Sitemap Url */
+            sitemap_url?: string | null;
+            /** Slug */
+            slug: string;
+            /** Stores */
+            stores: components["schemas"]["StoreAdminOut"][];
+            /** Website */
+            website: string;
+        };
+        /** MarketCreateIn */
+        MarketCreateIn: {
+            /**
+             * Brand Color
+             * @default #1BAF7A
+             */
+            brand_color?: string;
+            /**
+             * Confirm Public Price
+             * @constant
+             */
+            confirm_public_price: true;
+            first_store: components["schemas"]["StoreAdminIn"];
+            /** Name */
+            name: string;
+            /** Sample Url */
+            sample_url: string;
+            /** Sitemap Url */
+            sitemap_url?: string | null;
+            /** Website */
+            website: string;
+        };
         /** MarketHealthOut */
         MarketHealthOut: {
             /** Adapter Version */
@@ -1935,6 +2093,62 @@ export interface components {
             slug: string;
             /** Stores */
             stores: components["schemas"]["StoreOut"][];
+            /** Website */
+            website: string;
+        };
+        /** MarketPatch */
+        MarketPatch: {
+            /** Brand Color */
+            brand_color?: string | null;
+            /** Enabled */
+            enabled?: boolean | null;
+            /** Name */
+            name?: string | null;
+            /** Notes */
+            notes?: string | null;
+        };
+        /** MarketProbeIn */
+        MarketProbeIn: {
+            /** Sample Url */
+            sample_url: string;
+            /** Sitemap Url */
+            sitemap_url?: string | null;
+            /** Website */
+            website: string;
+        };
+        /** MarketProbeOut */
+        MarketProbeOut: {
+            /**
+             * Indexed Pages
+             * @default 0
+             */
+            indexed_pages?: number;
+            /** Price Scope Note */
+            price_scope_note: string;
+            /** Reason */
+            reason: string;
+            /** Sample Name */
+            sample_name?: string | null;
+            /** Sample Price */
+            sample_price?: string | null;
+            /** Sitemap Url */
+            sitemap_url?: string | null;
+            /** Supported */
+            supported: boolean;
+            /** Website */
+            website: string;
+        };
+        /** MarketSourceIn */
+        MarketSourceIn: {
+            /**
+             * Confirm Public Price
+             * @constant
+             */
+            confirm_public_price: true;
+            /** Sample Url */
+            sample_url: string;
+            /** Sitemap Url */
+            sitemap_url?: string | null;
             /** Website */
             website: string;
         };
@@ -2636,6 +2850,77 @@ export interface components {
          * @enum {string}
          */
         SoldBy: "package" | "weight" | "unit";
+        /** StoreAdminIn */
+        StoreAdminIn: {
+            /** City */
+            city: string;
+            /** District */
+            district?: string | null;
+            /** External Id */
+            external_id?: string | null;
+            /**
+             * Is Active
+             * @default true
+             */
+            is_active?: boolean;
+            /** Latitude */
+            latitude?: number | string | null;
+            /** Longitude */
+            longitude?: number | string | null;
+            /** Name */
+            name: string;
+            /** Number */
+            number?: string | null;
+            /** Postal Code */
+            postal_code?: string | null;
+            /** Seller */
+            seller?: string | null;
+            /** State */
+            state: string;
+            /** Street */
+            street?: string | null;
+        };
+        /** StoreAdminOut */
+        StoreAdminOut: {
+            /** City */
+            city: string;
+            /** District */
+            district?: string | null;
+            /** External Id */
+            external_id?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Is Active
+             * @default true
+             */
+            is_active?: boolean;
+            /** Latitude */
+            latitude?: string | null;
+            /** Longitude */
+            longitude?: string | null;
+            /** Name */
+            name: string;
+            /** Number */
+            number?: string | null;
+            /** Postal Code */
+            postal_code?: string | null;
+            /** Price Scope Note */
+            price_scope_note?: string | null;
+            /** Seller */
+            seller?: string | null;
+            /** Slug */
+            slug: string;
+            /** Source */
+            source: string;
+            /** State */
+            state: string;
+            /** Street */
+            street?: string | null;
+        };
         /** StoreOut */
         StoreOut: {
             /** City */
@@ -2750,7 +3035,7 @@ export interface components {
          * Unit
          * @enum {string}
          */
-        Unit: "g" | "kg" | "ml" | "l" | "un" | "pct";
+        Unit: "g" | "kg" | "ml" | "l" | "m" | "un" | "pct";
         /** UserOut */
         UserOut: {
             /**
@@ -3082,6 +3367,233 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["LlmTestOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_markets_api_v1_admin_markets_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MarketAdminOut"][];
+                };
+            };
+        };
+    };
+    create_market_api_v1_admin_markets_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MarketCreateIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MarketAdminOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    probe_market_api_v1_admin_markets_probe_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MarketProbeIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MarketProbeOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_market_api_v1_admin_markets__market_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                market_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MarketPatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MarketAdminOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_public_source_api_v1_admin_markets__market_id__source_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                market_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MarketSourceIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MarketAdminOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_store_api_v1_admin_markets__market_id__stores_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                market_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StoreAdminIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MarketAdminOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_store_api_v1_admin_markets__market_id__stores__store_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                market_id: string;
+                store_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StoreAdminIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MarketAdminOut"];
                 };
             };
             /** @description Validation Error */

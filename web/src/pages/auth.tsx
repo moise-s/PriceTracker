@@ -1,3 +1,4 @@
+import { translate, useLocale } from "@/lib/i18n";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { Copy, Download, KeyRound, ShieldCheck } from "lucide-react";
@@ -19,6 +20,7 @@ const username = z
 const password = z.string().min(10, "A senha precisa ter pelo menos 10 caracteres.").max(256);
 
 export function RecoveryCodes({ codes, onDone }: { codes: string[]; onDone: () => void | Promise<void> }) {
+  useLocale();
   const [confirmed, setConfirmed] = useState(false);
   const [leaving, setLeaving] = useState(false);
   const text = codes.join("\n");
@@ -29,34 +31,27 @@ export function RecoveryCodes({ codes, onDone }: { codes: string[]; onDone: () =
           <KeyRound aria-hidden className="size-6" />
         </span>
         <div>
-          <h1 className="text-2xl font-bold outline-none">Guarde seus códigos de recuperação</h1>
-          <p className="mt-1 text-sm text-ink-2">
-            Como não usamos e-mail, estes códigos permitem redefinir sua senha. Cada código funciona uma única vez e
-            <strong> não será mostrado de novo</strong>.
-          </p>
+          <h1 className="text-2xl font-bold outline-none">{translate("Guarde seus códigos de recuperação")}</h1>
+          <p className="mt-1 text-sm text-ink-2">{translate("Como não usamos e-mail, estes códigos permitem redefinir sua senha. Cada código funciona uma única vez e")}<strong>{translate(" não será mostrado de novo")}</strong>{translate(".")}</p>
         </div>
       </div>
       <ol className="grid grid-cols-2 gap-2 rounded-lg bg-surface-2 p-4 font-mono text-[15px] tabular">
         {codes.map((code) => (
-          <li key={code}>{code}</li>
+          <li key={code}>{translate(code)}</li>
         ))}
       </ol>
       <div className="flex flex-wrap gap-2">
-        <Button variant="secondary" size="sm" onClick={() => void navigator.clipboard.writeText(text).then(() => toast.success("Códigos copiados"))}>
-          <Copy aria-hidden className="size-4" /> Copiar
-        </Button>
+        <Button variant="secondary" size="sm" onClick={() => void navigator.clipboard.writeText(text).then(() => toast.success(translate("Códigos copiados")))}>
+          <Copy aria-hidden className="size-4" />{translate(" Copiar")}</Button>
         <a
           className="inline-flex h-9 items-center gap-2 rounded-full px-3.5 text-sm font-semibold ring-1 ring-line-strong hover:bg-surface-2"
           href={`data:text/plain;charset=utf-8,${encodeURIComponent(`PriceTracker — códigos de recuperação\n\n${text}\n`)}`}
           download="pricetracker-codigos-de-recuperacao.txt"
         >
-          <Download aria-hidden className="size-4" /> Baixar .txt
-        </a>
+          <Download aria-hidden className="size-4" />{translate(" Baixar .txt")}</a>
       </div>
       <label className="flex items-center gap-2 text-sm font-medium">
-        <input type="checkbox" className="size-4 accent-[var(--color-brand)]" checked={confirmed} onChange={(e) => setConfirmed(e.target.checked)} />
-        Guardei os códigos em um lugar seguro
-      </label>
+        <input type="checkbox" className="size-4 accent-[var(--color-brand)]" checked={confirmed} onChange={(e) => setConfirmed(e.target.checked)} />{translate("Guardei os códigos em um lugar seguro")}</label>
       <Button
         className="w-full"
         disabled={!confirmed}
@@ -65,9 +60,7 @@ export function RecoveryCodes({ codes, onDone }: { codes: string[]; onDone: () =
           setLeaving(true);
           void Promise.resolve(onDone()).finally(() => setLeaving(false));
         }}
-      >
-        Continuar
-      </Button>
+      >{translate("Continuar")}</Button>
     </Card>
   );
 }
@@ -77,6 +70,7 @@ const setupSchema = z
   .refine((v) => v.password === v.confirm, { path: ["confirm"], message: "As senhas não conferem." });
 
 export function SetupPage() {
+  useLocale();
   const meta = useMeta();
   const client = useQueryClient();
   const navigate = useNavigate();
@@ -121,37 +115,33 @@ export function SetupPage() {
             <ShieldCheck aria-hidden className="size-6" />
           </span>
           <div>
-            <h1 className="text-2xl font-bold outline-none">Primeiro acesso</h1>
-            <p className="mt-1 text-sm text-ink-2">Crie a conta de administrador desta instalação. Não existe senha padrão.</p>
+            <h1 className="text-2xl font-bold outline-none">{translate("Primeiro acesso")}</h1>
+            <p className="mt-1 text-sm text-ink-2">{translate("Crie a conta de administrador desta instalação. Não existe senha padrão.")}</p>
           </div>
         </div>
         {requiresCode ? (
-          <InlineAlert tone="info" title="Código de configuração necessário">
-            Para proteger a instalação, gere um código no servidor com <code className="rounded bg-surface px-1">pricetracker setup-code</code> e cole abaixo.
-          </InlineAlert>
+          <InlineAlert tone="info" title={translate("Código de configuração necessário")}>{translate("Para proteger a instalação, gere um código no servidor com ")}<code className="rounded bg-surface px-1">{translate("pricetracker setup-code")}</code>{translate(" e cole abaixo.")}</InlineAlert>
         ) : null}
         <form className="mt-4 space-y-4" onSubmit={submit} noValidate>
           {requiresCode ? (
-            <Field label="Código de configuração" htmlFor="setup_code" error={e.setup_code?.message}>
-              <Input id="setup_code" autoComplete="one-time-code" placeholder="XXXX-XXXX-XXXX" {...form.register("setup_code")} />
+            <Field label={translate("Código de configuração")} htmlFor="setup_code" error={translate(e.setup_code?.message)}>
+              <Input id="setup_code" autoComplete="one-time-code" placeholder={translate("XXXX-XXXX-XXXX")} {...form.register("setup_code")} />
             </Field>
           ) : null}
-          <Field label="Seu nome" htmlFor="display_name" error={e.display_name?.message}>
+          <Field label={translate("Seu nome")} htmlFor="display_name" error={translate(e.display_name?.message)}>
             <Input id="display_name" autoComplete="name" aria-invalid={Boolean(e.display_name)} {...form.register("display_name")} />
           </Field>
-          <Field label="Nome de usuário" htmlFor="username" error={e.username?.message} hint="Usado para entrar. Ex.: ana.souza">
+          <Field label={translate("Nome de usuário")} htmlFor="username" error={translate(e.username?.message)} hint={translate("Usado para entrar. Ex.: ana.souza")}>
             <Input id="username" autoComplete="username" autoCapitalize="none" aria-invalid={Boolean(e.username)} {...form.register("username")} />
           </Field>
-          <Field label="Senha" htmlFor="password" error={e.password?.message} hint="Pelo menos 10 caracteres.">
+          <Field label={translate("Senha")} htmlFor="password" error={translate(e.password?.message)} hint={translate("Pelo menos 10 caracteres.")}>
             <Input id="password" type="password" autoComplete="new-password" aria-invalid={Boolean(e.password)} {...form.register("password")} />
           </Field>
-          <Field label="Confirme a senha" htmlFor="confirm" error={e.confirm?.message}>
+          <Field label={translate("Confirme a senha")} htmlFor="confirm" error={translate(e.confirm?.message)}>
             <Input id="confirm" type="password" autoComplete="new-password" aria-invalid={Boolean(e.confirm)} {...form.register("confirm")} />
           </Field>
-          {error ? <InlineAlert tone="danger">{error}</InlineAlert> : null}
-          <Button type="submit" className="w-full" loading={form.formState.isSubmitting}>
-            Criar administrador
-          </Button>
+          {error ? <InlineAlert tone="danger">{translate(error)}</InlineAlert> : null}
+          <Button type="submit" className="w-full" loading={form.formState.isSubmitting}>{translate("Criar administrador")}</Button>
         </form>
       </Card>
     </AuthLayout>
@@ -161,6 +151,7 @@ export function SetupPage() {
 const loginSchema = z.object({ username: z.string().trim().min(1, "Informe o usuário."), password: z.string().min(1, "Informe a senha.") });
 
 export function LoginPage() {
+  useLocale();
   const meta = useMeta();
   const client = useQueryClient();
   const navigate = useNavigate();
@@ -180,28 +171,22 @@ export function LoginPage() {
   return (
     <AuthLayout>
       <Card className="p-6">
-        <h1 className="text-2xl font-bold outline-none">Entrar</h1>
-        <p className="mt-1 text-sm text-ink-2">Acesse sua lista e as comparações da semana.</p>
+        <h1 className="text-2xl font-bold outline-none">{translate("Entrar")}</h1>
+        <p className="mt-1 text-sm text-ink-2">{translate("Acesse sua lista e as comparações da semana.")}</p>
         <form className="mt-5 space-y-4" onSubmit={submit} noValidate>
-          <Field label="Usuário" htmlFor="username" error={e.username?.message}>
+          <Field label={translate("Usuário")} htmlFor="username" error={translate(e.username?.message)}>
             <Input id="username" autoComplete="username" autoCapitalize="none" aria-invalid={Boolean(e.username)} {...form.register("username")} />
           </Field>
-          <Field label="Senha" htmlFor="password" error={e.password?.message}>
+          <Field label={translate("Senha")} htmlFor="password" error={translate(e.password?.message)}>
             <Input id="password" type="password" autoComplete="current-password" aria-invalid={Boolean(e.password)} {...form.register("password")} />
           </Field>
-          {error ? <InlineAlert tone="danger">{error}</InlineAlert> : null}
-          <Button type="submit" className="w-full" loading={form.formState.isSubmitting}>
-            Entrar
-          </Button>
+          {error ? <InlineAlert tone="danger">{translate(error)}</InlineAlert> : null}
+          <Button type="submit" className="w-full" loading={form.formState.isSubmitting}>{translate("Entrar")}</Button>
         </form>
         <div className="mt-5 flex flex-wrap justify-between gap-2 text-sm">
-          <Link to="/recuperar" className="font-semibold text-brand hover:underline">
-            Esqueci a senha
-          </Link>
+          <Link to="/recuperar" className="font-semibold text-brand hover:underline">{translate("Esqueci a senha")}</Link>
           {meta.data?.registration_enabled ? (
-            <Link to="/cadastro" className="font-semibold text-brand hover:underline">
-              Criar conta
-            </Link>
+            <Link to="/cadastro" className="font-semibold text-brand hover:underline">{translate("Criar conta")}</Link>
           ) : null}
         </div>
       </Card>
@@ -214,6 +199,7 @@ const registerSchema = z
   .refine((v) => v.password === v.confirm, { path: ["confirm"], message: "As senhas não conferem." });
 
 export function RegisterPage() {
+  useLocale();
   const client = useQueryClient();
   const navigate = useNavigate();
   const [codes, setCodes] = useState<string[] | null>(null);
@@ -239,27 +225,25 @@ export function RegisterPage() {
   return (
     <AuthLayout>
       <Card className="p-6">
-        <h1 className="text-2xl font-bold outline-none">Criar conta</h1>
+        <h1 className="text-2xl font-bold outline-none">{translate("Criar conta")}</h1>
         <form className="mt-5 space-y-4" onSubmit={submit} noValidate>
-          <Field label="Seu nome" htmlFor="display_name" error={e.display_name?.message}>
+          <Field label={translate("Seu nome")} htmlFor="display_name" error={translate(e.display_name?.message)}>
             <Input id="display_name" autoComplete="name" {...form.register("display_name")} />
           </Field>
-          <Field label="Nome de usuário" htmlFor="username" error={e.username?.message}>
+          <Field label={translate("Nome de usuário")} htmlFor="username" error={translate(e.username?.message)}>
             <Input id="username" autoComplete="username" autoCapitalize="none" {...form.register("username")} />
           </Field>
-          <Field label="Senha" htmlFor="password" error={e.password?.message}>
+          <Field label={translate("Senha")} htmlFor="password" error={translate(e.password?.message)}>
             <Input id="password" type="password" autoComplete="new-password" {...form.register("password")} />
           </Field>
-          <Field label="Confirme a senha" htmlFor="confirm" error={e.confirm?.message}>
+          <Field label={translate("Confirme a senha")} htmlFor="confirm" error={translate(e.confirm?.message)}>
             <Input id="confirm" type="password" autoComplete="new-password" {...form.register("confirm")} />
           </Field>
-          {error ? <InlineAlert tone="danger">{error}</InlineAlert> : null}
-          <Button type="submit" className="w-full" loading={form.formState.isSubmitting}>
-            Criar conta
-          </Button>
+          {error ? <InlineAlert tone="danger">{translate(error)}</InlineAlert> : null}
+          <Button type="submit" className="w-full" loading={form.formState.isSubmitting}>{translate("Criar conta")}</Button>
         </form>
         <p className="mt-4 text-center text-sm">
-          <Link to="/entrar" className="font-semibold text-brand hover:underline">Já tenho conta</Link>
+          <Link to="/entrar" className="font-semibold text-brand hover:underline">{translate("Já tenho conta")}</Link>
         </p>
       </Card>
     </AuthLayout>
@@ -271,6 +255,7 @@ const recoverSchema = z
   .refine((v) => v.new_password === v.confirm, { path: ["confirm"], message: "As senhas não conferem." });
 
 export function RecoverPage() {
+  useLocale();
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
   const form = useForm<z.infer<typeof recoverSchema>>({ resolver: zodResolver(recoverSchema), defaultValues: { username: "", recovery_code: "", new_password: "", confirm: "" } });
@@ -278,7 +263,7 @@ export function RecoverPage() {
     setError(null);
     try {
       await unwrap(api.POST("/api/v1/auth/recover", { body: { username: values.username, recovery_code: values.recovery_code, new_password: values.new_password } }));
-      toast.success("Senha redefinida. Entre com a nova senha.");
+      toast.success(translate("Senha redefinida. Entre com a nova senha."));
       navigate("/entrar", { replace: true });
     } catch (e) {
       setError(errorMessage(e));
@@ -288,28 +273,26 @@ export function RecoverPage() {
   return (
     <AuthLayout>
       <Card className="p-6">
-        <h1 className="text-2xl font-bold outline-none">Recuperar acesso</h1>
-        <p className="mt-1 text-sm text-ink-2">Use um dos códigos de recuperação que você guardou. Sem código, peça ao administrador para redefinir sua senha.</p>
+        <h1 className="text-2xl font-bold outline-none">{translate("Recuperar acesso")}</h1>
+        <p className="mt-1 text-sm text-ink-2">{translate("Use um dos códigos de recuperação que você guardou. Sem código, peça ao administrador para redefinir sua senha.")}</p>
         <form className="mt-5 space-y-4" onSubmit={submit} noValidate>
-          <Field label="Usuário" htmlFor="username" error={e.username?.message}>
+          <Field label={translate("Usuário")} htmlFor="username" error={translate(e.username?.message)}>
             <Input id="username" autoComplete="username" autoCapitalize="none" {...form.register("username")} />
           </Field>
-          <Field label="Código de recuperação" htmlFor="recovery_code" error={e.recovery_code?.message}>
-            <Input id="recovery_code" autoComplete="one-time-code" placeholder="XXXXX-XXXXX" {...form.register("recovery_code")} />
+          <Field label={translate("Código de recuperação")} htmlFor="recovery_code" error={translate(e.recovery_code?.message)}>
+            <Input id="recovery_code" autoComplete="one-time-code" placeholder={translate("XXXXX-XXXXX")} {...form.register("recovery_code")} />
           </Field>
-          <Field label="Nova senha" htmlFor="new_password" error={e.new_password?.message}>
+          <Field label={translate("Nova senha")} htmlFor="new_password" error={translate(e.new_password?.message)}>
             <Input id="new_password" type="password" autoComplete="new-password" {...form.register("new_password")} />
           </Field>
-          <Field label="Confirme a nova senha" htmlFor="confirm" error={e.confirm?.message}>
+          <Field label={translate("Confirme a nova senha")} htmlFor="confirm" error={translate(e.confirm?.message)}>
             <Input id="confirm" type="password" autoComplete="new-password" {...form.register("confirm")} />
           </Field>
-          {error ? <InlineAlert tone="danger">{error}</InlineAlert> : null}
-          <Button type="submit" className="w-full" loading={form.formState.isSubmitting}>
-            Redefinir senha
-          </Button>
+          {error ? <InlineAlert tone="danger">{translate(error)}</InlineAlert> : null}
+          <Button type="submit" className="w-full" loading={form.formState.isSubmitting}>{translate("Redefinir senha")}</Button>
         </form>
         <p className="mt-4 text-center text-sm">
-          <Link to="/entrar" className="font-semibold text-brand hover:underline">Voltar para entrar</Link>
+          <Link to="/entrar" className="font-semibold text-brand hover:underline">{translate("Voltar para entrar")}</Link>
         </p>
       </Card>
     </AuthLayout>
@@ -321,13 +304,14 @@ const changeSchema = z
   .refine((v) => v.new_password === v.confirm, { path: ["confirm"], message: "As senhas não conferem." });
 
 export function ChangePasswordForm({ onDone }: { onDone: () => void }) {
+  useLocale();
   const [error, setError] = useState<string | null>(null);
   const form = useForm<z.infer<typeof changeSchema>>({ resolver: zodResolver(changeSchema), defaultValues: { current_password: "", new_password: "", confirm: "" } });
   const submit = form.handleSubmit(async (values) => {
     setError(null);
     try {
       await unwrap(api.POST("/api/v1/auth/change-password", { body: { current_password: values.current_password, new_password: values.new_password } }));
-      toast.success("Senha alterada. As outras sessões foram encerradas.");
+      toast.success(translate("Senha alterada. As outras sessões foram encerradas."));
       form.reset();
       onDone();
     } catch (e) {
@@ -337,31 +321,30 @@ export function ChangePasswordForm({ onDone }: { onDone: () => void }) {
   const e = form.formState.errors;
   return (
     <form className="space-y-4" onSubmit={submit} noValidate>
-      <Field label="Senha atual" htmlFor="current_password" error={e.current_password?.message}>
+      <Field label={translate("Senha atual")} htmlFor="current_password" error={translate(e.current_password?.message)}>
         <Input id="current_password" type="password" autoComplete="current-password" {...form.register("current_password")} />
       </Field>
-      <Field label="Nova senha" htmlFor="new_password" error={e.new_password?.message}>
+      <Field label={translate("Nova senha")} htmlFor="new_password" error={translate(e.new_password?.message)}>
         <Input id="new_password" type="password" autoComplete="new-password" {...form.register("new_password")} />
       </Field>
-      <Field label="Confirme a nova senha" htmlFor="confirm_new" error={e.confirm?.message}>
+      <Field label={translate("Confirme a nova senha")} htmlFor="confirm_new" error={translate(e.confirm?.message)}>
         <Input id="confirm_new" type="password" autoComplete="new-password" {...form.register("confirm")} />
       </Field>
-      {error ? <InlineAlert tone="danger">{error}</InlineAlert> : null}
-      <Button type="submit" loading={form.formState.isSubmitting}>
-        Alterar senha
-      </Button>
+      {error ? <InlineAlert tone="danger">{translate(error)}</InlineAlert> : null}
+      <Button type="submit" loading={form.formState.isSubmitting}>{translate("Alterar senha")}</Button>
     </form>
   );
 }
 
 export function ForcedPasswordChangePage() {
+  useLocale();
   const client = useQueryClient();
   const navigate = useNavigate();
   return (
     <AuthLayout>
       <Card className="p-6">
-        <h1 className="text-2xl font-bold outline-none">Defina sua senha</h1>
-        <p className="mt-1 mb-5 text-sm text-ink-2">Sua senha atual é temporária. Escolha uma nova para continuar.</p>
+        <h1 className="text-2xl font-bold outline-none">{translate("Defina sua senha")}</h1>
+        <p className="mt-1 mb-5 text-sm text-ink-2">{translate("Sua senha atual é temporária. Escolha uma nova para continuar.")}</p>
         <ChangePasswordForm
           onDone={() => {
             void client.invalidateQueries({ queryKey: keys.me });

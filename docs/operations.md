@@ -39,6 +39,11 @@ acesso): `docker compose exec api pricetracker user create --username <usuario> 
 
 ## 3. Uso diário
 
+- Para preparar outras regiões: **Administração → Mercados** cadastra e corrige filiais das
+  redes integradas e controla sua disponibilidade. **Mercados** filtra por UF/cidade e guarda a
+  seleção de cada pessoa. Veja [cobertura e contextos de preços](markets.md).
+- Guia para novos usuários: [primeiros passos](getting-started.md), [uso diário](user-guide.md) e
+  **Mais → Como usar** no app.
 - Monte a lista, escolha as lojas, cadastre endereço (coordenadas ou "usar minha localização") e
   veículo, e clique em **Buscar preços**. A busca roda em segundo plano; pode fechar a página.
 - **Agendamentos** mantém os preços frescos (ex.: toda sexta às 7h).
@@ -52,7 +57,7 @@ acesso): `docker compose exec api pricetracker user create --username <usuario> 
 ```bash
 docker compose ps
 docker compose logs -f --tail=100 api worker   # logs JSON com request_id/run_id, sem segredos
-curl -s localhost:8090/api/v1/health/ready      # {"status":"ok","database":true,"schema_version":"0001"}
+curl -s localhost:8090/api/v1/health/ready      # {"status":"ok","database":true,"schema_version":"0002"}
 docker compose exec api pricetracker llm check  # testa o provedor de IA sem mostrar a chave
 ```
 
@@ -79,6 +84,9 @@ make restore-drill BACKUP=backups/pricetracker-<UTC>      # restaura num Postgre
 
 `docker compose down` seguido de `docker compose up -d` preserva tudo (volumes `pg_data` e
 `app_data`). Uma busca interrompida volta para a fila e é retomada do ponto em que parou.
+O seed preserva nome, cor, notas e disponibilidade de mercados; filiais editadas pela
+administração têm origem `admin` e não são sobrescritas. Domínios e adaptadores das quatro redes iniciais são mantidos em código.
+Redes do assistente preservam domínio e fonte validados no banco; veja [fontes](markets.md).
 Teste de 27/09: run com 19 de 40 alvos prontos → `down`/`up` → retomado (tentativa 2, 21 pendentes)
 → `success`, 29 observações, nenhuma duplicada. Para apagar **tudo** (inclusive dados):
 `docker compose down -v`.
@@ -90,7 +98,9 @@ git pull   # quando houver novas versões
 docker compose up -d --build   # o job migrate aplica migrations pendentes e o seed idempotente
 ```
 
-Detalhes em `docs/migrations.md`.
+A revisão `0002` permite quantidades em metros sem apagar dados existentes. Instalações v1
+precisam aplicá-la antes de usar a comparação por metro; o job `migrate` aplica no início.
+Detalhes e limites de downgrade em [migrations](migrations.md).
 
 ## 8. Consumo de recursos (medido em 27/09/2026, Docker Desktop, Apple Silicon)
 

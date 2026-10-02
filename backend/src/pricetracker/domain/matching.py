@@ -10,6 +10,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from decimal import Decimal
+from typing import Literal
 
 from pydantic import BaseModel, Field, field_validator
 
@@ -38,6 +39,7 @@ class MatchSpec(BaseModel):
     strict_brand: bool = False
     sold_by: SoldBy = SoldBy.PACKAGE
     size: SizeSpec | None = None
+    comparison_unit: Literal["m"] | None = None
     gtins: list[str] = Field(default_factory=list)
     approx_unit_weight_kg: Decimal | None = Field(default=None, gt=0)
     max_piece_kg: Decimal = Field(default=Decimal("3"), gt=0)
@@ -93,6 +95,16 @@ def evaluate(listing: Listing, spec: MatchSpec, pins: Pins | None = None) -> Mat
     if key in pins.rejected:
         result.reject("pin_rejected")
         return result
+    if spec.comparison_unit is not None:
+        package = listing.effective_package
+        if (
+            listing.sale_unit != SaleUnit.PACKAGE
+            or package.measure is None
+            or package.measure.unit.value != spec.comparison_unit
+            or package.measure.quantity <= 0
+        ):
+            result.reject("length_unknown")
+            return result
     if key in pins.accepted:
         result.identity = True
         result.reasons.append("pin_accepted")
@@ -191,6 +203,11 @@ def _check_size_and_unit(listing: Listing, spec: MatchSpec, result: MatchResult)
         result.reject(f"unexpected_package:{package.measure.describe()}")
         return False
 
+    # PACKAGE: an explicit length metric accepts different pack lengths only
+    # when the actual total length is known (also checked before identity pins).
+    if spec.comparison_unit == "m":
+        result.reasons.append("compared_per_metre")
+        return False
     # PACKAGE
     if spec.size is None:
         result.reasons.append("no_size_rule")

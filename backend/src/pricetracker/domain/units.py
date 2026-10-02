@@ -19,6 +19,7 @@ BASE_UNIT: dict[Unit, Unit] = {
     Unit.KG: Unit.KG,
     Unit.ML: Unit.L,
     Unit.L: Unit.L,
+    Unit.M: Unit.M,
     Unit.UN: Unit.UN,
     Unit.PCT: Unit.UN,
 }
@@ -27,6 +28,7 @@ TO_BASE_FACTOR: dict[Unit, Decimal] = {
     Unit.KG: Decimal("1"),
     Unit.ML: Decimal("0.001"),
     Unit.L: Decimal("1"),
+    Unit.M: Decimal("1"),
     Unit.UN: Decimal("1"),
     Unit.PCT: Decimal("1"),
 }
@@ -35,11 +37,14 @@ _UNIT_ALIASES: dict[str, Unit] = {
     "kg": Unit.KG, "kgs": Unit.KG, "kilo": Unit.KG, "kilos": Unit.KG, "quilo": Unit.KG,
     "quilos": Unit.KG, "g": Unit.G, "gr": Unit.G, "grs": Unit.G, "grama": Unit.G,
     "gramas": Unit.G, "ml": Unit.ML, "l": Unit.L, "lt": Unit.L, "lts": Unit.L,
+    "m": Unit.M, "metro": Unit.M, "metros": Unit.M, "metres": Unit.M, "meters": Unit.M,
     "litro": Unit.L, "litros": Unit.L, "un": Unit.UN, "und": Unit.UN, "unid": Unit.UN,
     "unidade": Unit.UN, "unidades": Unit.UN, "pct": Unit.PCT, "pacote": Unit.PCT,
 }  # fmt: skip
 
-_MASS_VOLUME_UNITS = r"(kg|kgs|kilos?|quilos?|g|gr|grs|gramas?|mg|ml|l|lt|lts|litros?)"
+_MASS_VOLUME_UNITS = (
+    r"(kg|kgs|kilos?|quilos?|g|gr|grs|gramas?|mg|ml|l|lt|lts|litros?|m|metros?|metres?|meters?)"
+)
 _NUMBER = r"(\d{1,3}(?:\.\d{3})+|\d+(?:[.,]\d+)?)"
 _MULTIPACK = re.compile(rf"(?<![\d.,])(\d{{1,3}})\s*x\s*{_NUMBER}\s*{_MASS_VOLUME_UNITS}\b")
 _SIZE = re.compile(rf"(?<![\d.,])(?<![a-z]){_NUMBER}\s*{_MASS_VOLUME_UNITS}\b")
@@ -69,7 +74,7 @@ class Measure:
     unit: Unit
 
     def __post_init__(self) -> None:
-        if self.unit not in (Unit.KG, Unit.L, Unit.UN):
+        if self.unit not in (Unit.KG, Unit.L, Unit.M, Unit.UN):
             raise ValueError(f"Measure must use a base unit, got {self.unit}")
 
     def describe(self) -> str:
@@ -169,6 +174,22 @@ def parse_package(title: str | None) -> PackageInfo:
             count = 12
             matched.append("duzia")
 
+    # Roll lengths are per roll, never per ply. Prefer an explicit roll count
+    # over generic counts (e.g. "2 folhas"). Missing counts must not invent a
+    # pack size or make a multi-roll pack look cheaper than it is.
+    if measure is not None and measure.unit == Unit.M and not multi:
+        roll_context = bool(re.search(r"\b(?:rolos?|rolls?)\b|higienico|toilet", text))
+        if roll_context:
+            roll_match = re.search(r"\b(\d{1,3})\s*(?:rolos?|rolls?|unidades?|un)\b", text)
+            if roll_match is None:
+                roll_match = re.search(r"\b(?:c\s*/|com|pack of|leve)\s*(\d{1,3})\b", text)
+            count = int(roll_match.group(1)) if roll_match else None
+            if roll_match is not None and count and count > 0:
+                if not re.search(r"\btotal\b", text):
+                    measure = Measure(measure.quantity * count, Unit.M)
+                matched.append(roll_match.group(0))
+            elif not re.search(r"\btotal\b", text):
+                measure = None
     approximate = bool(_APPROX.search(text))
     per_kg = measure is None and bool(_BARE_KG.search(" " + text) or _PER_KG.search(text))
     if measure is None and not per_kg and re.search(r"\bgranel\b", text):
@@ -197,6 +218,7 @@ def describe_quantity(quantity: Decimal, unit: Unit | str) -> str:
     label = {
         Unit.KG: "kg",
         Unit.L: "L",
+        Unit.M: "m",
         Unit.UN: "un",
         Unit.G: "g",
         Unit.ML: "ml",

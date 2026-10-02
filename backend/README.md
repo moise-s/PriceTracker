@@ -28,3 +28,9 @@ uv run ruff check . && uv run ruff format --check . && uv run mypy src
 
 Configuração por variáveis `PRICETRACKER_*` (ou `*_FILE` para segredos); ver
 `src/pricetracker/settings.py` e `../.env.example`.
+
+Gestão de redes/filiais: `services/markets.py`, schemas `MarketPatch`/`StoreAdminIn` e rotas
+`GET/PATCH /api/v1/admin/markets` (PATCH com ID), `POST .../{market_id}/stores` e
+`PUT .../{market_id}/stores/{store_id}`. Todas exigem administrador; mutações exigem CSRF.
+Desativação preserva histórico. Regiões de preço usadas em buscas não podem ser reassociadas.
+Veja [cadastro regional](../docs/markets.md) e [novos adaptadores](../CONTRIBUTING.md).

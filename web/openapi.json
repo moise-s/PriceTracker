@@ -2744,6 +2744,160 @@
         "title": "MarkedOut",
         "type": "object"
       },
+      "MarketAdminOut": {
+        "properties": {
+          "adapter_key": {
+            "title": "Adapter Key",
+            "type": "string"
+          },
+          "brand_color": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Brand Color"
+          },
+          "context_help": {
+            "title": "Context Help",
+            "type": "string"
+          },
+          "context_kind": {
+            "enum": [
+              "postal_code",
+              "store_id",
+              "shared",
+              "unsupported"
+            ],
+            "title": "Context Kind",
+            "type": "string"
+          },
+          "enabled": {
+            "title": "Enabled",
+            "type": "boolean"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "sitemap_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sitemap Url"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "stores": {
+            "items": {
+              "$ref": "#/components/schemas/StoreAdminOut"
+            },
+            "title": "Stores",
+            "type": "array"
+          },
+          "website": {
+            "title": "Website",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "website",
+          "enabled",
+          "adapter_key",
+          "context_kind",
+          "context_help",
+          "stores"
+        ],
+        "title": "MarketAdminOut",
+        "type": "object"
+      },
+      "MarketCreateIn": {
+        "additionalProperties": false,
+        "properties": {
+          "brand_color": {
+            "default": "#1BAF7A",
+            "pattern": "^#[0-9a-fA-F]{6}$",
+            "title": "Brand Color",
+            "type": "string"
+          },
+          "confirm_public_price": {
+            "const": true,
+            "title": "Confirm Public Price",
+            "type": "boolean"
+          },
+          "first_store": {
+            "$ref": "#/components/schemas/StoreAdminIn"
+          },
+          "name": {
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "Name",
+            "type": "string"
+          },
+          "sample_url": {
+            "maxLength": 1000,
+            "minLength": 10,
+            "title": "Sample Url",
+            "type": "string"
+          },
+          "sitemap_url": {
+            "anyOf": [
+              {
+                "maxLength": 1000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sitemap Url"
+          },
+          "website": {
+            "maxLength": 200,
+            "minLength": 10,
+            "title": "Website",
+            "type": "string"
+          }
+        },
+        "required": [
+          "website",
+          "sample_url",
+          "confirm_public_price",
+          "name",
+          "first_store"
+        ],
+        "title": "MarketCreateIn",
+        "type": "object"
+      },
       "MarketHealthOut": {
         "properties": {
           "adapter_version": {
@@ -2975,6 +3129,204 @@
           "stores"
         ],
         "title": "MarketOut",
+        "type": "object"
+      },
+      "MarketPatch": {
+        "additionalProperties": false,
+        "properties": {
+          "brand_color": {
+            "anyOf": [
+              {
+                "pattern": "^#[0-9a-fA-F]{6}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Brand Color"
+          },
+          "enabled": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Enabled"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "maxLength": 80,
+                "minLength": 2,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "maxLength": 1000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          }
+        },
+        "title": "MarketPatch",
+        "type": "object"
+      },
+      "MarketProbeIn": {
+        "additionalProperties": false,
+        "properties": {
+          "sample_url": {
+            "maxLength": 1000,
+            "minLength": 10,
+            "title": "Sample Url",
+            "type": "string"
+          },
+          "sitemap_url": {
+            "anyOf": [
+              {
+                "maxLength": 1000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sitemap Url"
+          },
+          "website": {
+            "maxLength": 200,
+            "minLength": 10,
+            "title": "Website",
+            "type": "string"
+          }
+        },
+        "required": [
+          "website",
+          "sample_url"
+        ],
+        "title": "MarketProbeIn",
+        "type": "object"
+      },
+      "MarketProbeOut": {
+        "properties": {
+          "indexed_pages": {
+            "default": 0,
+            "title": "Indexed Pages",
+            "type": "integer"
+          },
+          "price_scope_note": {
+            "title": "Price Scope Note",
+            "type": "string"
+          },
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          },
+          "sample_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sample Name"
+          },
+          "sample_price": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sample Price"
+          },
+          "sitemap_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sitemap Url"
+          },
+          "supported": {
+            "title": "Supported",
+            "type": "boolean"
+          },
+          "website": {
+            "title": "Website",
+            "type": "string"
+          }
+        },
+        "required": [
+          "supported",
+          "reason",
+          "website",
+          "price_scope_note"
+        ],
+        "title": "MarketProbeOut",
+        "type": "object"
+      },
+      "MarketSourceIn": {
+        "additionalProperties": false,
+        "properties": {
+          "confirm_public_price": {
+            "const": true,
+            "title": "Confirm Public Price",
+            "type": "boolean"
+          },
+          "sample_url": {
+            "maxLength": 1000,
+            "minLength": 10,
+            "title": "Sample Url",
+            "type": "string"
+          },
+          "sitemap_url": {
+            "anyOf": [
+              {
+                "maxLength": 1000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sitemap Url"
+          },
+          "website": {
+            "maxLength": 200,
+            "minLength": 10,
+            "title": "Website",
+            "type": "string"
+          }
+        },
+        "required": [
+          "website",
+          "sample_url",
+          "confirm_public_price"
+        ],
+        "title": "MarketSourceIn",
         "type": "object"
       },
       "MeOut": {
@@ -5088,6 +5440,300 @@
         "title": "SoldBy",
         "type": "string"
       },
+      "StoreAdminIn": {
+        "additionalProperties": false,
+        "properties": {
+          "city": {
+            "maxLength": 120,
+            "minLength": 2,
+            "title": "City",
+            "type": "string"
+          },
+          "district": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "District"
+          },
+          "external_id": {
+            "anyOf": [
+              {
+                "maxLength": 80,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "External Id"
+          },
+          "is_active": {
+            "default": true,
+            "title": "Is Active",
+            "type": "boolean"
+          },
+          "latitude": {
+            "anyOf": [
+              {
+                "maximum": 90.0,
+                "minimum": -90.0,
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latitude"
+          },
+          "longitude": {
+            "anyOf": [
+              {
+                "maximum": 180.0,
+                "minimum": -180.0,
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Longitude"
+          },
+          "name": {
+            "maxLength": 120,
+            "minLength": 2,
+            "title": "Name",
+            "type": "string"
+          },
+          "number": {
+            "anyOf": [
+              {
+                "maxLength": 20,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Number"
+          },
+          "postal_code": {
+            "anyOf": [
+              {
+                "pattern": "^\\d{5}-?\\d{3}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Postal Code"
+          },
+          "seller": {
+            "anyOf": [
+              {
+                "maxLength": 80,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Seller"
+          },
+          "state": {
+            "pattern": "^(AC|AL|AP|AM|BA|CE|DF|ES|GO|MA|MT|MS|MG|PA|PB|PR|PE|PI|RJ|RN|RS|RO|RR|SC|SP|SE|TO)$",
+            "title": "State",
+            "type": "string"
+          },
+          "street": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Street"
+          }
+        },
+        "required": [
+          "name",
+          "city",
+          "state"
+        ],
+        "title": "StoreAdminIn",
+        "type": "object"
+      },
+      "StoreAdminOut": {
+        "additionalProperties": false,
+        "properties": {
+          "city": {
+            "title": "City",
+            "type": "string"
+          },
+          "district": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "District"
+          },
+          "external_id": {
+            "anyOf": [
+              {
+                "maxLength": 80,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "External Id"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "is_active": {
+            "default": true,
+            "title": "Is Active",
+            "type": "boolean"
+          },
+          "latitude": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latitude"
+          },
+          "longitude": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Longitude"
+          },
+          "name": {
+            "maxLength": 120,
+            "minLength": 2,
+            "title": "Name",
+            "type": "string"
+          },
+          "number": {
+            "anyOf": [
+              {
+                "maxLength": 20,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Number"
+          },
+          "postal_code": {
+            "anyOf": [
+              {
+                "pattern": "^\\d{5}-?\\d{3}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Postal Code"
+          },
+          "price_scope_note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Price Scope Note"
+          },
+          "seller": {
+            "anyOf": [
+              {
+                "maxLength": 80,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Seller"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "state": {
+            "title": "State",
+            "type": "string"
+          },
+          "street": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Street"
+          }
+        },
+        "required": [
+          "name",
+          "city",
+          "state",
+          "id",
+          "slug",
+          "source"
+        ],
+        "title": "StoreAdminOut",
+        "type": "object"
+      },
       "StoreOut": {
         "properties": {
           "city": {
@@ -5453,6 +6099,7 @@
           "kg",
           "ml",
           "l",
+          "m",
           "un",
           "pct"
         ],
@@ -6021,6 +6668,333 @@
           }
         },
         "summary": "Test Provider",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/markets": {
+      "get": {
+        "operationId": "list_markets_api_v1_admin_markets_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/MarketAdminOut"
+                  },
+                  "title": "Response List Markets Api V1 Admin Markets Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "List Markets",
+        "tags": [
+          "admin"
+        ]
+      },
+      "post": {
+        "operationId": "create_market_api_v1_admin_markets_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarketCreateIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarketAdminOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create Market",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/markets/probe": {
+      "post": {
+        "operationId": "probe_market_api_v1_admin_markets_probe_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarketProbeIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarketProbeOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Probe Market",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/markets/{market_id}": {
+      "patch": {
+        "operationId": "update_market_api_v1_admin_markets__market_id__patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "market_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Market Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarketPatch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarketAdminOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Update Market",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/markets/{market_id}/source": {
+      "put": {
+        "operationId": "update_public_source_api_v1_admin_markets__market_id__source_put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "market_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Market Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarketSourceIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarketAdminOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Update Public Source",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/markets/{market_id}/stores": {
+      "post": {
+        "operationId": "create_store_api_v1_admin_markets__market_id__stores_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "market_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Market Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StoreAdminIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarketAdminOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create Store",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/markets/{market_id}/stores/{store_id}": {
+      "put": {
+        "operationId": "update_store_api_v1_admin_markets__market_id__stores__store_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "market_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Market Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "store_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Store Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StoreAdminIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarketAdminOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Update Store",
         "tags": [
           "admin"
         ]

@@ -71,6 +71,19 @@ export function useProducts() {
   return useQuery({ queryKey: keys.products, queryFn: () => unwrap(api.GET("/api/v1/products")) });
 }
 
+export function usePersonalizeProduct() {
+  const client = useQueryClient();
+  const invalidate = useInvalidateListData();
+  return useMutation({
+    mutationFn: (catalogItemId: string) => unwrap(api.POST("/api/v1/products/from-catalog/{catalog_item_id}", { params: { path: { catalog_item_id: catalogItemId } } })),
+    onSuccess: (product) => {
+      client.setQueryData<Schemas["ProductOut"][]>(keys.products, (current) => [...(current ?? []).filter((p) => p.id !== product.id), product]);
+      invalidate();
+    },
+    onError: onMutationError,
+  });
+}
+
 export function useLists() {
   return useQuery({ queryKey: keys.lists, queryFn: () => unwrap(api.GET("/api/v1/lists")) });
 }

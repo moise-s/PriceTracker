@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 510 100" role="img" aria-labelledby="title">
+<title id="title">PriceTracker</title>
+<g transform="translate(8 10) scale(1.25)">
+  <rect width="64" height="64" rx="16" fill="#1F6B4A"/>
+  <path d="M17 27h30l-3.2 17.5A4 4 0 0 1 39.9 48H24.1a4 4 0 0 1-3.9-3.5Z" fill="#fff"/>
+  <path d="M23 27c0-6 4-10.5 9-10.5S41 21 41 27" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+  <path d="M27 34v7M32 34v7M37 34v7" stroke="#1F6B4A" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="46" cy="18" r="6" fill="#E2662F"/>
+</g>
+<text x="108" y="64" fill="#183E2C" font-family="Arial, Helvetica, sans-serif" font-size="49" font-weight="700" letter-spacing="-1.8">PriceTracker</text>
+</svg>

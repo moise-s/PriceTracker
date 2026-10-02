@@ -208,6 +208,7 @@ class PoliteClient:
     async def _fetch_robots(self, url: str) -> tuple[int, str]:
         current = url
         for _ in range(5):
+            self._check_url(current)
             try:
                 response = await self._client.get(current)
             except httpx.TimeoutException as exc:
@@ -218,7 +219,9 @@ class PoliteClient:
                 current = urljoin(current, response.headers["location"])
                 parts = urlsplit(current)
                 if not parts.hostname or not host_allowed(parts.hostname, self.allowed_domains):
-                    return 404, ""
+                    raise NotAllowedHost(
+                        "robots.txt redireciona para fora do domínio permitido.", url=current
+                    )
                 continue
             return response.status_code, response.text[:500_000]
         return 404, ""

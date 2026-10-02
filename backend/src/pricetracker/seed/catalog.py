@@ -1,4 +1,4 @@
-"""Initial global catalog: the real products from the v0 configuration.
+"""Initial global catalog: grocery and household product defaults.
 
 Each item has a friendly name, category, package, search aliases and an explicit,
 deterministic matching rule. Images are original illustrations shipped with the
@@ -283,6 +283,30 @@ CATALOG: list[dict[str, Any]] = [
             "excluded": ["formosa", "polpa", "suco", "desidratado", "doce", "vitamina"],
             "sold_by": "unit",
             "approx_unit_weight_kg": "0.45",
+        },
+    },
+    {
+        "slug": "papel-higienico-folha-dupla",
+        "name": "Papel higiênico folha dupla",
+        "category": "Higiene",
+        "description": (
+            "Qualquer marca e tamanho de embalagem, comparados pelo preço por metro. "
+            "Quantidade inicial de compra: 120 m; somente ofertas com comprimento total identificado."
+        ),
+        "sold_by": SoldBy.PACKAGE,
+        "package_quantity": Decimal("120"),
+        "package_unit": Unit.M,
+        "default_quantity": Decimal("120"),
+        "default_unit": Unit.M,
+        "match_spec": {
+            "search_terms": ["papel higiênico folha dupla", "papel higienico"],
+            "required": [
+                ["papel higienico", "toilet paper"],
+                ["folha dupla", "folhas duplas", "fd", "2 folhas", "double ply", "2 ply"],
+            ],
+            "excluded": ["folha simples", "folha tripla", "papel toalha", "guardanapo"],
+            "sold_by": "package",
+            "comparison_unit": "m",
         },
     },
 ]

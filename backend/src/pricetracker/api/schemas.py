@@ -325,6 +325,88 @@ class MarketOut(Model):
     stores: list[StoreOut]
 
 
+class MarketPatch(Model):
+    model_config = ConfigDict(extra="forbid")
+
+    name: str | None = Field(default=None, min_length=2, max_length=80)
+    enabled: bool | None = None
+    brand_color: str | None = Field(default=None, pattern=r"^#[0-9a-fA-F]{6}$")
+    notes: str | None = Field(default=None, max_length=1000)
+
+
+class StoreAdminIn(Model):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    name: str = Field(min_length=2, max_length=120)
+    external_id: str | None = Field(default=None, max_length=80)
+    street: str | None = Field(default=None, max_length=200)
+    number: str | None = Field(default=None, max_length=20)
+    district: str | None = Field(default=None, max_length=120)
+    city: str = Field(min_length=2, max_length=120)
+    state: str = Field(
+        pattern=r"^(AC|AL|AP|AM|BA|CE|DF|ES|GO|MA|MT|MS|MG|PA|PB|PR|PE|PI|RJ|RN|RS|RO|RR|SC|SP|SE|TO)$"
+    )
+    postal_code: str | None = Field(default=None, pattern=r"^\d{5}-?\d{3}$")
+    latitude: Decimal | None = Field(default=None, ge=-90, le=90)
+    longitude: Decimal | None = Field(default=None, ge=-180, le=180)
+    # Price-region identifiers, never arbitrary URLs or HTTP configuration.
+    seller: str | None = Field(default=None, max_length=80)
+    is_active: bool = True
+
+
+class StoreAdminOut(StoreAdminIn):
+    city: str
+    state: str
+    id: uuid.UUID
+    slug: str
+    source: str
+    price_scope_note: str | None = None
+
+
+class MarketAdminOut(Model):
+    id: uuid.UUID
+    slug: str
+    name: str
+    website: str
+    enabled: bool
+    brand_color: str | None = None
+    notes: str | None = None
+    adapter_key: str
+    context_kind: Literal["postal_code", "store_id", "shared", "unsupported"]
+    context_help: str
+    stores: list[StoreAdminOut]
+    sitemap_url: str | None = None
+
+
+class MarketProbeIn(Model):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    website: str = Field(min_length=10, max_length=200)
+    sample_url: str = Field(min_length=10, max_length=1000)
+    sitemap_url: str | None = Field(default=None, max_length=1000)
+
+
+class MarketProbeOut(Model):
+    supported: bool
+    reason: str
+    website: str
+    sitemap_url: str | None = None
+    sample_name: str | None = None
+    sample_price: Decimal | None = None
+    indexed_pages: int = 0
+    price_scope_note: str
+
+
+class MarketSourceIn(MarketProbeIn):
+    confirm_public_price: Literal[True]
+
+
+class MarketCreateIn(MarketSourceIn):
+    name: str = Field(min_length=2, max_length=80)
+    brand_color: str = Field(default="#1BAF7A", pattern=r"^#[0-9a-fA-F]{6}$")
+    first_store: StoreAdminIn
+
+
 class StoreSelectionIn(Model):
     store_id: uuid.UUID
     toll_round_trip: Decimal = Field(default=Decimal("0"), ge=0, le=1000)

@@ -75,6 +75,12 @@ def product_match_spec(product: Product) -> MatchSpec:
         if word not in excluded:
             excluded.append(word)
     base["excluded"] = excluded
+    if base.get("comparison_unit") == "m" and (
+        product.sold_by != SoldBy.PACKAGE.value or product.package_unit != Unit.M.value
+    ):
+        raise ValidationFailed(
+            "Comparação por metro exige uma embalagem medida em metros.", code="invalid_unit"
+        )
     return MatchSpec.model_validate(base)
 
 
@@ -186,6 +192,7 @@ def create_custom_product(db: Session, user: User, data: dict[str, Any]) -> Prod
         spec["search_terms"] = [data["name"]]
     spec.setdefault("sold_by", data["sold_by"])
     product = Product(user_id=user.id, match_spec=validate_match_spec(spec), **data)
+    product_match_spec(product)
     db.add(product)
     db.commit()
     return product
@@ -406,12 +413,20 @@ def _allowed_units(product: Product) -> set[str]:
         units |= {Unit.KG.value, Unit.G.value}
     elif product.package_unit in (Unit.L.value, Unit.ML.value):
         units |= {Unit.L.value, Unit.ML.value}
+    elif product.package_unit == Unit.M.value:
+        units.add(Unit.M.value)
     elif product.package_unit == Unit.UN.value:
         units.add(Unit.UN.value)
     return units
 
 
 def default_unit_for(product: Product) -> str:
+    if (
+        product.sold_by == SoldBy.PACKAGE.value
+        and product.package_unit == Unit.M.value
+        and (product.match_spec or {}).get("comparison_unit") == "m"
+    ):
+        return Unit.M.value
     if product.sold_by == SoldBy.WEIGHT.value:
         return Unit.KG.value
     if product.sold_by == SoldBy.UNIT.value:
@@ -509,5 +524,5 @@ def delete_list_item(db: Session, user: User, list_id: uuid.UUID, item_id: uuid.
 
 
 def allowed_units(product: Product) -> list[str]:
-    order = [u.value for u in (Unit.PCT, Unit.UN, Unit.KG, Unit.G, Unit.L, Unit.ML)]
+    order = [u.value for u in (Unit.PCT, Unit.UN, Unit.KG, Unit.G, Unit.L, Unit.ML, Unit.M)]
     return [u for u in order if u in _allowed_units(product)]

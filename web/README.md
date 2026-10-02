@@ -22,3 +22,7 @@ npm run api:generate # regenera src/api/schema.d.ts a partir de openapi.json
 
 Tokens de cor, tipografia e modo escuro ficam em `src/styles.css`; as cores dos mercados vêm de uma
 paleta validada para daltonismo e contraste, e o nome do mercado sempre acompanha a cor.
+Administradores podem personalizar a cor; nesse caso, confira contraste nos dois temas.
+
+`pages/admin-markets.tsx` gerencia filiais e redes integradas. `pages/markets.tsx` filtra por região
+sem remover lojas selecionadas fora do filtro. `pages/help.tsx` oferece o guia de uso em `/ajuda`.

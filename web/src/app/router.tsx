@@ -4,6 +4,7 @@ import { AdminPage, ComparePage, HistoryPage, NotificationsPage, ProductFormPage
 import { AppShell } from "@/app/shell";
 import { ForcedPasswordChangePage, LoginPage, RecoverPage, RegisterPage, SetupPage } from "@/pages/auth";
 import { HomePage } from "@/pages/home";
+import { HelpPage } from "@/pages/help";
 import { ListPage } from "@/pages/list";
 import { MarketsPage } from "@/pages/markets";
 import { MorePage, NotFoundPage, OnboardingPage } from "@/pages/misc";
@@ -34,6 +35,7 @@ export const router = createBrowserRouter([
       { path: "perfil", element: <Page><ProfilePage /></Page> },
       { path: "admin", element: <Page><AdminPage /></Page> },
       { path: "mais", element: <MorePage /> },
+      { path: "ajuda", element: <HelpPage /> },
       { path: "*", element: <NotFoundPage /> },
     ],
   },

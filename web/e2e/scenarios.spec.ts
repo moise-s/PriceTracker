@@ -59,10 +59,7 @@ test("1. compra da semana: primeiro acesso, lista, lojas, busca e recomendação
     await checkbox.check();
   }
   await expect(page.getByText("3 lojas selecionadas")).toBeVisible();
-  await page.getByRole("button", { name: "Buscar preços" }).click();
-  await expect(page).toHaveURL(/\/buscar$/);
-
-  await page.getByRole("button", { name: "Buscar preços agora" }).click();
+  await page.getByRole("button", { name: "Verificar preços agora" }).first().click();
   await expect(page).toHaveURL(/\/buscas\/[0-9a-f-]{36}$/);
   await expect(page.getByRole("heading", { name: "Resultado da busca" })).toBeVisible({ timeout: 30_000 });
   await expect(page.getByText("Concluída", { exact: true }).filter({ visible: true }).first()).toBeVisible();

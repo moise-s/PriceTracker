@@ -10,7 +10,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from pricetracker.db.base import utcnow
-from pricetracker.models import Schedule, Store, User
+from pricetracker.models import Market, Schedule, Store, User
 from pricetracker.models.enums import ScheduleFrequency
 from pricetracker.scheduler.main import next_occurrence
 from pricetracker.services import catalog
@@ -47,7 +47,11 @@ def save_schedule(
     if data.get("store_ids") is not None:
         ids = [uuid.UUID(str(s)) for s in data["store_ids"]]
         found = set(
-            db.scalars(select(Store.id).where(Store.id.in_(ids), Store.is_active.is_(True)))
+            db.scalars(
+                select(Store.id)
+                .join(Market)
+                .where(Store.id.in_(ids), Store.is_active.is_(True), Market.enabled.is_(True))
+            )
         )
         if found != set(ids):
             raise ValidationFailed("Loja inválida no agendamento.", code="invalid_store")

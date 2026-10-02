@@ -1,3 +1,4 @@
+import { translate, useLocale } from "@/lib/i18n";
 import type { LucideIcon } from "lucide-react";
 import {
   Apple,
@@ -33,6 +34,7 @@ const CATEGORY_ART: Record<string, { icon: LucideIcon; bg: string; fg: string }>
 };
 
 export function CategoryArt({ category, className }: { category?: string | null; className?: string }) {
+  useLocale();
   const art = (category && CATEGORY_ART[category]) || { icon: ShoppingBasket, bg: "#F2EEE6", fg: "#636A65" };
   const Icon = art.icon;
   return (
@@ -43,6 +45,7 @@ export function CategoryArt({ category, className }: { category?: string | null;
 }
 
 export function ProductImage({ image, category, name, className }: { image?: Schemas["ImageRef"] | null; category?: string | null; name: string; className?: string }) {
+  useLocale();
   return (
     <div className={cn("relative aspect-square overflow-hidden rounded-lg bg-surface-2", className)}>
       {image ? (
@@ -55,52 +58,57 @@ export function ProductImage({ image, category, name, className }: { image?: Sch
 }
 
 export function MarketDot({ color, className }: { color?: string | null; className?: string }) {
+  useLocale();
   return <span aria-hidden className={cn("inline-block size-2.5 shrink-0 rounded-full ring-2 ring-surface", className)} style={{ background: color ?? "var(--color-ink-3)" }} />;
 }
 
 export function MarketName({ market, store, color, className }: { market: string; store?: string | null; color?: string | null; className?: string }) {
+  useLocale();
   return (
     <span className={cn("inline-flex min-w-0 items-center gap-2", className)}>
       <MarketDot color={color} />
       <span className="truncate">
         <span className="font-semibold">{market}</span>
-        {store ? <span className="text-ink-3"> · {store}</span> : null}
+        {store ? <span className="text-ink-3">{translate(" · ")}{store}</span> : null}
       </span>
     </span>
   );
 }
 
 export function StatusPill({ status }: { status: string }) {
+  useLocale();
   const meta = TARGET_STATUS[status] ?? { label: status, tone: "neutral" as const, icon: Clock3, help: "" };
   return (
-    <span title={meta.help}>
+    <span title={translate(meta.help)}>
       <Badge tone={meta.tone} icon={meta.icon} spin={status === "running"}>
-        {meta.label}
+        {translate(meta.label)}
       </Badge>
     </span>
   );
 }
 
 export function FreshnessBadge({ observedAt, freshnessDays }: { observedAt?: string | null; freshnessDays: number }) {
+  useLocale();
   const days = ageDays(observedAt);
-  if (days === null) return <Badge tone="neutral">Sem preço</Badge>;
+  if (days === null) return <Badge tone="neutral">{translate("Sem preço")}</Badge>;
   const stale = days > freshnessDays;
   return (
     <Badge tone={stale ? "warn" : days < 1 ? "brand" : "neutral"} icon={Clock3}>
-      {stale ? `Desatualizado · ${ago(observedAt)}` : days < 1 ? `Hoje · ${ago(observedAt)}` : ago(observedAt)}
+      {translate(stale ? `Desatualizado · ${ago(observedAt)}` : days < 1 ? `Hoje · ${ago(observedAt)}` : ago(observedAt))}
     </Badge>
   );
 }
 
 export function CoverageMeter({ covered, total, className }: { covered: number; total: number; className?: string }) {
+  useLocale();
   const complete = total > 0 && covered === total;
   return (
     <div className={cn("space-y-1.5", className)}>
       <p className="text-sm">
-        <span className="font-bold tabular text-ink">{covered}</span>
-        <span className="text-ink-3"> de {total} itens encontrados</span>
+        <span className="font-bold tabular text-ink">{translate(covered)}</span>
+        <span className="text-ink-3">{translate(" de ")}{translate(total)}{translate(" itens encontrados")}</span>
       </p>
-      <div className="flex h-2 gap-0.5" role="img" aria-label={`${covered} de ${total} itens encontrados`}>
+      <div className="flex h-2 gap-0.5" role="img" aria-label={translate(`${covered} de ${total} itens encontrados`)}>
         {Array.from({ length: total }, (_, i) => (
           <span key={i} className={cn("h-full flex-1 rounded-full", i < covered ? (complete ? "bg-brand" : "bg-accent") : "bg-surface-3")} />
         ))}
@@ -110,35 +118,38 @@ export function CoverageMeter({ covered, total, className }: { covered: number; 
 }
 
 export function ConfidenceBadge({ level }: { level: string }) {
+  useLocale();
   const meta = CONFIDENCE[level] ?? { label: level, tone: "neutral" as const };
-  return <Badge tone={meta.tone}>{meta.label}</Badge>;
+  return <Badge tone={meta.tone}>{translate(meta.label)}</Badge>;
 }
 
 export function PriceKindBadge({ kind }: { kind: string }) {
+  useLocale();
   if (kind === "regular") return null;
   const meta = PRICE_KIND[kind] ?? { label: kind, tone: "neutral" as const };
-  return <Badge tone={meta.tone}>{meta.label}</Badge>;
+  return <Badge tone={meta.tone}>{translate(meta.label)}</Badge>;
 }
 
 export function OfferDetails({ offer }: { offer: Schemas["OfferOut"] }) {
+  useLocale();
   const selling = offer.promo_price ?? offer.regular_price;
   return (
     <div className="space-y-1 text-sm">
       <p className="flex flex-wrap items-baseline gap-x-2">
-        <span className="font-bold tabular">{money(selling)}</span>
-        {offer.promo_price ? <span className="text-ink-3 line-through tabular">{money(offer.regular_price)}</span> : null}
-        {offer.unit_price ? <span className="text-ink-3 tabular">({unitPrice(offer.unit_price, offer.unit_price_unit)})</span> : null}
+        <span className="font-bold tabular">{translate(money(selling))}</span>
+        {offer.promo_price ? <span className="text-ink-3 line-through tabular">{translate(money(offer.regular_price))}</span> : null}
+        {offer.unit_price ? <span className="text-ink-3 tabular">{translate("(")}{translate(unitPrice(offer.unit_price, offer.unit_price_unit))}{translate(")")}</span> : null}
       </p>
       <div className="flex flex-wrap gap-1.5">
-        {offer.promo_price ? <Badge tone="accent">Promoção</Badge> : null}
-        {offer.club_price ? <Badge tone="info">{`${offer.club_label ?? "Clube"}: ${money(offer.club_price)}`}</Badge> : null}
+        {offer.promo_price ? <Badge tone="accent">{translate("Promoção")}</Badge> : null}
+        {offer.club_price ? <Badge tone="info">{translate(`${offer.club_label ?? translate("Clube")}: ${money(offer.club_price)}`)}</Badge> : null}
         {offer.quantity_min && offer.quantity_price ? (
           <Badge tone="accent">
-            {offer.quantity_mode === "per_group" ? `Levando ${offer.quantity_min}: ${money(offer.quantity_price)} cada` : `A partir de ${offer.quantity_min}: ${money(offer.quantity_price)} cada`}
+            {translate(offer.quantity_mode === "per_group" ? `Levando ${offer.quantity_min}: ${money(offer.quantity_price)} cada` : `A partir de ${offer.quantity_min}: ${money(offer.quantity_price)} cada`)}
           </Badge>
         ) : null}
         {offer.extra_prices.map((extra, i) => (
-          <Badge key={i} tone="neutral">{`${String(extra.label ?? "Condição")}: ${money(String(extra.price ?? ""))}`}</Badge>
+          <Badge key={i} tone="neutral">{translate(`${String(extra.label ?? translate("Condição"))}: ${money(String(extra.price ?? ""))}`)}</Badge>
         ))}
       </div>
     </div>
@@ -146,9 +157,10 @@ export function OfferDetails({ offer }: { offer: Schemas["OfferOut"] }) {
 }
 
 export function BigMoney({ value, className, label }: { value: string | number | null | undefined; className?: string; label?: string }) {
+  useLocale();
   return (
-    <span className={cn("font-display font-bold tracking-tight tabular", className)} aria-label={label ? `${label}: ${money(value)}` : undefined}>
-      {money(value)}
+    <span className={cn("font-display font-bold tracking-tight tabular", className)} aria-label={translate(label ? `${label}: ${money(value)}` : undefined)}>
+      {translate(money(value))}
     </span>
   );
 }

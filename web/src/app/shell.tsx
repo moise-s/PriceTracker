@@ -17,9 +17,18 @@ import { type ReactNode, useEffect, useRef } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router";
 import { useActiveRun, useLogout, useMe, useNotifications } from "@/api/hooks";
 import { Button, Progress } from "@/components/ui";
+import { setLocale, useLocale, translate } from "@/lib/i18n";
 import { cn } from "@/components/ui/utils";
 
+export function LanguageSwitcher() {
+  const locale = useLocale();
+  return <select aria-label={translate(locale === "en" ? "Language" : "Idioma")} value={locale} onChange={(event) => setLocale(event.target.value === "en" ? "en" : "pt-BR")} className="h-9 max-w-full rounded-lg border border-line bg-surface px-2 text-xs text-ink">
+    <option value="pt-BR">{translate("Português (Brasil)")}</option><option value="en">{translate("English")}</option>
+  </select>;
+}
+
 export function Logo({ className, withText = true }: { className?: string; withText?: boolean }) {
+  useLocale();
   return (
     <span className={cn("inline-flex items-center gap-2.5", className)}>
       <svg viewBox="0 0 64 64" className="size-9 shrink-0" aria-hidden>
@@ -31,8 +40,8 @@ export function Logo({ className, withText = true }: { className?: string; withT
       </svg>
       {withText ? (
         <span className="leading-tight">
-          <span className="block font-display text-[17px] font-bold tracking-tight text-ink">PriceTracker</span>
-          <span className="block text-xs text-ink-3">onde a compra compensa</span>
+          <span className="block font-display text-[17px] font-bold tracking-tight text-ink">{translate("PriceTracker")}</span>
+          <span className="block text-xs text-ink-3">{translate("onde a compra compensa")}</span>
         </span>
       ) : null}
     </span>
@@ -62,15 +71,17 @@ const MOBILE: NavItem[] = [
 ];
 
 function UnreadBadge({ count, className }: { count: number; className?: string }) {
+  useLocale();
   if (!count) return null;
-  return <span aria-hidden className={cn("grid h-5 min-w-5 place-content-center rounded-full bg-accent px-1.5 text-[11px] font-bold text-on-accent tabular", className)}>{count > 9 ? "9+" : count}</span>;
+  return <span aria-hidden className={cn("grid h-5 min-w-5 place-content-center rounded-full bg-accent px-1.5 text-[11px] font-bold text-on-accent tabular", className)}>{translate(count > 9 ? "9+" : count)}</span>;
 }
 
 function SideNav({ isAdmin }: { isAdmin: boolean }) {
+  useLocale();
   const unread = useNotifications().data?.unread ?? 0;
   const items = isAdmin ? [...PRIMARY, { to: "/admin", label: "Administração", icon: Shield }] : PRIMARY;
   return (
-    <nav aria-label="Principal" className="space-y-1">
+    <nav aria-label={translate("Principal")} className="space-y-1">
       {items.map((item) => (
         <NavLink
           key={item.to}
@@ -84,10 +95,10 @@ function SideNav({ isAdmin }: { isAdmin: boolean }) {
           }
         >
           <item.icon aria-hidden className="size-5" />
-          {item.label}
+          {translate(item.label)}
           {item.to === "/avisos" && unread ? (
             <>
-              <span className="sr-only">, {unread} não lido{unread > 1 ? "s" : ""}</span>
+              <span className="sr-only">{translate(", ")}{translate(unread)}{translate(" não lido")}{translate(unread > 1 ? "s" : "")}</span>
               <UnreadBadge count={unread} className="ml-auto" />
             </>
           ) : null}
@@ -98,8 +109,9 @@ function SideNav({ isAdmin }: { isAdmin: boolean }) {
 }
 
 function BottomNav() {
+  useLocale();
   return (
-    <nav aria-label="Principal" className="safe-bottom fixed inset-x-0 bottom-0 z-40 border-t border-line bg-surface/95 px-2 pt-1.5 shadow-bar backdrop-blur lg:hidden">
+    <nav aria-label={translate("Principal")} className="safe-bottom fixed inset-x-0 bottom-0 z-40 border-t border-line bg-surface/95 px-2 pt-1.5 shadow-bar backdrop-blur lg:hidden">
       <ul className="mx-auto grid max-w-lg grid-cols-5">
         {MOBILE.map((item) => (
           <li key={item.to}>
@@ -115,7 +127,7 @@ function BottomNav() {
                   <span className={cn("grid h-8 w-12 place-content-center rounded-full transition-colors", item.to === "/buscar" ? (isActive ? "bg-brand text-on-brand" : "bg-brand-soft text-brand") : isActive ? "bg-brand-soft" : "")}>
                     <item.icon aria-hidden className="size-5" />
                   </span>
-                  {item.label}
+                  {translate(item.label)}
                 </>
               )}
             </NavLink>
@@ -127,6 +139,7 @@ function BottomNav() {
 }
 
 function ActiveRunBanner() {
+  useLocale();
   const { data: run } = useActiveRun();
   const location = useLocation();
   if (!run || location.pathname.startsWith("/buscas/")) return null;
@@ -137,17 +150,18 @@ function ActiveRunBanner() {
     >
       <Search aria-hidden className="size-5 shrink-0 animate-pulse" />
       <span className="min-w-0 flex-1">
-        <span className="block text-sm font-semibold">Buscando preços…</span>
-        <Progress value={run.done_targets} max={run.total_targets} label="Progresso da busca" className="mt-1.5 h-1.5 bg-white/20" />
+        <span className="block text-sm font-semibold">{translate("Buscando preços…")}</span>
+        <Progress value={run.done_targets} max={run.total_targets} label={translate("Progresso da busca")} className="mt-1.5 h-1.5 bg-white/20" />
       </span>
       <span className="text-xs tabular opacity-80">
-        {run.done_targets}/{run.total_targets}
+        {translate(run.done_targets)}{translate("/")}{translate(run.total_targets)}
       </span>
     </Link>
   );
 }
 
 export function AppShell() {
+  useLocale();
   const { data: me } = useMe();
   const unread = useNotifications().data?.unread ?? 0;
   const logout = useLogout();
@@ -165,9 +179,7 @@ export function AppShell() {
 
   return (
     <div className="min-h-dvh lg:grid lg:grid-cols-[17rem_1fr]">
-      <a href="#conteudo" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:bg-brand focus:px-4 focus:py-2 focus:text-on-brand">
-        Pular para o conteúdo
-      </a>
+      <a href="#conteudo" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:bg-brand focus:px-4 focus:py-2 focus:text-on-brand">{translate("Pular para o conteúdo")}</a>
       {/* The column carries the background so it spans the whole page; the nav itself sticks. */}
       <div className="hidden border-r border-line bg-surface-2 lg:block">
         <aside className="sticky top-0 flex h-dvh flex-col px-4 py-6">
@@ -175,27 +187,27 @@ export function AppShell() {
             <Logo />
           </Link>
           <SideNav isAdmin={me?.user.role === "admin"} />
-          <div className="mt-auto rounded-xl border border-line bg-surface p-3">
+          <div className="mt-auto mb-3"><LanguageSwitcher /></div>
+          <div className="rounded-xl border border-line bg-surface p-3">
             <p className="truncate text-sm font-semibold">{me?.user.display_name}</p>
-            <p className="truncate text-xs text-ink-3">@{me?.user.username}</p>
+            <p className="truncate text-xs text-ink-3">{translate("@")}{me?.user.username}</p>
             <Button variant="ghost" size="sm" className="mt-2 w-full justify-start" onClick={() => logout.mutate()} loading={logout.isPending}>
-              <LogOut aria-hidden className="size-4" />
-              Sair
-            </Button>
+              <LogOut aria-hidden className="size-4" />{translate("Sair")}</Button>
           </div>
         </aside>
       </div>
       <div className="min-w-0">
         <header className="sticky top-0 z-30 flex items-center justify-between border-b border-line bg-canvas/90 px-4 py-2.5 backdrop-blur lg:hidden">
-          <Link to="/" aria-label="Início">
+          <Link to="/" aria-label={translate("Início")}>
             <Logo withText={false} />
           </Link>
           <div className="flex items-center gap-1">
-            <Link to="/avisos" className="relative grid size-10 place-content-center rounded-full text-ink-2 hover:bg-surface-3" aria-label={unread ? `Avisos, ${unread} não lido${unread > 1 ? "s" : ""}` : "Avisos"}>
+            <LanguageSwitcher />
+            <Link to="/avisos" className="relative grid size-10 place-content-center rounded-full text-ink-2 hover:bg-surface-3" aria-label={translate(unread ? `Avisos, ${unread} não lido${unread > 1 ? "s" : ""}` : "Avisos")}>
               <Bell aria-hidden className="size-5" />
               <UnreadBadge count={unread} className="absolute -top-0.5 -right-0.5 h-4 min-w-4 px-1 text-[10px]" />
             </Link>
-            <Link to="/perfil" className="grid size-9 place-content-center rounded-full bg-brand-soft font-display text-sm font-bold text-brand-ink" aria-label="Perfil">
+            <Link to="/perfil" className="grid size-9 place-content-center rounded-full bg-brand-soft font-display text-sm font-bold text-brand-ink" aria-label={translate("Perfil")}>
               {me?.user.display_name?.slice(0, 1).toUpperCase() ?? <Settings2 className="size-4" />}
             </Link>
           </div>
@@ -211,26 +223,29 @@ export function AppShell() {
 }
 
 export function PageHeader({ title, description, eyebrow, actions }: { title: ReactNode; description?: ReactNode; eyebrow?: ReactNode; actions?: ReactNode }) {
+  useLocale();
   return (
     <div className="mb-6 flex flex-wrap items-end justify-between gap-4 animate-rise">
       <div className="min-w-0">
-        {eyebrow ? <p className="mb-1 text-sm font-semibold text-brand">{eyebrow}</p> : null}
-        <h1 className="text-[28px] leading-tight font-bold text-ink outline-none sm:text-[34px]">{title}</h1>
-        {description ? <p className="mt-1.5 max-w-2xl text-[15px] text-ink-2">{description}</p> : null}
+        {eyebrow ? <p className="mb-1 text-sm font-semibold text-brand">{translate(eyebrow)}</p> : null}
+        <h1 className="text-[28px] leading-tight font-bold text-ink outline-none sm:text-[34px]">{translate(title)}</h1>
+        {description ? <p className="mt-1.5 max-w-2xl text-[15px] text-ink-2">{translate(description)}</p> : null}
       </div>
-      {actions ? <div className="flex flex-wrap gap-2">{actions}</div> : null}
+      {actions ? <div className="flex flex-wrap gap-2">{translate(actions)}</div> : null}
     </div>
   );
 }
 
 export function AuthLayout({ children }: { children: ReactNode }) {
+  useLocale();
   return (
     <div className="grid min-h-dvh place-items-center px-4 py-10">
       <main className="w-full max-w-md animate-rise">
         <div className="mb-8 flex justify-center">
           <Logo />
         </div>
-        {children}
+        <div className="mb-5 flex justify-end"><LanguageSwitcher /></div>
+        {translate(children)}
       </main>
     </div>
   );

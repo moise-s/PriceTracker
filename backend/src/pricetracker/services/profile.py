@@ -200,8 +200,15 @@ def list_markets(db: Session, include_disabled: bool = False) -> list[Market]:
     return list(db.scalars(stmt))
 
 
-def selections(db: Session, user_id: uuid.UUID) -> dict[uuid.UUID, UserStoreSelection]:
-    rows = db.scalars(select(UserStoreSelection).where(UserStoreSelection.user_id == user_id))
+def selections(
+    db: Session, user_id: uuid.UUID, *, include_unavailable: bool = False
+) -> dict[uuid.UUID, UserStoreSelection]:
+    stmt = select(UserStoreSelection).where(UserStoreSelection.user_id == user_id)
+    if not include_unavailable:
+        stmt = (
+            stmt.join(Store).join(Market).where(Store.is_active.is_(True), Market.enabled.is_(True))
+        )
+    rows = db.scalars(stmt)
     return {row.store_id: row for row in rows}
 
 
@@ -211,13 +218,13 @@ def set_selections(
     wanted: dict[uuid.UUID, Decimal] = {}
     for entry in entries:
         store = db.get(Store, entry["store_id"])
-        if store is None or not store.is_active:
+        if store is None or not store.is_active or not store.market.enabled:
             raise ValidationFailed("Loja inválida.", code="invalid_store")
         toll = entry.get("toll_round_trip") or Decimal("0")
         if toll < 0:
             raise ValidationFailed("Pedágio inválido.", code="invalid_toll")
         wanted[store.id] = toll
-    current = selections(db, user.id)
+    current = selections(db, user.id, include_unavailable=True)
     for store_id, row in current.items():
         if store_id not in wanted:
             db.delete(row)

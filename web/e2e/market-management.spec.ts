@@ -1,0 +1,94 @@
+import AxeBuilder from "@axe-core/playwright";
+import { expect, test } from "@playwright/test";
+import { apiAs, createUser, expectNoClippedContent, expectNoHorizontalOverflow, login, resetBackend, snap } from "./support";
+
+// Contrast must be measured after the entry animation, not on a partially transparent frame.
+test.use({ reducedMotion: "reduce" });
+test.beforeEach(async ({ request }) => { await resetBackend(request); });
+
+test("gestão regional: administrador cadastra, corrige e desativa uma filial", async ({ page, request }, testInfo) => {
+  await createUser(request, "regional-admin", { admin: true });
+  await login(page, "regional-admin");
+  await page.goto("/admin");
+  await page.getByRole("tab", { name: "Mercados", exact: true }).click();
+  const market = page.getByRole("region", { name: "Gerenciar Fort Atacadista" });
+  await market.getByRole("button", { name: "Adicionar filial" }).click();
+  const dialog = page.getByRole("dialog");
+  await dialog.getByLabel("Nome da filial").fill("Centro regional");
+  await dialog.getByLabel("Cidade", { exact: true }).fill("Curitiba");
+  await dialog.getByLabel("UF", { exact: true }).selectOption("PR");
+  await dialog.getByLabel("Identificador oficial da loja", { exact: true }).fill("987654");
+  await dialog.getByLabel("Latitude (opcional)", { exact: true }).fill("-25,428400");
+  await dialog.getByLabel("Longitude (opcional)", { exact: true }).fill("-49,273300");
+  await expectNoHorizontalOverflow(page);
+  await expectNoClippedContent(page);
+  await snap(page, testInfo, "cadastro-filial-regional");
+  const accessibility = await new AxeBuilder({ page }).include('[role="dialog"]').analyze();
+  expect(accessibility.violations).toEqual([]);
+  await dialog.getByRole("button", { name: "Salvar filial" }).click();
+  await expect(dialog).not.toBeVisible();
+  await market.locator("summary").click();
+  await expect(market.getByText("Centro regional", { exact: true })).toBeVisible();
+  await market.getByRole("button", { name: "Editar filial Centro regional", exact: true }).click();
+  await dialog.getByLabel("Nome da filial").fill("Centro corrigido");
+  await dialog.getByRole("button", { name: "Salvar filial" }).click();
+  await expect(dialog).not.toBeVisible();
+  await expect(market.getByText("Centro corrigido", { exact: true })).toBeVisible();
+
+  await page.goto("/mercados");
+  await page.getByLabel("UF", { exact: true }).selectOption("PR");
+  await page.getByLabel("Cidade", { exact: true }).selectOption("Curitiba");
+  await page.getByRole("checkbox", { name: /Centro corrigido/ }).check();
+  await page.getByRole("button", { name: "Salvar", exact: true }).click();
+  await expect(page.getByText("alterações não salvas")).not.toBeVisible();
+  await expectNoHorizontalOverflow(page);
+  await snap(page, testInfo, "selecao-regional");
+  const data = await apiAs(page, "GET", "/admin/markets");
+  const fort = data.find((m: any) => m.slug === "fort");
+  const branch = fort.stores.find((s: any) => s.external_id === "987654");
+  expect(branch.city).toBe("Curitiba");
+  expect(branch.latitude).toBe("-25.428400");
+
+  await page.goto("/admin");
+  await page.getByRole("tab", { name: "Mercados", exact: true }).click();
+  await market.locator("summary").click();
+  await market.getByRole("button", { name: "Editar filial Centro corrigido", exact: true }).click();
+  await dialog.getByRole("switch", { name: /Filial disponível/ }).uncheck();
+  await dialog.getByRole("button", { name: "Salvar filial" }).click();
+  await expect(dialog).not.toBeVisible();
+  await page.goto("/mercados");
+  await page.getByLabel("Buscar mercado ou filial").fill("Centro corrigido");
+  await expect(page.getByText("Nenhuma loja neste filtro")).toBeVisible();
+  await expect(page.getByText("0 lojas selecionadas")).toBeVisible();
+});
+
+test("filtros preservam seleção entre regiões e ajuda funciona a 320 px", async ({ page, request }, testInfo) => {
+  await createUser(request, "regional-user");
+  await login(page, "regional-user");
+  await page.goto("/mercados");
+  await page.getByLabel("Buscar mercado ou filial").fill("beira mar");
+  await page.getByRole("checkbox", { name: /^Beira Mar/ }).check();
+  await page.getByLabel("Buscar mercado ou filial").fill("kobrasol");
+  await page.getByRole("region", { name: "Fort Atacadista", exact: true }).getByRole("checkbox", { name: /^Kobrasol/ }).check();
+  await expect(page.getByText("2 lojas selecionadas")).toBeVisible();
+  await page.getByRole("button", { name: "Salvar", exact: true }).click();
+  await expect(page.getByText("alterações não salvas")).not.toBeVisible();
+  const selected = (await apiAs(page, "GET", "/markets")).flatMap((m: any) => m.stores).filter((s: any) => s.selected);
+  expect(selected).toHaveLength(2);
+  await page.getByLabel("Buscar mercado ou filial").fill("uma cidade sem cobertura");
+  await expect(page.getByText("Nenhuma loja neste filtro")).toBeVisible();
+  await expect(page.getByText("2 lojas selecionadas")).toBeVisible();
+  await page.getByRole("button", { name: "Limpar filtros" }).click();
+  await page.getByRole("switch", { name: "Mostrar só minhas lojas" }).check();
+  await expect(page.getByRole("checkbox")).toHaveCount(2);
+  await page.goto("/ajuda");
+  await expect(page.getByRole("heading", { name: "Como usar o PriceTracker" })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Administração/ })).toHaveCount(0);
+  await page.setViewportSize({ width: 320, height: 740 });
+  await page.evaluate(() => document.fonts.ready);
+  await expectNoHorizontalOverflow(page);
+  await expectNoClippedContent(page);
+  const violations = await new AxeBuilder({ page }).include("main").analyze();
+  expect(violations.violations).toEqual([]);
+  await snap(page, testInfo, "ajuda-320");
+});
