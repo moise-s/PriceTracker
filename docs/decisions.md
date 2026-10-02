@@ -1,157 +1,156 @@
-# Decisões e trade-offs
+# Decisions and trade-offs
 
-Registro curto no formato ADR (contexto → decisão → consequências). Datas: 27/09/2026.
+[Português](decisions.pt-BR.md)
 
-## ADR-01 — Monólito modular com worker e fila no PostgreSQL
+Short architecture decision records: context → decision → consequences. ADR-01 through ADR-10
+were recorded on 2026-09-27; regional onboarding and language/length support were added on 2026-10-02.
 
-- **Contexto:** coletas levam minutos, precisam sobreviver a reinícios e não podem duplicar; a
-  instalação é doméstica e deve ser leve.
-- **Decisão:** FastAPI + serviços + domínio puro num pacote só; `worker` e `scheduler` como
-  processos separados; fila nas tabelas `runs`/`run_targets` com claim
-  `FOR UPDATE SKIP LOCKED`, heartbeat, recuperação de runs órfãos e devolução à fila no desligamento.
-  Recorrências usam chave idempotente por ocorrência.
-- **Consequências:** nenhum Redis/Celery; um único banco para fazer backup. O throughput é limitado
-  (poucas coletas simultâneas), o que é adequado para uma casa. SQLite serializa escritas e serve
-  só para desenvolvimento e testes.
+## ADR-01 — Modular monolith with a worker and PostgreSQL queue
 
-## ADR-02 — Coleta determinística primeiro; LLM como fallback verificado
+- **Context:** collection takes minutes, must survive restarts and must not duplicate results.
+  A household installation should remain lightweight.
+- **Decision:** FastAPI, services and a pure domain in one package; separate worker/scheduler
+  processes. `runs`/`run_targets` provide a queue with `FOR UPDATE SKIP LOCKED` claims, heartbeats,
+  orphan-run recovery and return to the queue at shutdown. Recurrences have one idempotency key
+  per occurrence.
+- **Consequences:** no Redis/Celery; one database to back up. Limited throughput suits a household.
+  SQLite serializes writes and serves development/tests only.
 
-- **Contexto:** o protótipo dependia de LLM e de um modelo removido; LLM pode inventar preços.
-- **Decisão:** cada adaptador usa primeiro dados estruturados públicos (API JSON, JSON-LD, estado
-  embutido na página) e depois DOM determinístico. O LLM só recebe um trecho pequeno e sanitizado,
-  tratado como dado não confiável, com schema JSON estrito; todo valor devolvido precisa aparecer no
-  trecho (anti-fabricação) e as regras de matching são reaplicadas. Groq com `qwen/qwen3.8-27b` é o
-  padrão (verificado com `pricetracker llm check`); OpenAI exige uma `OPENAI_API_KEY` da plataforma
-  de API (a assinatura do ChatGPT não inclui créditos). Orçamento de chamadas por run e cache por hash.
-- **Consequências:** nas execuções reais de 27/09 foram necessárias **0 chamadas** de LLM. Sem chave,
-  só os alvos que precisariam de IA ficam `needs_llm`; o resto da busca segue normal.
+## ADR-02 — Deterministic collection first, validated LLM fallback
 
-## ADR-03 — Respeito às fontes em código, sem contornar proteções
+- **Context:** the prototype depended on an LLM and a discontinued model. Models can fabricate prices.
+- **Decision:** adapters prefer public structured data (JSON APIs, JSON-LD, embedded page state),
+  then deterministic DOM extraction. An LLM receives only a small sanitized excerpt treated as
+  untrusted data, with a strict JSON schema. Every returned value must occur in that excerpt;
+  matching rules run again. Groq `qwen/qwen3.8-27b` was the configured default, verified with
+  `pricetracker llm check`. OpenAI requires a platform `OPENAI_API_KEY`; a ChatGPT subscription
+  does not supply API credits. Calls have a per-run budget and a content-hash cache.
+- **Consequences:** live runs on 2026-09-27 used **0 LLM calls**. Without a key, only targets needing
+  AI become `needs_llm`; the rest of the run continues.
 
-- **Decisão:** cliente HTTP único com `robots.txt` (RFC 9309), allowlist de domínios inclusive em
-  redirecionamentos, concorrência e intervalo por host, retries com backoff/jitter, circuit breaker,
-  User-Agent identificável e detecção de desafios anti-bot, que viram `blocked`.
-- **Consequências:** Bistek é lido por sitemaps (o `robots.txt` proíbe busca e API); Fort não usa
-  query strings; o catálogo completo do Imperatriz no iFood fica de fora (ADR-07).
+## ADR-03 — Respect sources without bypassing protections
 
-## ADR-04 — Dinheiro em Decimal/NUMERIC e quantidade da lista ≠ tamanho da embalagem
+- **Decision:** a shared HTTP client implements `robots.txt` (RFC 9309), allowed-domain checks on
+  redirects, per-host concurrency/pacing, retries with backoff/jitter, circuit breakers, an
+  identifiable User-Agent and anti-bot challenge detection that produces `blocked`.
+- **Consequences:** Bistek uses sitemaps because robots forbids search/API access; Fort avoids query
+  strings. Imperatriz's full iFood catalog stays excluded (ADR-07).
 
-- **Decisão:** preços `NUMERIC(12,2)`, preço unitário `NUMERIC(14,4)`, quantidades `NUMERIC(12,3)`;
-  a API trafega dinheiro como string decimal. A lista guarda "quanto comprar" (2 pacotes, 1,5 kg,
-  12 unidades); a embalagem é característica da oferta. Itens vendidos a peso convertem embalagens
-  aproximadas em preço por kg; preços por quantidade ("leve 3") só valem quando a quantidade atinge o
-  mínimo; preço de clube só se o usuário ativar aquele clube.
-- **Consequências:** nenhum float toca dinheiro; custos de linha são explicáveis ("2 × R$ 6,79").
+## ADR-04 — Decimal/NUMERIC money; list quantity differs from package size
 
-## ADR-05 — Três visões de comparação e recomendação honesta
+- **Decision:** prices use `NUMERIC(12,2)`, unit prices `NUMERIC(14,4)` and quantities
+  `NUMERIC(12,3)`. The API sends money as decimal strings. Lists record how much to buy (2 packs,
+  1.5 kg, 12 items); package size belongs to the offer. Weight-based items convert estimated packs
+  to price per kg. Quantity discounts apply only when the minimum is met; loyalty prices apply
+  only when the user enables that club.
+- **Consequences:** money calculations do not use floats. Line costs are explainable, for example
+  2 × R$6.79.
 
-- **Decisão:** cesta comum (interseção), cobertura por mercado (sem vencedor injusto) e plano
-  econômico que prioriza cobertura, inclui deslocamento, limita paradas e só divide a compra se
-  economizar pelo menos R$ 5. Preços antigos (padrão 7 dias) exigem consentimento e baixam a
-  confiança (baixa quando todos os preços usados são antigos); outliers ficam em revisão. Células
-  vazias mostram o resultado da última busca.
-- **Consequências:** a recomendação às vezes é "não há preços suficientes" — preferível a uma
-  resposta errada.
+## ADR-05 — Three comparison views and honest recommendations
 
-## ADR-06 — Contas locais, sem e-mail
+- **Decision:** common basket (intersection), per-store coverage and a budget plan prioritizing
+  coverage, including travel and limiting stops. Splitting requires at least R$5 savings. Stale
+  prices (default 7 days) require consent and reduce confidence; confidence is low when all used
+  prices are stale. Outliers remain under review. Empty cells show the latest search outcome.
+- **Consequences:** the recommendation may say there are insufficient prices rather than offer
+  an unsupported winner.
 
-- **Decisão:** Argon2id, sessões opacas com hash no banco, cookies `HttpOnly`/`Secure`/`Lax`, CSRF
-  double submit + Origin, rate limit por HMAC de usuário e cliente, 10 códigos de recuperação de uso
-  único, reset pelo administrador com troca obrigatória. O primeiro administrador exige código de uma
-  vez gerado no servidor (`pricetracker setup-code`); depois do bootstrap o autocadastro fica
-  desligado (o admin pode ligar).
-- **Consequências:** sem dependência de SMTP; perder senha e códigos exige um administrador.
+## ADR-06 — Local accounts without email
 
-## ADR-07 — Imperatriz: somente a fonte oficial do Super Clube
+- **Decision:** Argon2id, opaque sessions hashed in the database, `HttpOnly`/`Secure`/`Lax` cookies,
+  double-submit CSRF plus Origin checks, HMAC-based user/client rate limits, 10 single-use recovery
+  codes and administrator resets requiring a password change. The first administrator needs a
+  one-time server-generated code (`pricetracker setup-code`). Self-registration is disabled after
+  bootstrap; an administrator can enable it.
+- **Consequences:** no SMTP dependency. Losing both password and recovery codes requires an admin.
 
-- **Contexto:** o site do Imperatriz não publica preços de catálogo; o catálogo completo está no
-  iFood, protegido por anti-bot (PerimeterX) e termos de uso.
-- **Decisão:** usar apenas a API pública de ofertas do hotsite oficial do Super Clube, guardando
-  preço de gôndola e preço de clube separados, e declarar a cobertura parcial na UI.
-- **Consequências:** itens fora de oferta aparecem como "não encontrado" no Imperatriz. **Requer
-  decisão do usuário** (opções em `docs/sources/readiness-matrix.md`).
+## ADR-07 — Imperatriz uses only the official Super Clube source
 
-## ADR-08 — Geografia sem serviços públicos recorrentes
+- **Context:** Imperatriz's website does not publish catalog prices. Its full catalog is on iFood,
+  protected by PerimeterX and terms of use.
+- **Decision:** use only the official public Super Clube offers API, keep regular/loyalty prices
+  separate and declare partial coverage in the UI.
+- **Consequences:** items outside current offers appear as not found. **A user decision remains
+  pending**; see the [source-readiness matrix](sources/readiness-matrix.md).
 
-- **Decisão:** endereço com coordenadas informadas pelo usuário (ou geolocalização do navegador);
-  Nominatim só como opção explícita, com contato configurado e cache (nunca para autocomplete);
-  distância por OSRM auto-hospedado opcional ou estimativa `haversine × 1,35`, sempre com a fórmula
-  visível.
-- **Consequências:** zero dependência externa por padrão; a estimativa pode errar em trajetos com
-  pontes/serras — por isso o método aparece na UI ("Distância estimada") e o OSRM é recomendado para
-  quem quiser precisão.
+## ADR-08 — Geography without recurring public-service dependencies
 
-## ADR-09 — Implantação somente local
+- **Decision:** user-provided coordinates or browser geolocation. Nominatim is an explicit opt-in
+  with configured contact and cache, never autocomplete. Routing uses optional self-hosted OSRM
+  or `haversine × 1.35`, with the formula visible.
+- **Consequences:** no external dependency by default. Estimates can be wrong around bridges or
+  mountains, so the UI identifies the method; OSRM provides the optional more precise route.
 
-- **Contexto:** o dono do projeto pediu explicitamente para não tratar de deploy em servidor.
-- **Decisão:** Docker Compose local, publicado só em `127.0.0.1:8090`, com segredos em arquivos,
-  backups e restauração testados. Tailscale Serve, systemd e servidor ficam fora do escopo.
-- **Consequências:** para uso em outro dispositivo da casa será preciso um passo adicional
-  (proxy HTTPS/Tailscale), deixado no backlog.
+## ADR-09 — Local installation only
 
-## ADR-10 — Testes de ponta a ponta com backend determinístico
+- **Context:** server deployment was explicitly excluded from this delivery.
+- **Decision:** local Docker Compose exposed only at `127.0.0.1:8090`, file-based secrets, tested
+  backups/restoration. Tailscale Serve, systemd and server deployment remain outside scope.
+- **Consequences:** another household device needs additional HTTPS/proxy configuration, tracked
+  in the backlog.
 
-- **Decisão:** um harness de testes (`backend/tests/e2e_harness.py`) sobe a API real com SQLite
-  descartável e um worker em processo que replica as fixtures sanitizadas; uma API de controle
-  (montada só no harness) reseta o estado e injeta falhas por mercado. O Playwright roda contra o
-  build de produção (`vite preview`).
-- **Consequências:** os oito cenários rodam em ~1 min, sem rede externa e sem flakiness de sites
-  reais; a validação contra os sites reais fica nos smoke tests ao vivo e nas execuções da stack.
+## ADR-10 — E2E tests against a deterministic backend
 
-## ADR-11 — Gestão regional com integrações explícitas
+- **Decision:** `backend/tests/e2e_harness.py` runs the real API with disposable SQLite and an
+  in-process worker replaying sanitized fixtures. A control API, mounted only in the harness,
+  resets state and injects market failures. Playwright uses the production build (`vite preview`).
+- **Consequences:** the initial eight desktop/mobile scenarios ran in about a minute without
+  external traffic or live-site instability. Real-source validation uses opt-in live smoke tests
+  and stack runs.
 
-- **Contexto:** usuários de outras cidades precisavam editar o cadastro inicial e não tinham
-  gestão de filiais pela interface. Endereço físico e região de preço online são conceitos distintos.
-- **Decisão:** administradores gerenciam disponibilidade, apresentação e filiais das redes
-  integradas; usuários filtram por região e mantêm sua própria seleção. Contextos são validados
-  por adaptador (CEP/vendedor, ID oficial ou preço compartilhado); domínio, site e código de
-  coleta das integrações iniciais continuam em código. Fontes novas passam pelo teste da ADR-12.
-- **Persistência:** seed preserva campos administráveis das redes e filiais com origem `admin`.
-  Desativação preserva histórico e filtra novas seleções/comparações; IDs explícitos indisponíveis
-  são recusados, inclusive nas repetições e novos agendamentos. Buscas já criadas podem concluir.
-- **Histórico:** depois de registrar uma busca, alterar a região de preço exige outro cadastro;
-  não se reinterpretam observações antigas como preços de uma nova região.
-- **Limites:** UI pt-BR/en, BRL e endereços brasileiros. Fontes fora do contrato público da ADR-12
-  exigem adaptadores com fixtures e contexto verificável. Entrada manual/importação, outras moedas e
-  formatos internacionais de endereço ficam no backlog.
+## ADR-11 — Regional management with explicit integrations
 
-## ADR-12 — Assistente de redes novas com fonte pública verificada
+- **Context:** users in other cities needed to change the initial branch data and lacked UI branch
+  management. A street address and an online pricing region are different concepts.
+- **Decision:** administrators manage integrated chains and branches; users filter by region and
+  maintain personal selections. Adapter-specific contexts validate postal code/seller, official
+  IDs or shared reference prices. Built-in integration domains, sites and collection code remain
+  code-owned. New sources follow ADR-12 validation.
+- **Persistence:** seed preserves administrator-editable market fields and branches with `admin`
+  origin. Deactivation preserves history and excludes new selections/comparisons. Explicit
+  unavailable IDs are rejected in retries and new schedules. Existing runs may finish.
+- **History:** changing a pricing region after a recorded run requires another branch. Old
+  observations are not reinterpreted as prices from the new region.
+- **Limits:** Portuguese/English UI, BRL and Brazilian addresses. Sources outside ADR-12 need
+  adapters with fixtures and verifiable context. Manual/imported prices, other currencies and
+  international address formats remain future work.
 
-- **Contexto:** administrar filiais de quatro redes não permite usar a aplicação em regiões
-  onde nenhuma delas existe. Cadastrar só um nome/site também não garante coleta utilizável.
-- **Decisão:** administrador testa site HTTPS, produto público e sitemap; uma fonte com JSON-LD
-  `Product` e uma `Offer` explícita em BRL pode ser cadastrada com a primeira loja na mesma
-  transação. A fonte é testada novamente no cadastro; prévias enviadas pelo cliente não são prova.
-  O índice pode ser revalidado/atualizado pela UI no mesmo domínio, para todas as lojas, sem
-  mudar sua disponibilidade. Trocar o domínio exige outra rede para preservar a origem do histórico.
-  As quatro integrações específicas mantêm seus contratos de região e promoções.
-- **Cobertura:** referência online anônima, compartilhada entre filiais, com aviso e confirmação
-  explícitos. Cidade/endereço não configuram região no site. Faixas de preço, múltiplas ofertas,
-  condições por quantidade/cliente, validade expirada e outras moedas são recusadas.
-- **Coleta:** sitemap de até 6 documentos/5.000 páginas, cache de 24 h e até 6 candidatos
-  descobertos por produto. Cada anúncio ainda passa pelas regras de equivalência existentes.
-  Sem JavaScript, login, configuração de CEP ou fallback de IA nesse adaptador.
-- **Rede:** HTTPS, mesma origem configurada, robots e ritmo de acesso; cada conexão resolve
-  todos os endereços DNS públicos e fixa o IP validado com Host/SNI originais. Endereços privados,
-  credenciais e portas alternativas são recusados; documentos até 4 MB, teste até 35 s.
-- **UX:** qualquer produto do catálogo pode virar cópia privada editável. Mercados mostra o
-  resumo de produtos/lojas e uma ação que salva a seleção e cria a busca diretamente; opções
-  avançadas e histórico continuam acessíveis separadamente.
+## ADR-12 — New-chain wizard with a verified public source
 
+- **Context:** managing branches of four chains does not serve regions where none exists. A name
+  and website alone do not establish a usable price source.
+- **Decision:** administrators test HTTPS site, public product and sitemap. A source with JSON-LD
+  `Product` and a single explicit BRL `Offer` can be registered with its first store in one
+  transaction. Validation runs again at registration; client-supplied previews are not evidence.
+  The UI can revalidate/update the same-host index for all branches without changing availability.
+  Another hostname requires another chain to preserve historical origin. Built-in integrations
+  retain their region/promotion contracts.
+- **Coverage:** anonymous online reference shared across branches, with explicit notice and
+  confirmation. City/address does not configure the site's delivery region. Price ranges, multiple
+  offers, quantity/customer conditions, expired offers and other currencies are refused.
+- **Collection:** up to 6 sitemap documents/5,000 pages, 24-hour cache and up to 6 discovered
+  candidates per product. Each listing still passes equivalence rules. This adapter uses no
+  JavaScript, login, postal-code setup or AI fallback.
+- **Network:** HTTPS, configured same origin, robots and pacing. Every connection checks all DNS
+  addresses are public and pins the validated IP with original Host/SNI. Private addresses,
+  credentials and alternative ports are refused. Documents are limited to 4 MB; probes to 35 s.
+- **UX:** any catalog product can become a private editable copy. Markets shows product/store
+  counts and an action that saves the selection and starts a run. Advanced options/history remain
+  separately available.
 
-## ADR-13 — Idioma local e comparação por metro — 02/10/2026
+## ADR-13 — Browser language and per-metre comparison, 2026-10-02
 
-- **Contexto:** salvar um produto deixava dúvida sobre o estado do formulário; embalagens de
-  papel higiênico com quantidades distintas precisavam de uma comparação equivalente.
-- **Decisão:** salvar a criação retorna à lista, onde o usuário adiciona o produto. A UI permite
-  pt-BR/en por navegador, sem traduzir nomes/dados do usuário ou termos de busca. README e guias
-  de entrada, uso e fontes têm versões em inglês; moeda BRL e fuso da instalação permanecem.
-- **Comprimento:** a unidade `m` representa metros totais. O modelo de folha dupla exige essa
-  característica e permite tamanhos distintos; sem comprimento verificável, a oferta é recusada.
-  A escolha usa preço por metro com quatro casas decimais. A cesta compra embalagens inteiras
-  suficientes para os metros desejados e explica a sobra; alertas continuam por embalagem.
-- **Fluxo:** o início mostra mercados selecionáveis. Atualizar preços salva a seleção e abre
-  revisão da lista → confirmação dos mercados → início da busca. Histórico permite ordenar cada
-  coluna nos dois sentidos, mantendo valores ausentes por último.
-- **Persistência:** migração `0002` amplia as unidades permitidas; downgrade recusa dados em metros
-  para evitar perda silenciosa. UI em inglês não amplia automaticamente a cobertura das fontes.
+- **Context:** product creation left users unsure whether they were still editing. Toilet-paper
+  packs of different sizes needed an equivalent comparison.
+- **Decision:** saving a new product returns to the list, where the user adds it. UI language is
+  chosen per browser without translating user/source names or search terms. README, onboarding,
+  usage and source guides have English versions. Currency remains BRL and the installation's
+  timezone is unchanged.
+- **Length:** `m` means total metres. Double-ply rules require that characteristic and allow
+  different pack sizes; unverifiable length is refused. Selection uses price per metre with four
+  decimal places. The basket buys enough whole packs and explains excess quantity; alerts still
+  use price per pack.
+- **Flow:** Home provides store selection. Update prices saves it, then opens list review → market
+  confirmation → start search. History sorts every column both ways, with missing values last.
+- **Persistence:** migration `0002` expands allowed units; downgrade refuses metre-based data to
+  avoid silent loss. English UI does not automatically expand source coverage.

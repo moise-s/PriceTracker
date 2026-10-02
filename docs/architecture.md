@@ -1,102 +1,114 @@
-# Arquitetura do PriceTracker v1
+# PriceTracker v1 architecture
 
-O PriceTracker responde a uma pergunta de casa: **onde a compra da semana sai mais barata quando o
-deslocamento entra na conta** — com cobertura, frescor e confiança explícitos. A v1 é uma
-reconstrução completa; o protótipo v0 está arquivado em `legacy/v0/` e o banco SQLite antigo não é
-importado nem suportado.
+[Português](architecture.pt-BR.md)
 
-## Forma: monólito modular com worker dedicado
+PriceTracker answers a household question: **where does the weekly grocery shop cost less when
+travel is included?** Coverage, freshness and confidence remain explicit. v1 is a complete rebuild;
+the v0 prototype is archived under `legacy/v0/`, and its old SQLite database is not imported or
+supported by v1.
 
-```
-Navegador (PWA pt-BR: React + TypeScript + Vite)
-   │  http://localhost:8090 (somente loopback)
+## Modular monolith with a dedicated worker
+
+```text
+Browser (Portuguese/English PWA: React + TypeScript + Vite)
+   │  http://localhost:8090 (loopback only)
    ▼
-web  (Caddy: SPA estática + proxy /api → api, CSP e cabeçalhos de segurança)
+web  (Caddy: static SPA + /api proxy → api, CSP and security headers)
    │
    ▼
 api  (FastAPI, Pydantic, SQLAlchemy) ───┐
-worker (coletas assíncronas) ───────────┼──► db (PostgreSQL 17: dados + fila durável)
-scheduler (recorrências → fila) ────────┘     volume app_data (imagens enviadas)
+worker (asynchronous collection) ──────┼──► db (PostgreSQL 17: data + durable queue)
+scheduler (recurrences → queue) ───────┘     app_data volume (uploaded images)
    │
-   └─► adaptadores de mercado ──► sites dos supermercados (robots, allowlist, ritmo educado)
-       └─► provedor de LLM (fallback opcional; schema JSON estrito; nunca obrigatório)
+   └─► market adapters ──► supermarket websites (robots, allowed domains, polite pacing)
+       └─► LLM provider (optional fallback; strict JSON schema; never required)
 ```
 
-| Camada | Pacote | Responsabilidade |
+| Layer | Package | Responsibility |
 | --- | --- | --- |
-| API | `pricetracker.api` | REST versionada (`/api/v1`), OpenAPI, autenticação/CSRF, autorização por usuário |
-| Serviços | `pricetracker.services` | Casos de uso: contas, catálogo, listas, buscas, comparação, histórico, alertas, admin |
-| Domínio | `pricetracker.domain` | Lógica pura: dinheiro, unidades, matching, cesta, deslocamento, frescor, outliers |
-| Adaptadores | `pricetracker.adapters` | Um adaptador por mercado atrás de um contrato comum; cliente HTTP educado |
-| LLM | `pricetracker.llm` | Provedores intercambiáveis (Groq, OpenAI, compatível com OpenAI) só como fallback |
-| Geo | `pricetracker.geo` | Geocodificação/rotas intercambiáveis (manual, Nominatim opcional, OSRM opcional, estimativa) + cache |
-| Jobs | `pricetracker.worker`, `pricetracker.scheduler` | Fila no PostgreSQL com claim transacional (`FOR UPDATE SKIP LOCKED`) |
-| Persistência | `pricetracker.db`, `pricetracker.models`, `migrations/` | Modelos SQLAlchemy 2 e migrations Alembic (schema novo) |
-| Web | `web/` | SPA React consumindo cliente tipado gerado do OpenAPI |
+| API | `pricetracker.api` | Versioned REST (`/api/v1`), OpenAPI, authentication/CSRF and user authorization |
+| Services | `pricetracker.services` | Use cases: accounts, catalog, lists, runs, comparison, history, alerts and administration |
+| Domain | `pricetracker.domain` | Pure logic: money, units, matching, baskets, travel, freshness and outliers |
+| Adapters | `pricetracker.adapters` | Source-specific adapters and a generic public adapter behind one contract; polite HTTP client |
+| LLM | `pricetracker.llm` | Interchangeable providers (Groq, OpenAI, OpenAI-compatible), used only as fallback |
+| Geography | `pricetracker.geo` | Interchangeable geocoding/routing (manual, optional Nominatim/OSRM, estimate) and cache |
+| Jobs | `pricetracker.worker`, `pricetracker.scheduler` | PostgreSQL queue with transactional claims (`FOR UPDATE SKIP LOCKED`) |
+| Persistence | `pricetracker.db`, `pricetracker.models`, `migrations/` | SQLAlchemy 2 models and Alembic migrations for the new schema |
+| Web | `web/` | React SPA consuming an OpenAPI-generated typed client |
 
-## Fluxo de uma busca
+## Price-check flow
 
-1. O usuário pede uma busca (ou o scheduler enfileira uma recorrência com chave idempotente
-   `schedule:<id>:<ocorrência>`). A API cria o `run` e um alvo por produto × loja.
-2. O worker faz o claim do run (`UPDATE … WHERE id = (SELECT … FOR UPDATE SKIP LOCKED)`), mantém
-   heartbeat e processa os alvos com concorrência limitada. Alvos com o mesmo contexto de preço
-   (ex.: todas as lojas Bistek, que têm preço único) compartilham uma única consulta.
-3. Para cada alvo: adaptador → listagens determinísticas → `MatchSpec` (termos, grupos obrigatórios,
-   exclusões, marca, tamanho com tolerância, "produto principal nas 3 primeiras palavras") →
-   melhor preço unitário comparável. Se a leitura determinística falhar e houver trecho
-   sanitizado, o LLM pode extrair itens — e cada valor devolvido precisa existir no trecho.
-4. O alvo termina em exatamente um status: `found`, `not_found`, `unavailable`, `no_price`,
-   `blocked`, `timeout`, `adapter_error`, `needs_llm` ou `cancelled`. O run é `success` sem falhas,
-   `partial` com falhas, `failed` sem nenhum resultado legítimo, `cancelled` a pedido.
-5. Observações guardam método (`api`, `json_ld`, `embedded_state`, `dom`, `llm`), confiança,
-   versão do adaptador, URL, filial, horário, payload bruto sanitizado e avaliação de outlier.
-6. Ao terminar, os alertas de preço do usuário são avaliados contra as observações desse run.
-7. Se o worker for desligado, o run volta para a fila sem perder alvos concluídos; se o worker
-   morrer, o scheduler/worker recupera runs sem heartbeat.
+1. A user requests a check, or the scheduler queues a recurrence with an idempotency key
+   `schedule:<id>:<occurrence>`. The API creates a `run` and one target per product × store.
+2. The worker claims the run (`UPDATE … WHERE id = (SELECT … FOR UPDATE SKIP LOCKED)`), maintains
+   a heartbeat and processes targets with bounded concurrency. Targets sharing a price context
+   (for example, Bistek stores with one reference price) share a single query.
+3. Each target goes through adapter → deterministic listings → `MatchSpec` → best comparable
+   unit price. Rules include search terms, required groups, exclusions, brand, size tolerance
+   and whether the main product appears in the first three title words. An optional LLM may
+   extract items from a sanitized excerpt when the adapter requests it; every returned value
+   must occur in that excerpt. The generic `public_jsonld` adapter does not request this fallback.
+4. Each target ends with one status: `found`, `not_found`, `unavailable`, `no_price`, `blocked`,
+   `timeout`, `adapter_error`, `needs_llm` or `cancelled`. A run is `success` without failures,
+   `partial` with some failures, `failed` without legitimate results, or `cancelled` on request.
+5. Observations record extraction method (`api`, `json_ld`, `embedded_state`, `dom`, `llm`),
+   confidence, adapter version, URL, branch, timestamp, sanitized raw payload and outlier review.
+6. When the run finishes, the user's price alerts are checked against its observations.
+7. A stopped worker returns the run to the queue without losing completed targets. If it dies,
+   the scheduler/worker recovers runs whose heartbeat has expired.
 
-## Comparação
+Generic market onboarding validates a public Product/Offer and sitemap again before saving the
+source configuration. It does not generate code or use an LLM. See [market sources](markets.en.md).
 
-Três visões sobre as observações mais recentes de cada produto × loja:
+## Comparison
 
-- **Cesta comum:** só os itens encontrados em todas as lojas; vencedor pelo menor total.
-- **Por mercado (cobertura):** total de cada loja com "X de Y itens"; lojas incompletas são
-  marcadas "total não comparável" e nunca vencem só por estarem incompletas.
-- **Plano econômico:** prioriza cobertura, depois custo efetivo (produtos + deslocamento), com até
-  N paradas (padrão 2, máx. 3) e rota exata casa → lojas → casa. Divisão só se economizar ≥ R$ 5.
+Three views use the latest observation for each product × store:
 
-Deslocamento = `distância ÷ km/l × R$/l + pedágios`, mostrado com a fórmula e os valores. A
-distância vem de OSRM auto-hospedado (opcional) ou de estimativa `haversine × 1,35`. Preços com mais
-de N dias (padrão 7) ficam no histórico mas não entram na recomendação sem consentimento explícito;
-outliers ficam sinalizados para revisão e não são usados. Cada célula vazia diz o motivo (resultado
-da última busca: não encontrado, bloqueado, tempo esgotado…). A confiança (alta/média/baixa)
-considera cobertura, preços antigos autorizados, uso de IA, pesos estimados e deslocamento.
+- **Common basket:** items found in every store; the lowest basket total wins.
+- **By market (coverage):** each store total includes its item count. Incomplete baskets are marked
+  as non-comparable and do not win simply because they omit products.
+- **Budget plan:** prioritize coverage, then effective cost (products + travel), with up to N stops
+  (default 2, maximum 3) and an exact home → stores → home route. Splitting requires savings of
+  at least R$5.
 
-## Segurança e privacidade
+Travel cost is `distance ÷ km/l × R$/l + tolls`, with values and formula shown in the UI. Distance
+uses optional self-hosted OSRM or the estimate `haversine × 1.35`. Prices older than N days
+(default 7) stay in history but require explicit consent to enter the recommendation. Outliers
+are flagged for review and excluded. Empty cells explain the last check's result. Confidence
+(high/medium/low) considers coverage, authorized stale prices, AI use, estimated weights and travel.
 
-- Contas locais: Argon2id, sessões opacas guardadas como hash em cookie `HttpOnly`, `Secure`,
-  `SameSite=Lax`; CSRF por double submit + checagem de `Origin`; rate limit de login; códigos de
-  recuperação no lugar de e-mail; primeiro administrador exige código de configuração gerado no
-  servidor.
-- Multiusuário por construção: toda linha do usuário tem `user_id` e todo serviço filtra por ele.
-  Catálogo global, mercados e lojas são curados por administradores.
-- Segredos só em arquivos (`./secrets`, Docker secrets ou `*_FILE`), nunca no banco, frontend,
-  logs ou Git. Logs estruturados em JSON com redação de chaves, tokens, cookies e senhas.
-- Imagens enviadas são revalidadas e recodificadas em WebP; SVG é recusado; importação por URL
-  resolve DNS e só aceita IP público (proteção contra SSRF), revalidando cada redirecionamento.
+For double-ply toilet paper, `comparison_unit=m` permits different pack sizes with verified total
+length. Selection uses price per metre; basket costs round up to whole packs. Unknown total lengths
+are excluded. See the [user guide](user-guide.en.md#double-ply-toilet-paper-lowest-price-per-metre).
 
-## Implantação
+## Security and privacy
 
-Somente local, por decisão do dono do projeto: Docker Compose com `db`, `migrate` (one-shot),
-`api`, `worker`, `scheduler` e `web`, imagens com versão fixada (digest no PostgreSQL), usuário não
-root, sistema de arquivos somente leitura, `no-new-privileges`, health checks, limites de CPU/memória
-e volumes nomeados. Só `127.0.0.1:8090` é publicado. Implantação em servidor (e Tailscale Serve) está
-fora do escopo desta entrega; ver `docs/operations.md`.
+- Local accounts: Argon2id, opaque sessions stored as hashes, `HttpOnly`/`Secure`/`SameSite=Lax`
+  cookies, double-submit CSRF and `Origin` checks, login rate limits and recovery codes instead of
+  email. The first administrator needs a server-generated setup code.
+- User isolation: user-owned records include `user_id`, and services filter by it. Administrators
+  curate the global catalog, markets and branches.
+- Secrets come from files (`./secrets`, Docker secrets or `*_FILE`), not the frontend, logs or Git.
+  Structured JSON logs redact keys, tokens, cookies and passwords. Administrator-configured API
+  keys are stored encrypted; environment/file-backed provider secrets remain outside the database.
+- Uploaded images are validated and re-encoded as WebP; user-uploaded SVG is refused. URL imports
+  accept public IP destinations only and revalidate redirects against SSRF.
+- Administrator-supplied market sources require public HTTPS destinations. Each connection
+  validates DNS results and pins the allowed IP while keeping the original Host/SNI.
 
-## Qualidade
+## Local installation
 
-- Backend: testes unitários, de contrato (fixtures sanitizadas das quatro fontes) e de integração;
-  a suíte roda em SQLite e, opcionalmente, em PostgreSQL (`make test-pg`) com testes de fila
-  concorrente. Smoke tests ao vivo são opt-in (`make test-live`).
-- Web: testes unitários (Vitest) e E2E (Playwright) contra um backend determinístico
-  (`backend/tests/e2e_harness.py`) que replica as fixtures sem sair da máquina.
-- Detalhes e resultados em `docs/testing.md`; decisões em `docs/decisions.md`.
+Docker Compose runs `db`, one-shot `migrate`, `api`, `worker`, `scheduler` and `web`. Images are
+version-pinned (PostgreSQL by digest), with non-root users, read-only filesystems,
+`no-new-privileges`, health checks, CPU/memory limits and named volumes. Only `127.0.0.1:8090`
+is published. Server deployment and Tailscale Serve are outside this delivery's scope; see
+[local operations](operations.md).
+
+## Quality
+
+- Backend unit, contract (sanitized fixtures) and integration tests run on SQLite and optionally
+  PostgreSQL (`make test-pg`), including concurrent queue tests. Live smoke tests are opt-in
+  (`make test-live`).
+- Vitest and Playwright test the web against a deterministic backend (`backend/tests/e2e_harness.py`)
+  that replays fixtures without external market traffic.
+- See [test evidence](testing.md) and [architecture decisions](decisions.md).

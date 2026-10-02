@@ -1,5 +1,7 @@
 # Mercados, filiais e cobertura regional
 
+[English](markets.en.md)
+
 Uma **rede** tem uma integração de coleta (adaptador). Uma **filial** é uma loja física associada
 a uma região de preços online. A **seleção pessoal** define quais filiais entram na sua comparação.
 O administrador gerencia redes e filiais; cada usuário gerencia sua seleção.
@@ -19,7 +21,7 @@ oferece português e inglês na interface e usa moeda BRL, CEP e UF brasileiros.
 
 Use dados oficiais da rede. Para Fort e Imperatriz, o ID é o identificador usado pelo site, não
 um número escolhido pelo administrador. Endereço físico, nome e coordenadas não bastam para
-descobrir uma região de preços. Confira [a matriz de prontidão](sources/readiness-matrix.md).
+descobrir uma região de preços. Confira [a matriz de prontidão](sources/readiness-matrix.pt-BR.md).
 
 ## Configurar pela interface
 
@@ -81,7 +83,7 @@ O teste inicial tem prazo de 35 segundos e documentos são limitados a 4 MB.
 
 Não configura CEP, filial, clube ou login no site e não executa JavaScript. O nome/cidade da loja
 não muda a região do preço. Se o teste falhar, o cadastro não é ativado: ajuste os links ou siga
-[Contribuir com um novo mercado](../CONTRIBUTING.md#nova-integração-de-mercado).
+[Contribuir com um novo mercado](../CONTRIBUTING.pt-BR.md#nova-integração-de-mercado).
 Ainda não há entrada manual de preços; uma fonte sem dados públicos compatíveis exige outra integração.
 
 Ao sugerir uma rede, informe nome, site oficial, cidade/UF e se o preço depende de filial/CEP/clube.
@@ -127,7 +129,7 @@ Resultados de IA são conferidos contra a página e continuam sujeitos às regra
 
 Sites com login, preços por CEP/vendedor, dados só em JavaScript, formatos próprios ou moeda diferente
 precisam de um adaptador específico e testes com fixtures. O roteiro de contribuição está em
-[CONTRIBUTING.md](../CONTRIBUTING.md). Para fontes genéricas, **Revalidar fonte** atualiza o sitemap de
+[guia de contribuição](../CONTRIBUTING.pt-BR.md). Para fontes genéricas, **Revalidar fonte** atualiza o sitemap de
 todas as filiais após novo teste; mantém o domínio para preservar a origem do histórico. Falha no
 teste preserva a configuração anterior.
 

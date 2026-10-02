@@ -1,5 +1,7 @@
 # Guia de uso
 
+[English](user-guide.en.md)
+
 ## Sua conta e suas lojas
 
 Peça uma conta ao administrador. Troque a senha temporária no primeiro acesso e guarde os
@@ -68,7 +70,7 @@ Se estiver em outro fuso, informe o horário equivalente; a escolha de fuso est�
 
 O guia resumido está no app em **Mais → Como usar**. Administradores podem criar contas,
 configurar filiais e consultar **Administração → Fontes**. Se a busca ficar na fila, confira o
-worker; para diagnóstico técnico veja [operação local](operations.md).
+worker; para diagnóstico técnico veja [operação local](operations.pt-BR.md).
 
 A instalação padrão é local: não há hospedagem compartilhada, acesso remoto automático ou
 comparação em outras moedas. Veja [primeiros passos](getting-started.md) para acesso e instalação.

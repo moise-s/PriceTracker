@@ -1,140 +1,148 @@
-# Operação local
+# Local operations
 
-Tudo roda na sua máquina com Docker Compose. Só a interface web é publicada, e só em loopback
-(`http://localhost:8090`). Implantação em servidor e Tailscale Serve ficam fora do escopo desta
-versão (decisão do dono do projeto).
+[Português](operations.pt-BR.md)
 
-## 1. Primeira instalação
+Everything runs on your computer with Docker Compose. Only the web UI is published, on loopback
+(`http://localhost:8090`). Server deployment and Tailscale Serve are outside this version's scope.
+
+## 1. First installation
 
 ```bash
-./scripts/init-secrets.sh                    # cria ./secrets (senha do banco e chave da aplicação)
-./scripts/init-secrets.sh --import-groq .env # opcional: copia a GROQ_API_KEY de um .env, sem exibir
-docker compose up -d --build                 # db → migrate (migrations + seed) → api, worker, scheduler, web
-docker compose ps                            # todos devem ficar "healthy"
+./scripts/init-secrets.sh                    # Create ./secrets (database password and app key)
+./scripts/init-secrets.sh --import-groq .env # Optional: import GROQ_API_KEY without displaying it
+docker compose up -d --build                 # db → migrate (schema + seed) → api/worker/scheduler/web
+docker compose ps                            # Persistent services should become healthy
 ```
 
-- `./secrets/` fica fora do Git, com permissão `0600`. Arquivos: `postgres_password`,
-  `app_secret_key`, `groq_api_key` e `openai_api_key` (os dois últimos podem ficar vazios; sem chave o
-  fallback de IA fica desligado e o resto funciona).
-- Configurações opcionais: copie `.env.example` para `.env` (ou use `--env-file`). Os padrões já são
-  seguros para uso local. Atenção: o `.env` antigo da raiz (protótipo) é lido pelo Compose se
-  existir; ele só é usado para as variáveis listadas no `compose.yaml`.
+- `./secrets/` is excluded from Git, with file permissions `0600`. Files: `postgres_password`,
+  `app_secret_key`, `groq_api_key`, `openai_api_key`. The last two may be empty; AI fallback is
+  disabled without a key and normal collection still works.
+- Optional configuration: copy `.env.example` to `.env`, or use `--env-file`. Defaults support
+  local operation. An existing root `.env` from the prototype is read by Compose if present;
+  only variables listed in `compose.yaml` are used.
 
-## 2. Primeiro acesso (criar o administrador)
+## 2. First access: create the administrator
 
-Não existe senha padrão. Gere um código de uso único (válido por 30 minutos):
+There is no default password. Generate a single-use setup code valid for 30 minutes:
 
 ```bash
 docker compose exec api pricetracker setup-code
 ```
 
-Abra `http://localhost:8090`, informe o código, seu nome, usuário e uma senha (mínimo de
-10 caracteres). A tela seguinte mostra **10 códigos de recuperação** uma única vez — guarde-os (é o
-jeito de recuperar a senha, porque não há e-mail). Depois do bootstrap o autocadastro fica
-desligado; o administrador cria contas em **Administração** (senha temporária com troca
-obrigatória) ou liga o autocadastro.
+Open `http://localhost:8090`, enter the code, name, username and a password of at least 10
+characters. The next screen displays **10 recovery codes once**; save them because there is no
+email recovery. After bootstrap, self-registration is disabled. Administrators can create users
+with temporary passwords requiring a change, or enable self-registration.
 
-Alternativa pela linha de comando (senha lida do terminal, sem eco; troca obrigatória no primeiro
-acesso): `docker compose exec api pricetracker user create --username <usuario> --display-name "<nome>" --admin`.
+CLI alternative, with a password read without terminal echo and a required change at first login:
+`docker compose exec api pricetracker user create --username <username> --display-name "<name>" --admin`.
 
-## 3. Uso diário
+## 3. Daily use
 
-- Para preparar outras regiões: **Administração → Mercados** cadastra e corrige filiais das
-  redes integradas e controla sua disponibilidade. **Mercados** filtra por UF/cidade e guarda a
-  seleção de cada pessoa. Veja [cobertura e contextos de preços](markets.md).
-- Guia para novos usuários: [primeiros passos](getting-started.md), [uso diário](user-guide.md) e
-  **Mais → Como usar** no app.
-- Monte a lista, escolha as lojas, cadastre endereço (coordenadas ou "usar minha localização") e
-  veículo, e clique em **Buscar preços**. A busca roda em segundo plano; pode fechar a página.
-- **Agendamentos** mantém os preços frescos (ex.: toda sexta às 7h).
-- **Avisos** mostra alertas de preço disparados pelas buscas.
-- Linha de comando (saída JSON; códigos de saída 0 sucesso, 4 parcial, 5 falhou, 6 cancelada):
-  `docker compose exec api pricetracker run --user <usuario> --store angeloni:beira-mar --product arroz`
-  (`--enqueue` só enfileira para o worker; `--no-llm` desliga o fallback de IA).
+- **Administration → Markets** manages integrated branches and availability and offers onboarding
+  for compatible new chains. **Markets** filters by Brazilian state/city and saves each user's
+  selection. See [coverage and price contexts](markets.en.md).
+- New-user guides: [getting started](getting-started.en.md), [daily use](user-guide.en.md) and
+  **More → How to use** in the app.
+- Build a list, choose stores, configure address/coordinates and vehicle, then check prices.
+  Home's **Refresh prices** opens list review → store confirmation → search. Collection continues
+  in the background after you close the page.
+- **Schedules** refresh prices regularly, for example every Friday at 07:00.
+- **Notifications** displays price alerts triggered by runs.
+- CLI output is JSON; exit codes are 0 success, 4 partial, 5 failed, 6 cancelled:
+  `docker compose exec api pricetracker run --user <username> --store angeloni:beira-mar --product arroz`.
+  `--enqueue` only queues for the worker; `--no-llm` disables the AI fallback.
 
-## 4. Saúde e logs
+## 4. Health and logs
 
 ```bash
 docker compose ps
-docker compose logs -f --tail=100 api worker   # logs JSON com request_id/run_id, sem segredos
+docker compose logs -f --tail=100 api worker   # JSON logs with request_id/run_id; secrets redacted
 curl -s localhost:8090/api/v1/health/ready      # {"status":"ok","database":true,"schema_version":"0002"}
-docker compose exec api pricetracker llm check  # testa o provedor de IA sem mostrar a chave
+docker compose exec api pricetracker llm check  # Check the AI provider without displaying its key
 ```
 
-A página **Administração** mostra, por mercado, taxa de sucesso, duração, métodos de extração e
-falhas dos últimos 14 dias, além do uso de IA.
+Administration shows per-market success rate, duration, extraction methods and failures over the
+last 14 days, plus AI usage.
 
-## 5. Backup e restauração
+## 5. Backup and restoration
 
 ```bash
-make backup                                               # = ./scripts/backup.sh → ./backups/pricetracker-<UTC>/
-make restore-drill BACKUP=backups/pricetracker-<UTC>      # restaura num PostgreSQL descartável e confere
-./scripts/restore.sh backups/pricetracker-<UTC> --yes     # DESTRUTIVO: substitui banco e imagens da stack
+make backup                                           # ./backups/pricetracker-<UTC>/
+make restore-drill BACKUP=backups/pricetracker-<UTC>    # Restore/check a disposable PostgreSQL
+./scripts/restore.sh backups/pricetracker-<UTC> --yes   # DESTRUCTIVE: replace stack database/images
 ```
 
-- O backup contém `db.dump` (formato custom do `pg_dump`), `uploads.tar.gz` (imagens enviadas) e
-  `manifest.json` (sha256, versão do schema e contagens de linhas).
-- O drill confere checksums, restaura, compara schema e contagens e verifica os arquivos de imagem,
-  sem tocar na stack. O `restore.sh` roda o drill antes de apagar qualquer coisa.
-- Evidência de 27/09/2026: backup `20260927T213829Z` (1,1 MB de dump, 11 imagens), drill **PASS** em
-  3,8 s; restauração real removeu uma lista criada depois do backup e manteve a imagem enviada.
-- Não há backup automático na instalação local: agende `make backup` (cron/launchd) se quiser.
+- Backups contain `db.dump` (`pg_dump` custom format), `uploads.tar.gz` and `manifest.json`
+  (SHA-256 checksums, schema version and row counts).
+- The drill validates checksums, restores, compares schema/row counts and checks image files without
+  touching the running stack. `restore.sh` performs the drill before removing existing data.
+- Evidence from 2026-09-27: backup `20260927T213829Z` (1.1 MB dump, 11 images), drill **PASS** in
+  3.8 s. A real restore removed a subsequently created list and retained the uploaded image.
+- Local backups are manual by default. Scheduling `make backup` and retention is separate setup.
 
-## 6. Reinícios e persistência
+## 6. Restart and persistence
 
-`docker compose down` seguido de `docker compose up -d` preserva tudo (volumes `pg_data` e
-`app_data`). Uma busca interrompida volta para a fila e é retomada do ponto em que parou.
-O seed preserva nome, cor, notas e disponibilidade de mercados; filiais editadas pela
-administração têm origem `admin` e não são sobrescritas. Domínios e adaptadores das quatro redes iniciais são mantidos em código.
-Redes do assistente preservam domínio e fonte validados no banco; veja [fontes](markets.md).
-Teste de 27/09: run com 19 de 40 alvos prontos → `down`/`up` → retomado (tentativa 2, 21 pendentes)
-→ `success`, 29 observações, nenhuma duplicada. Para apagar **tudo** (inclusive dados):
-`docker compose down -v`.
+`docker compose down` followed by `docker compose up -d` preserves the `pg_data` and `app_data`
+volumes. An interrupted run returns to the queue and resumes from its completed targets.
+Seed preserves market names, colors, notes and availability. Administrator-edited branches have
+`admin` origin and are not overwritten. Built-in source domains/adapters remain code-owned.
+Wizard-added chains preserve validated domains/source configuration in the database;
+see [sources](markets.en.md).
 
-## 7. Atualização e migrations
+The 2026-09-27 restart test interrupted a run at 19/40 targets. After restart, attempt 2 processed
+the 21 pending targets and finished `success`, with 29 observations and no duplicates.
+`docker compose down -v` deletes **all volume data**; do not use it for normal shutdown.
+
+## 7. Updates and migrations
 
 ```bash
-git pull   # quando houver novas versões
-docker compose up -d --build   # o job migrate aplica migrations pendentes e o seed idempotente
+git pull                       # When a new version is available
+docker compose up -d --build   # migrate applies pending revisions and idempotent seed
 ```
 
-A revisão `0002` permite quantidades em metros sem apagar dados existentes. Instalações v1
-precisam aplicá-la antes de usar a comparação por metro; o job `migrate` aplica no início.
-Detalhes e limites de downgrade em [migrations](migrations.md).
+Revision `0002` allows metre-based quantities without deleting existing data. v1 installations
+need it before using per-metre comparison; `migrate` applies it at startup. See
+[migrations and downgrade limits](migrations.md).
 
-## 8. Consumo de recursos (medido em 27/09/2026, Docker Desktop, Apple Silicon)
+## 8. Resource usage
 
-| Serviço | Em repouso | Durante uma coleta (40 alvos) | Limite configurado |
+Measured on 2026-09-27 using Docker Desktop on Apple Silicon; these are historical measurements.
+
+| Service | Idle | During collection (40 targets) | Configured limit |
 | --- | --- | --- | --- |
-| api | ~90 MiB, ~0% CPU | ~91 MiB, picos de ~14% CPU | 1 CPU / 512 MiB |
-| worker | ~70 MiB, ~0% CPU | 95–130 MiB, picos de ~23% CPU | 1 CPU / 768 MiB |
-| scheduler | ~67 MiB | ~67 MiB | 0,25 CPU / 256 MiB |
+| api | ~90 MiB, ~0% CPU | ~91 MiB, peaks ~14% CPU | 1 CPU / 512 MiB |
+| worker | ~70 MiB | 95–130 MiB, peaks ~23% CPU | 1 CPU / 768 MiB |
+| scheduler | ~67 MiB | ~67 MiB | 0.25 CPU / 256 MiB |
 | db | ~45–50 MiB | ~49 MiB | 1 CPU / 512 MiB |
-| web | ~14 MiB | ~14 MiB | 0,5 CPU / 128 MiB |
+| web | ~14 MiB | ~14 MiB | 0.5 CPU / 128 MiB |
 | **Total** | **~290 MiB** | **~350 MiB** | |
 
-Não há navegador headless: a coleta usa HTTP simples. Imagens: backend 432 MB, web 82 MB. A
-concorrência do worker é `PRICETRACKER_WORKER_CONCURRENCY` (padrão 3), e cada host recebe no máximo
-2 conexões.
+Collection uses HTTP rather than a headless browser. Measured images were 432 MB backend and
+82 MB web. `PRICETRACKER_WORKER_CONCURRENCY` defaults to 3; each host allows at most 2 connections.
 
-## 9. Problemas conhecidos
+## 9. Known issues
 
-- **Service worker em navegadores embutidos:** alguns navegadores baseados em Electron recusam o
-  registro do service worker em `http://localhost` ("unknown error when fetching the script"). Em
-  Chrome, Edge, Firefox e Safari ele registra normalmente (verificado com Chrome via Playwright). O
-  app funciona sem ele; só perde o cache offline do shell.
-- **Cookies `Secure` em HTTP:** navegadores atuais aceitam cookies `Secure` em `http://localhost`.
-  Se acessar por outro nome/IP sem HTTPS, o login não persiste — use `localhost` ou um proxy HTTPS.
-- **Uso a partir de outros dispositivos:** a porta está presa em `127.0.0.1`. Publicar na rede
-  exige um proxy HTTPS (ex.: Tailscale Serve) e ajustar `PRICETRACKER_PUBLIC_ORIGIN` — fora do escopo
-  desta versão.
+- **Embedded-browser service workers:** some Electron-based browsers reject registration on
+  `http://localhost` with an unknown script-fetch error. The app still works without its offline
+  shell cache. Chrome registration was verified with Playwright; check normal browsers before
+  diagnosing an embedded-browser failure.
+- **Secure cookies over HTTP:** current browsers accept `Secure` cookies on `http://localhost`.
+  Access through another name/IP without HTTPS can break session persistence. Use localhost or
+  configure an HTTPS proxy.
+- **Other devices:** the published port is bound to `127.0.0.1`. Network access needs an HTTPS proxy
+  and a matching `PRICETRACKER_PUBLIC_ORIGIN`, outside this version's installation scope.
 
-## 10. Desenvolvimento sem Docker
+## 10. Development without application containers
+
+A disposable database still uses Docker; API, worker and web run directly on the host:
 
 ```bash
-make bootstrap   # uv sync + npm ci
-make dev-db      # PostgreSQL descartável em 127.0.0.1:55433 (+ banco pricetracker_test)
-make api         # API em :8000 (cookies sem Secure para http://localhost:5173)
+make bootstrap       # uv sync + npm ci
+make dev-db          # Disposable PostgreSQL at 127.0.0.1:55433 and pricetracker_test database
+make dev-init        # Apply schema and seed before starting the API
+make dev-setup-code  # Generate the first administrator's setup code
+make api             # :8000, development cookies for http://localhost:5173
 make worker
-make web         # Vite em :5173 com proxy /api → :8000
+make web             # Vite :5173 with /api proxy → :8000
 ```

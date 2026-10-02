@@ -1,61 +1,64 @@
-# Relatório de migrations
+# Schema migrations
 
-O schema da v1 é **novo**: começa de um banco vazio e não importa, migra nem lê o SQLite do
-protótipo (`pricetracker.db`, mantido intacto na raiz só como referência histórica).
+[Português](migrations.pt-BR.md)
 
-## Estado atual
+v1 has a **new schema**: it starts from an empty database and does not import, migrate or read the
+prototype's SQLite database (`pricetracker.db`, left intact locally as historical reference).
 
-| Revisão | Arquivo | Conteúdo |
+## Current revisions
+
+| Revision | File | Contents |
 | --- | --- | --- |
-| `0001` | `backend/migrations/versions/20260927_0001_initial_v1_schema.py` | Schema inicial completo: 31 tabelas, 23 check constraints, uniques e índices |
-| `0002` (head) | `backend/migrations/versions/20261002_0002_length_units.py` | Permite `m` nos checks de unidade do catálogo e da lista; preserva dados existentes |
+| `0001` | `backend/migrations/versions/20260927_0001_initial_v1_schema.py` | Initial schema: 31 tables, 23 check constraints, unique constraints and indexes |
+| `0002` (head) | `backend/migrations/versions/20261002_0002_length_units.py` | Allow `m` in catalog/list unit checks while preserving existing data |
 
-A migration é autocontida (não importa tipos da aplicação: o tipo `UTCDateTime` vira
-`sa.DateTime(timezone=True)` via `render_item`) e usa `render_as_batch` no SQLite, para que ALTERs
-futuros funcionem nos dois bancos.
+Migrations are self-contained rather than importing application types. `UTCDateTime` becomes
+`sa.DateTime(timezone=True)` through `render_item`. SQLite uses `render_as_batch` so future
+alterations work on both databases.
 
-## Tabelas por área
+## Tables by area
 
-- **Contas e sessões:** `users`, `user_sessions` (hash do token, único), `recovery_codes`,
-  `login_attempts`, `profiles` (frescor 1–90 dias, paradas 1–4, clubes ativados, onboarding).
-- **Endereço e veículo:** `addresses`, `vehicles` (km/l > 0, preço do combustível ≥ 0).
-- **Catálogo e produtos:** `catalog_items` (global, slug único), `products` (do usuário, com regras
-  de matching), `images` (chave de armazenamento única, sha256 indexado, origem seed/upload/url),
-  `product_market_pins` (aceitar/rejeitar anúncio por mercado).
-- **Listas:** `shopping_lists`, `list_items` (quantidade > 0, produto único por lista).
-- **Mercados:** `markets` (slug único), `stores` (único por mercado + slug, coordenadas e contexto de
-  preço), `user_store_selections` (pedágio ≥ 0), `adapter_versions`.
-- **Coleta:** `runs` (chave de idempotência única; índices por status/criação e por usuário),
-  `run_targets`, `run_events`, `candidates` (todos os anúncios avaliados, com o motivo),
-  `observations` (uma por alvo, chave de idempotência única; índice usuário + produto + loja +
-  horário para a comparação e o histórico).
-- **Agenda e avisos:** `schedules` (diária/semanal), `price_alerts` (alvo > 0, um por produto),
-  `notifications`.
-- **Infraestrutura:** `app_settings`, `llm_providers`, `llm_calls`, `llm_cache`, `http_cache`,
-  `geo_cache` (caches com expiração indexada).
+- **Accounts and sessions:** `users`, `user_sessions` (unique token hash), `recovery_codes`,
+  `login_attempts`, `profiles` (freshness 1–90 days, stops 1–4, enabled loyalty clubs, onboarding).
+- **Address and vehicle:** `addresses`, `vehicles` (km/l > 0, fuel price ≥ 0).
+- **Catalog and products:** global `catalog_items` (unique slug), user-owned `products` with matching
+  rules, `images` (unique storage key, indexed SHA-256, seed/upload/URL origin),
+  `product_market_pins` (accepted/rejected market listings).
+- **Lists:** `shopping_lists`, `list_items` (positive quantity, unique product within a list).
+- **Markets:** `markets` (unique slug), `stores` (unique market + slug, coordinates and price context),
+  `user_store_selections` (non-negative tolls), `adapter_versions`.
+- **Collection:** `runs` (unique idempotency key; status/creation/user indexes), `run_targets`,
+  `run_events`, `candidates` (evaluated listings and reasons), `observations` (one per target,
+  unique idempotency key; user/product/store/time index for comparison and history).
+- **Schedules and notifications:** `schedules` (daily/weekly), `price_alerts` (positive target,
+  one per product), `notifications`.
+- **Infrastructure:** `app_settings`, `llm_providers`, `llm_calls`, `llm_cache`, `http_cache`,
+  `geo_cache` (caches with indexed expiry).
 
-## Convenções
+## Conventions
 
-- Dinheiro em `NUMERIC(12,2)`, preço unitário em `NUMERIC(14,4)`, quantidade em `NUMERIC(12,3)`,
-  coordenadas em `NUMERIC(9,6)`.
-- Timestamps sempre em UTC com fuso (`timestamptz`); formatação local só na interface.
-- JSON vira `JSONB` no PostgreSQL (e `JSON` no SQLite).
-- Toda linha pertencente a um usuário tem `user_id` com `ON DELETE CASCADE`.
-- Nomes de constraints e índices determinísticos (`ix_`, `uq_`, `ck_`, `fk_`, `pk_`), o que torna
-  `alembic check` confiável.
+- Money uses `NUMERIC(12,2)`, unit prices `NUMERIC(14,4)`, quantities `NUMERIC(12,3)` and
+  coordinates `NUMERIC(9,6)`.
+- Timestamps use UTC with timezone (`timestamptz`); local formatting belongs to the UI.
+- JSON uses `JSONB` on PostgreSQL and `JSON` on SQLite.
+- User-owned records have `user_id` with `ON DELETE CASCADE`.
+- Deterministic names for constraints and indexes (`ix_`, `uq_`, `ck_`, `fk_`, `pk_`) make
+  `alembic check` reliable.
 
-## Verificação (27/09/2026)
+## Verification on 2026-09-27
 
-| Verificação | PostgreSQL 17.10 | SQLite |
+These results describe revision `0001`, before the metre support added in `0002`.
+
+| Check | PostgreSQL 17.10 | SQLite |
 | --- | --- | --- |
-| `alembic upgrade head` num banco vazio | ok, 31 tabelas | ok |
-| `alembic check` (modelos × banco) | "No new upgrade operations detected" | idem |
-| `alembic downgrade base` | ok, 0 tabelas | — |
-| novo `upgrade head` + `check` | ok, sem diferenças | — |
-| stack Docker (`migrate` → `db-init`) | migração + seed idempotente a cada subida | — |
-| suíte de testes | 135 testes em PostgreSQL (`make test-pg`) | 133 em SQLite |
+| `alembic upgrade head` on an empty database | Passed, 31 tables | Passed |
+| `alembic check` (models vs database) | No new upgrade operations detected | Same |
+| `alembic downgrade base` | Passed, 0 tables | — |
+| New `upgrade head` + `check` | Passed, no differences | — |
+| Docker stack (`migrate` → `db-init`) | Migration and idempotent seed at startup | — |
+| Test suite | 135 PostgreSQL tests (`make test-pg`) | 133 SQLite tests |
 
-Reproduzir:
+To reproduce against a disposable development database:
 
 ```bash
 make dev-db
@@ -64,25 +67,24 @@ export PRICETRACKER_DATABASE_URL=postgresql+psycopg://pricetracker:pricetracker_
 uv run alembic upgrade head && uv run alembic check
 ```
 
-## Como evoluir o schema
+## Evolving the schema
 
-1. Altere os modelos em `backend/src/pricetracker/models/`.
-2. `uv run alembic revision --autogenerate -m "descrição"` com o banco de desenvolvimento em `head`.
-3. Revise o arquivo gerado (tipos, `server_default` para colunas obrigatórias em tabelas com dados,
-   índices), teste `upgrade` e `downgrade` em PostgreSQL e SQLite e rode `alembic check`.
-4. Faça um backup antes de aplicar em dados reais (`make backup`). Na stack, o job `migrate` aplica
-   as migrations pendentes antes de a API subir.
+1. Update models in `backend/src/pricetracker/models/`.
+2. Run `uv run alembic revision --autogenerate -m "description"` with the development database at head.
+3. Review generated types, defaults for required columns in populated tables and indexes. Test
+   upgrade/downgrade on PostgreSQL and SQLite, then run `alembic check`.
+4. Back up before applying to real data (`make backup`). Compose's `migrate` job applies pending
+   migrations before the API starts.
 
+## Length support — revision 0002, 2026-10-02
 
-## Comprimento — revisão 0002 (02/10/2026)
+Existing v1 installations need `upgrade head` before using quantities in metres. Compose's
+`migrate` job applies it when starting the updated version. Per-metre comparison lives in the
+product's JSON rules and needs no extra column. Observed unit prices retain four decimal places.
 
-Instalações v1 existentes precisam aplicar `upgrade head` antes de usar quantidades em metros.
-O job `migrate` do Compose faz isso ao iniciar a versão atualizada. O modo de comparação por metro
-fica nas regras JSON do produto; não precisa de outra coluna. Preços observados continuam com
-quatro casas no preço unitário.
+The disposable SQLite check started from `0001` with data: upgrade preserved the catalog record
+and allowed `m`; invalid units were rejected; downgrade with metre-based data was blocked. After
+removing/converting that data, downgrade and another upgrade passed. This revision was not applied
+to a real database or verified on PostgreSQL in that round.
 
-A verificação em SQLite descartável partiu da `0001` com dados: upgrade preservou a linha do
-catálogo e permitiu `m`, unidades inválidas foram recusadas, e downgrade com dados em metros foi
-bloqueado. Depois de remover/converter esses dados, downgrade e novo upgrade passaram.
-Essa revisão ainda não foi aplicada a um banco real nem verificada em PostgreSQL nesta rodada.
-Não faça downgrade enquanto houver dados em metros; ele falha explicitamente para preservar os dados.
+Do not downgrade while metre-based data exists: the migration fails explicitly to preserve it.

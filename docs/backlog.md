@@ -1,57 +1,64 @@
-# Riscos restantes e backlog priorizado
+# Remaining risks and prioritized backlog
 
-## Riscos
+[Português](backlog.pt-BR.md)
 
-| Risco | Impacto | Mitigação atual | Próximo passo |
+## Risks
+
+| Risk | Impact | Current mitigation | Next step |
 | --- | --- | --- | --- |
-| **Imperatriz com cobertura parcial** (só ofertas do Super Clube) | Itens fora de oferta nunca aparecem nesse mercado | Status "não encontrado" com a nota de cobertura; sem vencedor injusto | Decisão do usuário (ver `sources/readiness-matrix.md`) |
-| **Bistek com preço único** (site não deixa escolher filial) | Se as lojas tiverem preços diferentes na gôndola, a comparação usa o preço online de referência | Nota explícita em mercados/comparação; consulta única para todas as filiais | Reavaliar se o site passar a expor preço por loja |
-| **Sites mudam** (layout, APIs, cookies de loja) | Adaptador para de encontrar produtos | Status tipado (`adapter_error`, `store_context_error`, `no_prices_extracted`), painel de saúde, fixtures + testes de contrato, smoke ao vivo | Rodar `make test-live` semanalmente; canário agendado (backlog) |
-| **Distância estimada** (`haversine × 1,35`) | Pode errar em trajetos com ponte/serra e mudar um empate | Método e fórmula visíveis; OSRM opcional | Documentar/automatizar um OSRM local de SC |
-| **Geocodificação manual** | O usuário precisa informar coordenadas ou usar a localização do navegador | Botão "usar minha localização"; Nominatim opcional com cache | Busca de CEP autorizada (backlog) |
-| **LLM** (limites do Groq free tier, troca de modelos) | Fallback indisponível | Determinístico primeiro (0 chamadas nas execuções reais), `llm check`, falha só nos alvos afetados | Nenhum urgente |
-| **Backup manual** | Perda de dados se o disco falhar | `make backup` + drill testado | Agendar backup com retenção (backlog) |
-| **Service worker em navegadores embutidos** | Sem cache offline do shell nesses navegadores | App funciona sem SW; navegadores comuns registram normalmente | — |
-| **Acesso só em `localhost`** | Não dá para usar pelo celular na rede | Intencional (escopo local) | Proxy HTTPS/Tailscale quando o dono quiser |
+| **Partial Imperatriz coverage** (Super Clube offers only) | Non-promotional items do not appear | Missing status and explicit coverage note; no incomplete-basket winner | User decision; see [readiness matrix](sources/readiness-matrix.md) |
+| **One Bistek reference price** | Shelf prices may differ by branch | Explicit source note; one shared online query | Reassess if the site exposes per-store prices |
+| **Website changes** (layout, APIs, store cookies) | Adapter stops finding products | Typed errors (`adapter_error`, `store_context_error`, `no_prices_extracted`), health panel, fixtures/contract tests and live smoke tests | Weekly opt-in live checks; scheduled canary is future work |
+| **Estimated distance** (`haversine × 1.35`) | Bridges/mountains can alter costs and a close result | Visible method/formula; optional OSRM | Document/automate a local SC routing service |
+| **Manual geocoding** | Users enter coordinates or use browser location | Location button; optional cached Nominatim | Authorized postal-code lookup is future work |
+| **LLM limits/model changes** | Optional fallback becomes unavailable | Deterministic extraction first; `llm check`; only affected targets fail | No urgent change |
+| **Manual backups** | Disk failure can lose data | `make backup` and tested restore drill | Scheduled backups and retention |
+| **Embedded-browser service workers** | Offline shell cache may be unavailable | App works without SW; normal browsers support registration | — |
+| **Localhost-only access** | A phone cannot reach the host by its own localhost URL | Intentional local scope | HTTPS proxy/network access when requested |
 
-## Backlog priorizado
+## Priorities
 
-### P1 — próximos
-0. **Regiões sem rede integrada:** entrada manual de preços com data, filial e procedência, seguida
-   de importação/exportação CSV. Permitir comparar a compra mesmo onde não há coletor pronto.
-   Preços manuais precisam das mesmas regras de frescor, unidade, isolamento e equivalência.
-1. **Decisão sobre o Imperatriz** e ajuste correspondente (manter/desativar/nova fonte autorizada).
-2. **Backup agendado** com retenção (ex.: diário, 7 cópias) e alerta de falha.
-3. **Canário semanal** agendado pelo scheduler (1 produto por mercado) alimentando o painel de saúde.
-4. **Alerta de troca de mercado**: avisar quando o plano da semana economizar mais que um limite
-   definido pelo usuário em relação à loja de costume (os alertas por preço-alvo já existem).
-5. **Duplicar lista / listas recorrentes** na interface (a API já suporta `copy_from`).
-6. **Modo "na loja"**: marcar itens comprados no celular (a API já tem `checked` por item).
+### P1 — next
 
-### P2 — depois
-- **Pacotes regionais de filiais:** importar um cadastro validado sem editar código, com prévia,
-   deduplicação, verificação de contexto e preservação das edições locais.
-- **Expansão internacional:** moeda e formatos de endereço por instalação; fuso por usuário. A UI já oferece português/inglês; as fontes atuais usam BRL e contexto brasileiro
-   e agendamento. Não basta traduzir textos: geocodificação, matching e comparação monetária
-   também precisam ser revistos. Atualmente pt-BR/BRL/Brasil.
-7. **Residência compartilhada** (household) com permissões claras entre moradores.
-8. **Exportação CSV/JSON** da lista, comparação e histórico; link de compra por mercado.
-9. **Custo do tempo** como parâmetro opcional do plano (R$/hora), sempre visível.
-10. **Rotas reais por padrão** com OSRM local e mais de 3 paradas quando fizer sentido.
-11. **Sugestões pelo histórico** (itens frequentes, substitutos aceitos).
-12. **Implantação em servidor** (Compose no homeserver + Tailscale Serve + backups remotos).
-13. **Imagem do backend menor** (hoje 432 MB): wheels multi-stage mais enxutas.
+1. **Regions without an integrated source:** manual prices with date, branch and provenance,
+   followed by CSV import/export. Apply the same freshness, units, isolation and equivalence rules.
+2. **Imperatriz decision:** retain partial coverage, disable it or add an authorized source.
+3. **Scheduled backups:** retention (for example, daily with seven copies) and failure alerts.
+4. **Weekly source canary:** one product per market through the scheduler, feeding source health.
+5. **Store-switch savings alert:** notify when the plan beats the usual store by a user-defined
+   amount. Individual price-target alerts already exist.
+6. **List duplication/recurring lists in the UI:** the API already supports `copy_from`.
+7. **In-store mode:** mark purchased items on a phone; the API already exposes `checked`.
 
-### Já entregue além do P0
-Agendamentos, cesta comum × cobertura × plano econômico, alertas de preço com avisos no app,
-painel de saúde/admin, repetição só das falhas, teste seguro do provedor de IA, PWA, divisão ótima
-entre até 3 lojas com rota exata, mediana e mínimo histórico por loja, sinalização de preço atípico,
-pedágios por loja.
+### P2 — later
 
-Gestão administrativa de redes integradas e filiais, seleção com filtros UF/cidade/nome,
-preservação das edições no seed, ajuda no app e guias de instalação/uso/contribuição (02/10/2026).
+- **Regional branch packages:** import validated branch data with preview, deduplication, context
+  validation and preservation of local edits.
+- **International expansion:** currency/address formats per installation and timezone per user,
+  including schedules. The UI already supports Portuguese/English; sources currently use BRL and
+  Brazilian contexts. Geocoding, matching and monetary comparison need review, beyond text translation.
+- **Backend message localization:** some API-generated explanations, travel formulas and errors
+  still originate in Portuguese. Keep their stable API fields/codes; extend localization separately
+  from translating contributor documentation.
+- **Shared households** with explicit member permissions.
+- **CSV/JSON export** for lists, comparisons and history; shopping links per market.
+- **Optional time cost** in R$/hour, visible in the plan.
+- **Road routing by default** with local OSRM and more than three stops where useful.
+- **History-based suggestions:** frequent items and accepted alternatives.
+- **Server installation:** household server Compose, HTTPS access and remote backups.
+- **Smaller backend image:** leaner multi-stage wheels; the historical image measured 432 MB.
 
-Assistente para novas redes com fonte pública JSON-LD/BRL e sitemap verificados, cadastro da
-primeira loja, edição privada de qualquer produto do catálogo e início direto de verificação
-em Mercados (02/10/2026). Fontes com login, região/CEP ou contratos diferentes ainda precisam
-de adaptadores próprios; entrada manual e internacionalização continuam pendentes.
+## Delivered beyond P0
+
+Schedules, common basket/coverage/budget-plan comparison, in-app price alerts, source health,
+retry failed targets, safe provider checks, PWA, optimal splitting across up to three stores with
+an exact route, historical median/minimum, outlier flags and per-store tolls.
+
+Delivered on 2026-10-02: administrator chain/branch management, region/name filters, seed
+preservation, in-app help and installation/usage/contribution guides; public JSON-LD/BRL + sitemap
+onboarding, first-branch registration, private copies of every catalog product, direct start from
+Markets and guided review from Home; Portuguese/English UI, sortable history and per-metre
+comparison for double-ply toilet paper, including a standard catalog item.
+
+Sources needing login, postal-code regions or different contracts still need dedicated adapters.
+Manual price entry and full international coverage remain future work.

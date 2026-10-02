@@ -180,9 +180,10 @@ Historical code is preserved in `legacy/`.
 | [Operations](docs/operations.md) / [Migrations](docs/migrations.md) | Local operation, backup and schema changes |
 | [Testing](docs/testing.md) / [Backlog](docs/backlog.md) | Validation and known limitations |
 
-Technical reference documents linked above currently use Portuguese. English onboarding and daily
-usage guides are maintained alongside their Portuguese versions. Server deployment and currencies
-other than BRL are outside this version's scope.
+Primary contributor and technical documentation is in English, with linked Portuguese companions.
+Installation, daily use and market-source guides are available in both languages. See
+[language conventions](CONTRIBUTING.md#language-conventions) when contributing. Server deployment
+and currencies other than BRL are outside this version's scope.
 
 
 ## Contributing and license

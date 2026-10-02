@@ -86,7 +86,7 @@ Para ativar o fallback de IA (opcional), coloque a chave em
 reinicie: `docker compose up -d`.
 
 Backup e restauração: `make backup` e `make restore-drill BACKUP=backups/pricetracker-<data>`.
-Tudo sobre operação local em [`docs/operations.md`](docs/operations.md).
+Tudo sobre operação local em [`docs/operations.pt-BR.md`](docs/operations.pt-BR.md).
 
 ## Desenvolvimento
 
@@ -104,7 +104,7 @@ make e2e          # cenários Playwright contra backend determinístico
 Stack: Python 3.13, FastAPI, SQLAlchemy 2, Alembic, PostgreSQL 17, httpx; React 19, TypeScript,
 Vite, Tailwind CSS 4, TanStack Query, Recharts; Playwright e Vitest; Docker Compose com Caddy.
 Para desenvolvimento: Python 3.13+, uv, Node 22.12+ (ou uma versão posterior compatível), npm e
-Docker. Veja [CONTRIBUTING.md](CONTRIBUTING.md), incluindo o roteiro para uma nova rede.
+Docker. Veja [CONTRIBUTING.pt-BR.md](CONTRIBUTING.pt-BR.md), incluindo o roteiro para uma nova rede.
 
 ## Novos fluxos
 
@@ -123,14 +123,14 @@ Veja [como a fonte é validada, salva e coletada](docs/markets.md).
 | [`docs/getting-started.md`](docs/getting-started.md) | Instalação e primeira comparação, sem conhecer a stack |
 | [`docs/user-guide.md`](docs/user-guide.md) | Uso diário, contas, lista, comparação e solução de problemas |
 | [`docs/markets.md`](docs/markets.md) | Cobertura regional, cadastro de filiais e limites de cada rede |
-| [`CONTRIBUTING.md`](CONTRIBUTING.md) | Ambiente de desenvolvimento e contribuição de novos mercados |
-| [`docs/architecture.md`](docs/architecture.md) | Arquitetura, fluxo de uma busca, comparação, segurança |
-| [`docs/decisions.md`](docs/decisions.md) | Decisões e trade-offs (ADRs) |
-| [`docs/sources/readiness-matrix.md`](docs/sources/readiness-matrix.md) | Prontidão de cada mercado, com evidência |
-| [`docs/operations.md`](docs/operations.md) | Instalação, primeiro acesso, backup, recursos, problemas conhecidos |
-| [`docs/migrations.md`](docs/migrations.md) | Schema, verificação e como evoluir |
-| [`docs/testing.md`](docs/testing.md) | Testes, cenários E2E e resultados |
-| [`docs/backlog.md`](docs/backlog.md) | Riscos restantes e backlog priorizado |
+| [`CONTRIBUTING.pt-BR.md`](CONTRIBUTING.pt-BR.md) | Ambiente de desenvolvimento e contribuição de novos mercados |
+| [`docs/architecture.pt-BR.md`](docs/architecture.pt-BR.md) | Arquitetura, fluxo de uma busca, comparação, segurança |
+| [`docs/decisions.pt-BR.md`](docs/decisions.pt-BR.md) | Decisões e trade-offs (ADRs) |
+| [`docs/sources/readiness-matrix.pt-BR.md`](docs/sources/readiness-matrix.pt-BR.md) | Prontidão de cada mercado, com evidência |
+| [`docs/operations.pt-BR.md`](docs/operations.pt-BR.md) | Instalação, primeiro acesso, backup, recursos, problemas conhecidos |
+| [`docs/migrations.pt-BR.md`](docs/migrations.pt-BR.md) | Schema, verificação e como evoluir |
+| [`docs/testing.pt-BR.md`](docs/testing.pt-BR.md) | Testes, cenários E2E e resultados |
+| [`docs/backlog.pt-BR.md`](docs/backlog.pt-BR.md) | Riscos restantes e backlog priorizado |
 
 ## Estado
 
@@ -145,5 +145,5 @@ Implantação em servidor está fora do escopo desta versão. O protótipo anter
 ## Contribuição e licença
 
 O projeto já usa a [licença MIT](LICENSE). Correções de usabilidade, acessibilidade, documentação
-e novas integrações são bem-vindas; veja [CONTRIBUTING.md](CONTRIBUTING.md).
+e novas integrações são bem-vindas; veja [CONTRIBUTING.pt-BR.md](CONTRIBUTING.pt-BR.md).
 A cesta do logo, as ilustrações do catálogo e os logotipos do README são originais do projeto.

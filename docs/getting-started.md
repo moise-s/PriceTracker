@@ -1,5 +1,7 @@
 # Começar com o PriceTracker
 
+[English](getting-started.en.md)
+
 Se alguém já instalou o PriceTracker para você, peça uma conta ao administrador e siga o
 [guia de uso](user-guide.md). Estes passos são para quem vai manter sua própria instalação.
 
@@ -74,7 +76,7 @@ make backup               # se houver make; alternativa: ./scripts/backup.sh
 ```
 
 Guarde os backups em local seguro; eles contêm dados da instalação. Não apague `secrets/` nem use
-`docker compose down -v` para uma parada normal. Veja [operação, restauração e diagnóstico](operations.md).
+`docker compose down -v` para uma parada normal. Veja [operação, restauração e diagnóstico](operations.pt-BR.md).
 
 O padrão só publica a interface em loopback. `localhost` no celular aponta para o celular,
 não para seu computador. Acesso remoto/servidor é um trabalho separado e não está configurado aqui.

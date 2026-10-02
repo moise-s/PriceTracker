@@ -1,52 +1,54 @@
-# Matriz de prontidão das fontes
+# Source-readiness matrix
 
-Última verificação: **27/09/2026**, execuções reais a partir da stack Docker local (PostgreSQL) e
-dos smoke tests ao vivo (`make test-live`). Horários em America/Sao_Paulo (BRT, UTC−3).
+[Português](readiness-matrix.pt-BR.md)
 
-Um adaptador só é considerado pronto quando encontra, com preço, produtos reais de naturezas
-diferentes (embalagem, peso e unidade) numa filial identificada — abrir a página inicial não conta.
+Last live verification: **2026-09-27**, using the local Docker/PostgreSQL stack and opt-in smoke
+tests (`make test-live`). Table times use America/Sao_Paulo (BRT, UTC−3). These are historical
+results, not a claim of current live availability.
 
-| Fonte | Domínio final | Filial testada | Método determinístico | Produtos de smoke test | Data/hora | Resultado | LLM | Limitações | Status |
+An adapter is ready only after finding priced real products with different sale types (package,
+weight and item) in an identified branch. Reaching the homepage is insufficient.
+
+| Source | Final domain | Tested branch | Deterministic method | Smoke products | Date/time | Result | LLM | Limits | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Angeloni** | `super.angeloni.com.br` | Beira Mar, Florianópolis (CEP 88025-202, seller `superangeloni14`) | API pública VTEX Intelligent Search com `region-id` obtido em `/api/checkout/pub/regions` (seller conferido) + ofertas "leve mais" do Master Data (`PR`) | Arroz branco 1 kg (embalagem), Alcatra kg (peso), Ovos 30 un (unidade) + cesta de 10 itens | 27/09 19:27–19:29 (smoke) e 19:19–19:21 (cesta) | Smoke 3/3 encontrados. Cesta: 9 encontrados, 1 **indisponível** (Café Três Corações Gourmet Sul de Minas, sem estoque) | Não usado | Preço online por filial (pode diferir da gôndola). Depende do mapeamento CEP → região VTEX; se o seller mudar, o alvo falha como `adapter_error` em vez de usar outra loja | **Pronto** |
-| **Bistek** | `www.bistek.com.br` | Costeira do Pirajubaé, Florianópolis (preço de referência do site) | Sitemaps `/sitemap/product-{n}.xml` para descobrir URLs + página `/<slug>/p` com `__STATE__` embutido; revalidação por ETag. `robots.txt` proíbe `/busca` e `/api`, então a busca não é usada | Arroz 1 kg, Alcatra kg, Ovos 30 un + cesta de 10 itens | 27/09 19:27–19:29 (smoke) e 19:19–19:21 (cesta) | Smoke 3/3. Cesta: **10/10 encontrados** | Não usado | O site não permite escolher filial: todas as lojas Bistek recebem o mesmo preço online de referência (Florianópolis/SC). Isso é informado na UI. Descoberta depende dos sitemaps estarem atualizados | **Pronto** (com a ressalva de preço único) |
-| **Fort Atacadista** | `fortatacadista.com.br` | Kobrasol, São José (loja `1638`) | Sitemap + `/produtos/<id>/<slug>` com a loja escolhida por cookie `st_334` (`userSelected=true`); lê `APOLLO_STATE` e **confere que a loja respondida é a pedida** | Arroz 1 kg, Alcatra kg, Ovos 30 un + cesta de 10 itens | 27/09 19:27–19:29 (smoke) e 19:19–19:21 (cesta) | Smoke 3/3. Cesta: 9 encontrados, 1 **não encontrado** (Maçã Fuji — não vendida online na loja) | Não usado | Preço online por loja; preços de atacado (por quantidade) são guardados e só usados quando a quantidade da lista atinge o mínimo. `robots.txt` bloqueia URLs com `?`, então nenhuma query string é usada | **Pronto** |
-| **Imperatriz** | `clube.superimperatriz.com.br` (hotsite oficial do Super Clube) + API pública de ofertas (`api.zoombox.com.br`, `…execute-api.us-east-1.amazonaws.com`) | Mauro Ramos, Florianópolis (loja `9`) e Presidente Kennedy, São José (loja `16`) | JSON da API de ofertas do Super Clube; token público obtido no bootstrap do hotsite (mantido só em memória). Guarda preço de gôndola e preço de clube separados | Cesta de 10 itens; item em oferta: Leite condensado Tirol 395 g | 27/09 19:27–19:29 (smoke), 19:19–19:21 (cesta) e 19:33 (item em oferta) | API alcançável: **282 ofertas** vigentes na loja Mauro Ramos (2 requisições). Cesta: **10 não encontrados** (nenhum dos itens estava em oferta). Item em oferta: **encontrado**, gôndola R$ 5,79 e clube R$ 5,49 | Não usado | **Cobertura parcial por natureza da fonte**: só aparecem produtos em oferta do clube na semana. O catálogo completo está no iFood, protegido por anti-bot (PerimeterX) e termos de uso — **excluído** de propósito (não contornamos proteção). Preço de clube só entra se o usuário ativar o clube no perfil | **Degradado — requer decisão do usuário** |
+| **Angeloni** | `super.angeloni.com.br` | Beira Mar, Florianópolis (CEP 88025-202, seller `superangeloni14`) | Public VTEX Intelligent Search API with `region-id` from `/api/checkout/pub/regions`, verified seller; Master Data (`PR`) quantity offers | White rice 1 kg (pack), Alcatra/kg (weight), eggs 30 (items); 10-item basket | 2026-09-27 19:27–19:29 smoke; 19:19–19:21 basket | Smoke 3/3 found. Basket: 9 found, 1 **unavailable** (Café Três Corações Gourmet Sul de Minas, out of stock) | Not used | Online branch prices may differ from shelves. Depends on postal-code → VTEX-region mapping; seller changes fail with `adapter_error` rather than silently switching stores | **Ready** |
+| **Bistek** | `www.bistek.com.br` | Costeira do Pirajubaé, Florianópolis (website reference price) | `/sitemap/product-{n}.xml` discovers URLs; `/<slug>/p` exposes embedded `__STATE__`; ETag revalidation. Robots forbids `/busca` and `/api`, so search endpoints are unused | Rice 1 kg, Alcatra/kg, eggs 30; 10-item basket | 2026-09-27 19:27–19:29 smoke; 19:19–19:21 basket | Smoke 3/3. Basket: **10/10 found** | Not used | No branch selection on site: all branches share the Florianópolis/SC reference, explicitly shown in the UI. Discovery depends on current sitemaps | **Ready**, shared-price limitation |
+| **Fort Atacadista** | `fortatacadista.com.br` | Kobrasol, São José (store `1638`) | Sitemap + `/produtos/<id>/<slug>`; selected-store cookie `st_334` (`userSelected=true`); reads `APOLLO_STATE` and verifies the returned store matches the requested store | Rice 1 kg, Alcatra/kg, eggs 30; 10-item basket | 2026-09-27 19:27–19:29 smoke; 19:19–19:21 basket | Smoke 3/3. Basket: 9 found, 1 **not found** (Fuji apple, not sold online in that store) | Not used | Online store prices. Quantity offers apply only when the list meets the minimum. Robots blocks URLs containing `?`; no query strings are used | **Ready** |
+| **Imperatriz** | `clube.superimperatriz.com.br` (official Super Clube site), public API at `api.zoombox.com.br` / `…execute-api.us-east-1.amazonaws.com` | Mauro Ramos, Florianópolis (store `9`); Presidente Kennedy, São José (store `16`) | Super Clube JSON offers API; public bootstrap token kept in memory. Regular/loyalty prices stored separately | 10-item basket; promotional item: Leite condensado Tirol 395 g | 2026-09-27 19:27–19:29 smoke; 19:19–19:21 basket; 19:33 promotional item | API accessible: **282 current offers**, Mauro Ramos (2 requests). Basket: **10 not found**, none on promotion. Promotional item found, regular R$5.79 / loyalty R$5.49 | Not used | **Partial coverage by source design:** current club promotions only. Full iFood catalog is deliberately excluded because of anti-bot protection/terms. Loyalty prices require profile consent | **Degraded; user decision pending** |
 
-## Evidência reproduzível
+## Reproducible evidence
 
-- **Cesta completa (4 mercados, 40 alvos):** run `8c3fe775`, status `success`, 28 encontrados,
-  11 não encontrados, 1 indisponível, 100 s, 0 chamadas de LLM. Reproduzir:
-  `make smoke CREDENTIALS=secrets/local-admin-credentials.txt` com a stack no ar.
-- **Item em oferta no Imperatriz (4 mercados):** run `5365b85b` — Imperatriz encontrado (R$ 5,79;
-  clube R$ 5,49), Bistek encontrado (R$ 6,49), Fort **indisponível** (R$ 5,39, promo R$ 4,98, sem
-  estoque na loja), Angeloni **não encontrado**. Mostra os status distintos convivendo numa busca.
-- **Smoke tests ao vivo:** `make test-live` → 4 passaram (27/09 22:27:38–22:29:17 UTC). Cobrem
-  as três naturezas em Angeloni, Bistek e Fort e a disponibilidade das ofertas do Imperatriz.
-- **Reinício no meio da coleta:** run `5f7acf67` interrompido com 19/40 alvos prontos por
-  `docker compose down`; ao subir de novo foi retomado (tentativa 2, 21 pendentes) e terminou em
-  `success`, com 29 observações e nenhuma duplicada.
-- **Fixtures sanitizadas** das quatro fontes (capturadas em 27/09/2026) sustentam os testes de
-  contrato determinísticos: `backend/tests/fixtures/`.
+- **Complete basket, four markets/40 targets:** run `8c3fe775`, `success`, 28 found, 11 not found,
+  1 unavailable, 100 s, 0 LLM calls. Reproduce with
+  `make smoke CREDENTIALS=secrets/local-admin-credentials.txt` on the running stack.
+- **Imperatriz promotional item, four markets:** run `5365b85b`; Imperatriz found (R$5.79,
+  loyalty R$5.49), Bistek found (R$6.49), Fort unavailable (regular R$5.39, promo R$4.98,
+  out of stock), Angeloni not found. Distinct outcomes coexist within one run.
+- **Live smoke:** `make test-live`, 4 passed on 2026-09-27, 22:27:38–22:29:17 UTC. Covers three sale
+  types at Angeloni/Bistek/Fort and availability of Imperatriz offers.
+- **Restart during collection:** run `5f7acf67` stopped at 19/40 targets using `docker compose down`.
+  Restart resumed attempt 2 with 21 pending targets; finished `success` with 29 observations and
+  no duplicates.
+- Sanitized fixtures captured on 2026-09-27 support deterministic contract tests under
+  `backend/tests/fixtures/`.
 
-## Politeness aplicada a todas as fontes
+## Polite access for every source
 
-`robots.txt` com casamento RFC 9309 (regra mais longa vence), allowlist de domínios validada também
-em redirecionamentos, no máximo 2 conexões por host, intervalo mínimo entre requisições, timeout,
-retries com backoff e jitter, circuit breaker por host, User-Agent identificável e nenhuma tentativa
-de passar por CAPTCHA, login ou proteção anti-bot. Desafios (Cloudflare, Incapsula, PerimeterX)
-viram status `blocked`, nunca dados inventados.
+RFC 9309 robots matching (longest rule wins), allowed domains checked on redirects, at most two
+connections per host, minimum request intervals, timeouts, retry backoff/jitter, per-host circuit
+breakers and an identifiable User-Agent. No CAPTCHA, required-login or anti-bot bypass.
+Cloudflare/Incapsula/PerimeterX challenges become `blocked`, never fabricated data.
 
-## Decisão pendente — Imperatriz
+## Pending Imperatriz decision
 
-A execução real funciona, mas cobre só o que está em oferta no Super Clube. Opções:
+Live collection works, but only covers current Super Clube promotions. Options:
 
-1. **Manter como está (recomendado):** fonte oficial e legítima, cobertura parcial explícita na UI
-   ("somente ofertas vigentes"); a comparação trata os itens ausentes como faltantes, sem vencedor
-   injusto.
-2. **Desativar o Imperatriz** na comparação semanal e usá-lo só para alertas de oferta.
-3. **Buscar uma fonte adicional autorizada** (por exemplo, pedir ao Imperatriz acesso a um feed ou
-   API de catálogo). iFood e outros agregadores protegidos por anti-bot continuam fora.
+1. **Retain the official source:** recommended within its declared partial coverage. Missing items
+   remain missing; incomplete baskets do not receive an unfair win.
+2. **Disable Imperatriz** for weekly comparisons and use it only for promotional alerts.
+3. **Seek an additional authorized feed/API**, for example from the chain. Anti-bot-protected
+   iFood/aggregators remain excluded.
 
-Enquanto não houver decisão, o critério "execução real comprovada nos quatro mercados" fica
-**atendido para Angeloni, Bistek e Fort, e parcialmente para o Imperatriz**.
+Proven live collection is complete for Angeloni, Bistek and Fort, and partial for Imperatriz.
+Generic new-chain onboarding is documented in [market sources](../markets.en.md); this historical
+matrix does not assert live compatibility for Pradão or other wizard-added chains.
